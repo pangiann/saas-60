@@ -1,0 +1,122 @@
+:root {
+    --primary: #fff;
+  }
+  
+  .btn {
+    padding: 8px 20px;
+    border-radius: 2px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn--primary {
+    background-color: var(--primary);
+    color: #242424;
+    border: 1px solid var(--primary);
+  }
+  
+  .btn--outline {
+    background-color: transparent;
+    color: #fff;
+    padding: 8px 20px;
+    border: 1px solid var(--primary);
+    transition: all 0.3s ease-out;
+  }
+  
+  .btn--medium {
+    padding: 8px 20px;
+    font-size: 18px;
+  }
+  
+  .btn--large {
+    padding: 12px 26px;
+    font-size: 20px;
+  }
+  
+  .btn--large:hover,
+  .btn--medium:hover {
+    transition: all 0.3s ease-out;
+    background: #fff;
+    color: #242424;
+    transition: 250ms;
+  }
+  
+  
+
+  .btn--large3 {
+    padding: 12px 26px;
+    font-size: 20px;
+    background: #64d7d6;
+    color: #242424;
+    align-items: center;
+    justify-content: center;
+    display:block;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+  }
+
+  .btn--outline2 {
+    /* all: initial; */
+    font-size: 20px;
+    background-color: #242424;
+    color: #fff;
+    padding: 12px 26px;
+    border: 1px solid var(--primary);
+    transition: all 0.3s ease-out;
+    align-items: center;
+    justify-content: center;
+    display:block;
+    margin: 0 auto;
+    border-radius: 0.5rem;
+  }
+  .btn--large2 {
+    all: unset;
+    /* * {
+        all: unset;
+    } */
+    padding: 12px 26px;
+    font-size: 20px;
+    background: #64d7d6;
+    color: #242424;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display:block;
+    margin: 10px auto;
+    border-radius: 2rem;
+    
+  }
+
+
+  .btn--large2:hover {
+    transition: all 0.3s ease-out;
+    background: #353434;
+    color: #64d7d6;
+    transition: 250ms;
+    cursor: pointer;
+  }
+
+  .btn--large4 {
+    all: unset;
+    padding: 12px 26px;
+    font-size: 20px;
+    background: #64d7d6;
+    color: #242424;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display:block;
+    margin: 10px auto;
+    height:5rem;
+    border-radius: 0.5rem;
+  }
+
+  .btn--large4:hover {
+    transition: all 0.3s ease-out;
+    background: #353434;
+    color: #64d7d6;
+    transition: 250ms;
+    cursor: pointer;
+  }
+
