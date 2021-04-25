@@ -3,15 +3,9 @@ const crypto = require('crypto');
 // Replace the uri string with your MongoDB deployment's connection string.
 
 const url = "mongodb://localhost:27017";
-const fs = require('fs')
-var json_data;
-try {
-    const data = fs.readFileSync('/home/pangiann/Documents/TL20-17/back-end/JSON_Data/car.json', 'utf8')
-    json_data = JSON.parse(data);
-} catch (err) {
-    console.error(err);
-}
+
 const client = new MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
+client.connect();
 
 let hasher = (password, salt) => {
     let hash = crypto.createHmac('sha512', salt);
@@ -47,7 +41,6 @@ let compare = (password, hash) => {
 };
 module.exports = {
     insertUser: async function (username, password, email) {
-        await client.connect();
         const users_collection = client.db('q&a').collection('Users');
         const salt = crypto.randomBytes(32).toString('hex');
         console.log(username);
@@ -65,14 +58,14 @@ module.exports = {
             console.log(result);
             return result;
 
-        } finally {
-            await client.close();
+        }
+        catch (error) {
+            throw error;
         }
 
 
     },
     checkUserCreds: async function (username, password) {
-        await client.connect();
         const users_collection = client.db('q&a').collection('Users');
         const query = {username: username};
         console.log(username);
@@ -87,46 +80,20 @@ module.exports = {
         } catch (error) {
             console.log(error);
             return false;
-        } finally {
-            await client.close();
         }
 
     },
-    insertUsers: function () {
-        client.db('test_db').createCollection('users');
-        const cursor = client.db('test_db').collection('users');
-
-        const users = [
-            {
-                username: "michalakos",
-                password: "1234",
-                car_id: "606f1bfce4a0238c4ae6432c",
-                email: "michalis@gmail.com"
-            },
-            {
-                username: "pangiann",
-                password: "1234",
-                car_id: "606f1bfce4a0238c4ae642eb",
-                email: "pangiann@gmail.com"
-            }
-        ];
-
-        cursor.insertMany(users);
-    },
 
     findUser : async function(name) {
-        await client.connect();
         const query = { username: name };
-
+        const projection ={projection: {password: 0, salt: 0}};
         try {
-            const result = await client.db('q&a').collection('Users').findOne(query);
+            const result = await client.db('q&a').collection('Users').findOne(query, projection);
             console.log(result);
             return result;
         } catch (error) {
             console.log(error);
             throw new Error("something went wrong");
-        } finally {
-            await client.close();
         }
 
 

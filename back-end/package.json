@@ -18,6 +18,7 @@
     "pug": "2.0.0-beta11"
   },
   "devDependencies": {
+    "bson": "^4.3.0",
     "jsonwebtoken": "^8.5.1",
     "random-hash": "^4.0.1"
   }

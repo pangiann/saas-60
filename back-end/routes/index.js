@@ -1,5 +1,6 @@
 const users = require('../models/users');
 const questions = require('../models/questions');
+const answers = require('../models/answers');
 
 const createError = require('http-errors');
 const express = require('express');
@@ -9,6 +10,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
 
 const jwt = require('jsonwebtoken');
+const {ObjectID} = require("bson");
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const JWT_SECRET = 'top-secret';
@@ -56,7 +58,12 @@ router.post('/register',
                     id: result.insertedId
                 });
             })
-            .catch(err => console.error(`Failed to insert item: ${err}`))
+            .catch(err => {
+                res.status(400);
+                res.json( {
+                   msg: err.message
+                });
+            })
 
     }
 );
@@ -75,11 +82,49 @@ router.get('/whoami',
     }
 );
 
-// POST question
-router.post('/user/:userId/question/',
+
+
+router.post('/user/:userId/:questionId/answer',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
-        questions.insertQuestion(req.params.userId, req.body.question, req.body.keywords)
+        answers.insertAnswer(req.params.userId, req.params.questionId, req.body.answer)
+            .then(result => {
+                res.json( {
+                    res: "new answer added",
+                    id: result.insertedId
+                });
+            })
+            .catch(err => {
+                res.status(err.code);
+                res.json({
+                    res: err.message
+                })
+            })
+    }
+);
+
+router.get('/question',
+    function(req, res, next) {
+        questions.showQuestions()
+            .then(result => {
+                res.json( {
+                    result
+                });
+            })
+            .catch(err => {
+
+                res.json({
+                    res: err.message
+                })
+            })
+    }
+);
+
+// POST question
+router.post('/question/',
+    passport.authenticate('token', {session: false}),
+    function(req, res, next) {
+        questions.insertQuestion(req.body.user_id, req.body.title, req.body.question, req.body.keywords)
             .then(result => {
                 res.json( {
                     res: "new question added",
@@ -87,10 +132,44 @@ router.post('/user/:userId/question/',
                 });
             })
             .catch(err => {
+                res.status(err.code);
                 res.json({
                     res: err.message
                 })
             })
     }
 );
+router.delete('/question',
+    function(req, res, next) {
+        questions.deleteQuestion(ObjectID(req.body.question_id))
+            .then(result => {
+                res.json( {
+                    result
+                });
+            })
+            .catch(err => {
+                res.status(err.code);
+                res.json({
+                    res: err.message
+                })
+            })
+    }
+);
+router.get('/question/questionsPerKeyword',
+    function(req, res, next) {
+        questions.findQuestionByKeywords(req.body.keywords)
+            .then(result => {
+                res.json( {
+                    result
+                });
+            })
+            .catch(err => {
+                res.status(err.code);
+                res.json({
+                    res: err.message
+                })
+            })
+    }
+);
+
 module.exports = router;
