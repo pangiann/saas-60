@@ -60,25 +60,29 @@ function Home(props) {
     setformData({...formData,...{[key]:optionElementId}});
   }
 
-  console.log(props.vehicles);
+  // console.log(props.vehicles);
   return (
     <div className='profilestyle'>
       <div className='profile-title-container'>
         <div className='profile-title-container'>
-          <h1><i class="fas fa-user-alt"></i>&nbsp;&nbsp;My profile</h1>
+          Welcome to <b>AskMeAnything</b>!
         </div>
         <div className='profileboxbox'>
           <div className='profile-box'>
-            <div className='profile-text'> Username: &nbsp;&nbsp;{props.profile.username}</div>
-            <br></br>
-            <div className='profile-text'>First Name: &nbsp;&nbsp;{props.profile.first_name}</div>
-            <br></br>
-            <div className='profile-text'>Last Name: &nbsp;&nbsp;{props.profile.last_name}</div>
-            <br></br>
-            <div className='profile-text'>Email adress: &nbsp;&nbsp;{props.profile.email}</div>
-            <br></br>
-            <div className='profile-text'>Telephone number:&nbsp;&nbsp; {props.profile.telephone_number}</div>
-          </div>
+            <div className = "formbox">
+                      {/* <div className ="m-3">
+                        <br></br>
+                        Insert the plate number:
+                        <input 
+                        className="selectprofileinput"
+                        value={value} 
+                        onChange={(e)=>{handleChange(e.target.value)}}/>
+                      </div> */}
+                    
+                <button className='profilebtns' onClick={(e) =>{submit()}}>
+                &nbsp;&nbsp;Submit
+                </button>
+            </div>
           <Link to='/balance' className={{textDecoration: 'none'}}>     
             <button className='profilebtns2'>
               <a>
@@ -93,33 +97,7 @@ function Home(props) {
               </a>
             </button>
           </Link>
-        </div>
-        <br></br>
-        <div className='profile-title-container'>
-          <h1><i class="fas fa-car"></i>&nbsp;&nbsp;My vehicles</h1>
-        </div>               
-        <div className= "cars-profile" >
-          { props.vehicles.map(vehicle=> 
-            <div className='cars-profile-box'>
-              <div className='profile-text'>Model: &nbsp;&nbsp;{ vehicle.brand}</div>
-              <br></br>
-              <div className='profile-text'>Plate Number: &nbsp;&nbsp;{vehicle.plate_number}</div>
-              <br></br>
-              <div className='profile-text'> Brand: &nbsp;&nbsp;{vehicle.brand}</div>
-              <br></br>
-              <div className='profile-text'> Variant: &nbsp;&nbsp;{vehicle.variant}</div>
-              <br></br>
-              <div className='profile-text'> Energy Consumption: &nbsp;&nbsp;{vehicle.energy_consumption}</div>
-              <br></br>
-              <div className='profile-text'> Release Year: &nbsp;&nbsp;{vehicle.release_year}</div>
-              <br></br>
-              <div className='profile-text'> Type: &nbsp;&nbsp;{vehicle.type}</div>
-            </div>
-          )}
-      </div>
-      <br></br>
-      <div className='profile-title-container'>
-          <h1><i class="far fa-file-alt"></i>&nbsp;&nbsp;Fill the form to add a vehicle</h1>
+        </div>            
       </div>
       <div className = "formbox">
         <form> 
@@ -129,7 +107,7 @@ function Home(props) {
                 <div>
                   <br></br>
                   Pick model:&nbsp;&nbsp;
-                  <select  
+                  {/* <select  
                   value={formData[formElement.key]} 
                   onChange={(e)=>{handleChange2(e.target,formElement.key)}}
                   className="selectprofiledrop"
@@ -139,7 +117,7 @@ function Home(props) {
                         {String.prototype.concat(id.brand,'  ',id.model,' ',id.release_year)}   
                       </option>
                     )}
-                  </select>
+                  </select> */}
                 </div>
               )
             }

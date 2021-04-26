@@ -34,8 +34,8 @@ function App() {
       <Router>
         <Navbar />
         <Switch>
-          {/* <Route path='/' exact component=
-          {Home}/> */}
+          <Route path='/' exact component=
+          {Home}/>
           <Route path='/loginregister' exact component=
             {LoginRegister}/>
         </Switch>

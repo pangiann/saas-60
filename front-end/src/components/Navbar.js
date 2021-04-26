@@ -75,7 +75,7 @@ function Navbar() {
           <div className='navbar-container'>
             <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
             <img src={logoImg} className="logo-img" />    
-              Ask Me Everything
+              AskMeAnything
             </Link>
             <div className='menu-icon' onClick={handleClick}>
               <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -132,7 +132,7 @@ function Navbar() {
               <Link to='/'   className='navbar-logo' onClick={closeMobileMenu}>
                 
                 <img src={logoImg} className="logo-img" />    
-                Ask Me Everything
+                AskMeAnything
     
               </Link>
               <div className='menu-icon' onClick={handleClick}>
