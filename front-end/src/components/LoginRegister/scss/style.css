@@ -1,0 +1,394 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+.has-fade {
+  visibility: hidden;
+}
+
+@keyframes fade-in {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  }
+  1% {
+    visibility: visible;
+    opacity: 0;
+  }
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+.fade-in {
+  animation: fade-in 200ms ease-in-out forwards;
+}
+
+@keyframes fade-out {
+  from {
+    visibility: visible;
+    opacity: 1;
+  }
+  99% {
+    visibility: visible;
+    opacity: 0;
+  }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+.fade-out {
+  animation: fade-out 200ms ease-in-out forwards;
+}
+
+html {
+  font-size: 100%;
+  box-sizing: border-box;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Public Sans", sans-serif;
+  font-size: 1.125rem;
+  color: #9698a6;
+  line-height: 1.3;
+}
+body.noscroll {
+  overflow: hidden;
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+}
+
+h2 {
+  margin-bottom: 10px;
+  font-size: 1.875rem;
+  color: #2d314d;
+}
+@media (min-width: 64em) {
+  h2 {
+    font-size: 2.8rem;
+  }
+}
+
+a, a:visited, a:hover {
+  text-decoration: none;
+}
+
+.cont--nav {
+  max-width: 83.375rem;
+  margin: 0 auto;
+}
+.cont--sec {
+  max-width: 130rem;
+  margin: 0 auto;
+}
+.cont--pall {
+  padding-top: 4.375rem;
+  padding-right: 1.5rem;
+  padding-bottom: 4.375rem;
+  padding-left: 1.5rem;
+}
+@media (min-width: 64em) {
+  .cont--pall {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+.cont--py {
+  padding-top: 4.375rem;
+  padding-bottom: 4.375rem;
+}
+@media (min-width: 64em) {
+  .cont--py {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+.cont--px {
+  padding-right: 1.5rem;
+  padding-left: 1.5rem;
+}
+.cont--pt {
+  padding-top: 4.375rem;
+}
+@media (min-width: 64em) {
+  .cont--pt {
+    padding-top: 6rem;
+  }
+}
+.cont--pr {
+  padding-right: 1.5rem;
+}
+.cont--pb {
+  padding-bottom: 4.375rem;
+}
+@media (min-width: 64em) {
+  .cont--pb {
+    padding-bottom: 6rem;
+  }
+}
+.cont--pl {
+  padding-left: 1.5rem;
+}
+
+.flex {
+  display: flex;
+}
+.flex-jc-sb {
+  justify-content: space-between;
+}
+.flex-jc-c {
+  justify-content: center;
+}
+.flex-ai-c {
+  align-items: center;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.875rem 2.2rem;
+  border-radius: 50px;
+  cursor: pointer;
+  border: 0;
+  font-family: inherit;
+  font-size: 1.125rem;
+  color: #000000;
+  font-weight: 400;
+  background: #fab90a;
+  transition: opacity 300ms ease-in-out;
+}
+.button:hover {
+  opacity: 0.75;
+}
+
+@media (max-width: 63.9375em) {
+  .hide-for-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 64em) {
+  .hide-for-desktop {
+    display: none;
+  }
+}
+
+.LoginRegister {
+  padding: 3rem 4rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Open Sans", sans-serif;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.LeftPadding {
+  padding-left: 15rem;
+}
+@media (max-width: 63.9375em) {
+  .LeftPadding {
+    padding-left: 4rem;
+  }
+}
+
+.RightPadding {
+  padding-right: 15rem;
+}
+@media (max-width: 63.9375em) {
+  .RightPadding {
+    padding-right: 4rem;
+  }
+}
+
+.login {
+  width: 27em;
+  height: 40em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  position: relative;
+  z-index: 99;
+}
+.login .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+  border-radius: 4px;
+  position: relative;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  padding: 17px 10px;
+}
+.login .right-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 90%;
+  background-color: #208313;
+  width: 100%;
+  position: absolute;
+  right: -34%;
+  border-radius: 6px;
+  z-index: 1;
+  transition: all 400ms ease-in-out;
+  cursor: pointer;
+  box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.281);
+}
+@media (max-width: 63.9375em) {
+  .login .right-side {
+    display: none;
+  }
+}
+.login .right-side.right {
+  right: -40%;
+  align-items: flex-end;
+}
+.login .right-side.right:hover {
+  right: -45%;
+}
+.login .right-side.left {
+  right: 40%;
+  align-items: flex-start;
+}
+.login .right-side.left:hover {
+  right: 45%;
+}
+.login .right-side .text {
+  font-size: 21px;
+  font-weight: 500;
+  color: #fff;
+  margin-right: 3em;
+  margin-left: 3em;
+}
+
+.btn_teo {
+  font-size: 21px;
+  margin: 1rem;
+  width: 200px;
+  height: 50px;
+  padding: 5px 20px;
+  background-color: #208313;
+  color: #fff;
+  border: 0px;
+  border-radius: 10px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+}
+.btn_teo:hover {
+  opacity: 80%;
+  background-color: #208313;
+}
+.btn_teo:focus {
+  outline: none;
+}
+
+.other_option {
+  margin-top: 2.5rem;
+}
+.other_option a {
+  cursor: pointer;
+  text-decoration: none;
+  color: #208313;
+}
+
+@media (min-width: 40em) {
+  .form-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.input_field {
+  padding: 12px;
+  margin: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+@media (min-width: 40em) {
+  .input_field {
+    flex: 3;
+  }
+}
+
+input[type=text], input[type=password], select, textarea {
+  width: 90%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+@media (min-width: 40em) {
+  input[type=text], input[type=password], select, textarea {
+    max-width: 60%;
+  }
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  border: 1px solid #000;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin-left: 1rem;
+}
+@media (max-width: 63.9375em) {
+  label {
+    font-size: 0.8rem;
+  }
+}
+@media (min-width: 40em) {
+  label {
+    flex: 1;
+  }
+}
+
+.logo-img {
+  width: 80px;
+  margin-right: 15px;
+}
+
+/*# sourceMappingURL=style.css.map */
