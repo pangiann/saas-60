@@ -1,7 +1,7 @@
 const users = require('../models/users');
 const questions = require('../models/questions');
 const answers = require('../models/answers');
-
+const {OAuth2Client} = require('google-auth-library');
 const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
@@ -15,6 +15,7 @@ const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const JWT_SECRET = 'top-secret';
 
+const google_client = new OAuth2Client("1074766905977-lm80vj56vtkl2r3qh0urnv1eeaut71ns.apps.googleusercontent.com");
 
 
 
@@ -39,12 +40,38 @@ passport.use('token', new JWTstrategy(
     }
 ));
 
+
+router.post('/googlelogin',
+    function(req, res, next) {
+        const tokenId = req.body.tokenId;
+        google_client.verifyIdToken({idToken: tokenId, audience: "1074766905977-lm80vj56vtkl2r3qh0urnv1eeaut71ns.apps.googleusercontent.com"})
+            .then(response => {
+                const {email_verified, name, email} = response.payload;
+                if (email_verified) {
+                    res.json({
+                        name: name,
+                        email: email,
+                        token: jwt.sign({name: name}, JWT_SECRET, {expiresIn: 36000})
+                    });
+                }
+
+            })
+            .catch(err => {
+                res.status(400);
+                res.json({
+                    res: err.message
+                });
+            });
+
+    }
+);
 // POST signin
 router.post('/signin',
     passport.authenticate('signin', {session: false}),
     function(req, res, next) {
       res.json({
-        token: jwt.sign(req.user, JWT_SECRET, {expiresIn: 36000})
+          msg: "Successful login",
+          token: jwt.sign(req.user, JWT_SECRET, {expiresIn: 36000})
       });
     }
 );
@@ -67,7 +94,40 @@ router.post('/register',
 
     }
 );
+router.post('/googleregister',
+    function(req, res, next) {
+        const tokenId = req.body.tokenId;
+        google_client.verifyIdToken({idToken: tokenId, audience: "1074766905977-lm80vj56vtkl2r3qh0urnv1eeaut71ns.apps.googleusercontent.com"})
+            .then(response => {
+                const {email_verified, name, email} = response.payload;
+                if (email_verified) {
+                    //const jwt_token = jwt.sign({name: name}, JWT_SECRET, {expiresIn: 36000})
+                    const passwd = name + tokenId + email;
+                    users.insertUser(name, passwd, email)
+                        .then(result =>  {
+                            res.json({
+                                id: result.insertedId
+                            });
+                        })
+                        .catch(err => {
+                            res.status(400);
+                            res.json( {
+                                msg: err.message
+                            });
+                        })
+                }
 
+            })
+            .catch(err => {
+                res.status(400);
+                res.json({
+                    res: err.message
+                });
+            });
+
+
+    }
+);
 // GET whoami
 router.get('/whoami',
     passport.authenticate('token', {session: false}),
@@ -78,7 +138,11 @@ router.get('/whoami',
                     result
                 })
             })
-            .catch(err => console.log(err));
+            .catch(err =>
+                res.json({
+                    res: err.message
+                })
+            );
     }
 );
 
