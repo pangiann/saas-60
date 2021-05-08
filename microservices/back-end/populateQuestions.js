@@ -1,4 +1,4 @@
-const questions = require('./models/questions');
+const questions = require('./models/detailed_q&a_service/questions');
 
 async function populateQuestions(username) {
     const fs = require('fs')
