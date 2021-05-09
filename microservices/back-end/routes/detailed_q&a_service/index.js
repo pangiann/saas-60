@@ -5,8 +5,8 @@ const {OAuth2Client} = require('google-auth-library');
 const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
-
-const passport = require('passport')
+const mongodb = require('mongodb');
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const jwt = require('jsonwebtoken');
@@ -148,25 +148,134 @@ router.get('/whoami',
 
 
 
-router.post('/user/:userId/:questionId/answer',
+router.post('/answer',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
-        answers.insertAnswer(req.params.userId, req.params.questionId, req.body.answer)
-            .then(result => {
-                res.json( {
-                    res: "new answer added",
-                    id: result.insertedId
-                });
+        if (!mongodb.ObjectId.isValid(req.body.userId) || !mongodb.ObjectId.isValid(req.body.questionId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing Question or User Id"
             })
-            .catch(err => {
-                res.status(err.code);
-                res.json({
-                    res: err.message
+        }
+        else {
+            answers.insertAnswer(ObjectID(req.body.userId), ObjectID(req.body.questionId), req.body.answer)
+                .then(result => {
+                    res.json( {
+                        res: "new answer added",
+                        id: result.insertedId
+                    });
                 })
+                .catch(err => {
+                    res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
+
+    }
+);
+router.delete('/answer',
+    passport.authenticate('token', {session: false}),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.answerId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing Answer Id"
             })
+        }
+        else {
+            answers.deleteAnswer(ObjectID(req.body.answerId))
+                .then(result => {
+                    res.json({
+                        res: "Answer deleted successfully"
+                    });
+                })
+                .catch(err => {
+                    //res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
     }
 );
 
+router.put('/answer',
+    passport.authenticate('token', {session: false}),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.answerId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing Answer Id"
+            })
+        }
+        else {
+            answers.updateAnswer(ObjectID(req.body.answerId), req.body.answer)
+                .then(result => {
+                    res.json({
+                        res: "Answer updated successfully"
+                    });
+                })
+                .catch(err => {
+                    res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
+    }
+);
+router.get('/answers/question',
+    passport.authenticate('token', {session: false}),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.questionId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing Question Id"
+            })
+        }
+        else {
+            answers.showAnswersforQuestion(ObjectID(req.body.questionId))
+                .then(result => {
+                    res.json({
+                        result
+                    });
+                })
+                .catch(err => {
+                    res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
+    }
+);
+router.get('/answers/user',
+    passport.authenticate('token', {session: false}),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.userId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing User Id"
+            })
+        }
+        else {
+            answers.showAnswersforUser(ObjectID(req.body.userId))
+                .then(result => {
+                    res.json({
+                        result
+                    });
+                })
+                .catch(err => {
+                    res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
+    }
+);
 router.get('/question',
     function(req, res, next) {
         questions.showQuestions()
@@ -188,38 +297,80 @@ router.get('/question',
 router.post('/question/',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
-        questions.insertQuestion(req.body.user_id, req.body.title, req.body.question, req.body.keywords)
-            .then(result => {
-                res.json( {
-                    res: "new question added",
-                    id: result.insertedId
-                });
+        if (!mongodb.ObjectId.isValid(req.body.userId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing User Id"
             })
-            .catch(err => {
-                res.status(err.code);
-                res.json({
-                    res: err.message
+        }
+        else {
+            questions.insertQuestion(ObjectID(req.body.userId), req.body.title, req.body.question, req.body.keywords)
+                .then(result => {
+                    res.json({
+                        res: "new question added",
+                        id: result.insertedId
+                    });
                 })
+                .catch(err => {
+                    res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
+    }
+);
+router.put('/question',
+    passport.authenticate('token', {session: false}),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.questionId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing Question Id"
             })
+        }
+        else {
+            questions.updateQuestion(ObjectID(req.body.questionId), req.body.title, req.body.question, req.body.keywords)
+                .then(result => {
+                    res.json({
+                        res: "new question added",
+                        id: result.insertedId
+                    });
+                })
+                .catch(err => {
+                    res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
     }
 );
 router.delete('/question',
     function(req, res, next) {
-        questions.deleteQuestion(ObjectID(req.body.question_id))
-            .then(result => {
-                res.json( {
-                    result
-                });
+        if (!mongodb.ObjectId.isValid(req.body.qusetionId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing Question or User Id"
             })
-            .catch(err => {
-                res.status(err.code);
-                res.json({
-                    res: err.message
+        }
+        else {
+            questions.deleteQuestion(ObjectID(req.body.questionId))
+                .then(result => {
+                    res.json({
+                        res: "Question deleted successfully"
+                    });
                 })
-            })
+                .catch(err => {
+                    res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
     }
 );
-router.get('/question/questionsPerKeyword',
+router.get('/questions/questionsPerKeyword',
     function(req, res, next) {
         questions.findQuestionByKeywords(req.body.keywords)
             .then(result => {
@@ -235,5 +386,28 @@ router.get('/question/questionsPerKeyword',
             })
     }
 );
-
+router.get('/questions/user',
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.answerId)) {
+            res.status(404);
+            res.json({
+                res: "Not existing  User Id"
+            })
+        }
+        else {
+            questions.findQuestionByUser(ObjectID(req.body.userId))
+                .then(result => {
+                    res.json({
+                        result
+                    });
+                })
+                .catch(err => {
+                    res.status(err.code);
+                    res.json({
+                        res: err.message
+                    })
+                })
+        }
+    }
+);
 module.exports = router;
