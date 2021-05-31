@@ -1,10 +1,9 @@
 const users = require('../../models/users_minor_info_service/users');
-
 const {OAuth2Client} = require('google-auth-library');
 const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
-
+const produce = require('../../models/users_minor_info_service/producer');
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -75,15 +74,19 @@ router.post('/register',
     function(req, res, next) {
         users.insertUser(req.body.username, req.body.password, req.body.email)
             .then(result =>  {
+                produce.produce_register_event(result.insertedId, req.body.username, req.body.email)
+                    .then(r => {
+                        console.log("result successfull")
+                    })
+                    .catch(err => {
+                        next(createError(err.code || 500, err.message));
+                    })
                 res.json({
                     id: result.insertedId
                 });
             })
             .catch(err => {
-                res.status(400);
-                res.json( {
-                    msg: err.message
-                });
+                next(createError(err.code || 400, err.message));
             })
 
     }
@@ -104,10 +107,7 @@ router.post('/googleregister',
                             });
                         })
                         .catch(err => {
-                            res.status(400);
-                            res.json( {
-                                msg: err.message
-                            });
+                            next(createError(err.code || 400, err.message));
                         })
                 }
 

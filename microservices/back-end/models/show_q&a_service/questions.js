@@ -2,6 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 const createError = require('http-errors');
 const BSON = require('bson');
+const {ObjectID} = require("bson");
 
 // Replace the uri string with your MongoDB deployment's connection string.
 
@@ -10,11 +11,15 @@ const client = new MongoClient(url, {useNewUrlParser: true,  useUnifiedTopology:
 client.connect();
 function CustomException(message, code) {
     const error = new Error(message);
-
     error.code = code;
     return error;
 }
 
+
+
+// function to update number of questions
+// in 10000 years an overflow is highly probable to occur but who cares,
+// I'll not even exist until then, so good luck with the next ones
 CustomException.prototype = Object.create(Error.prototype);
 async function getNextSequenceValue(questions_collection, sequenceName){
     const sequenceDocument = await questions_collection.findOneAndUpdate(
@@ -22,36 +27,34 @@ async function getNextSequenceValue(questions_collection, sequenceName){
         {$inc:{seqValue:1}},
         {returnOriginal: false}
     );
-    console.log(sequenceDocument);
-    // const doc = JSON.parse(JSON.stringify(sequenceDocument));
-    // console.log(typeof(doc.value.seqValue));
     return sequenceDocument.value.seqValue;
 }
 
 module.exports = {
-    insertQuestion: async function (user_id,  title, question, keywords) {
-        const users_collection = client.db('q&a').collection('Users');
-        const questions_collection = client.db('q&a').collection('Questions');
-        const query = {_id:  user_id};
-        const projection = { projection: {_id:1} };
-        const datetime = new Date();
+    // Here an event produced in the kafka bus by add_q&a service where a new question is added
+    // so, we have already q question_id, user_id, question_no, answer and date for this
+    // we create the document and insert it in the database
+    insertQuestion: async function (user_id,  question_id, title, question, question_no, date, keywords) {
+        const questions_collection = client.db('questions_answers_only').collection('Questions');
         try {
-            const user_id_info = await users_collection.findOne(query, projection);
-            if (user_id_info === null) {
-                throw new CustomException("User Not Found", 404);
-            }
-            const seq = await getNextSequenceValue(questions_collection, "questionsInfo");
-            console.log(seq);
             const question_doc = {
-                question_no: seq,
+                _id: question_id,
                 user_id: user_id,
-                date: datetime,
                 title: title,
+                question_no: question_no,
                 question: question,
+                date: date,
                 keywords: keywords,
                 num_of_answers: 0
             }
             const result = await  questions_collection.insertOne(question_doc);
+
+            // In the result of insertOne() function there is a field called insertedCount that is returned from mongodb
+            // With this value we could check if everything did go well (specifically insertedCount should be equal to 1)
+            // or else we should throw an error with 404 code
+            if (result.insertedCount !== 1) {
+                throw new CustomException("Question insertion failed", 404);
+            }
             return result;
         } catch (error) {
             throw error;
@@ -59,12 +62,10 @@ module.exports = {
 
     },
     showQuestions: async function () {
-        const query = {_id: { $ne: "questionsInfo"} };
         try {
-            const questions_collection = client.db('q&a').collection('Questions');
-            const result = await questions_collection.find(query).toArray();
-            //console.log(result);
-            //console.log(questions);
+            const questions_collection = client.db('questions_answers_only').collection('Questions');
+            const result = await questions_collection.find().toArray();
+
             return result;
         }
         catch (error) {
@@ -77,7 +78,7 @@ module.exports = {
     deleteQuestion: async function (question_id) {
         const query = {_id: question_id};
         try {
-            const questions_collection = client.db('q&a').collection('Questions');
+            const questions_collection = client.db('questions_answers_only').collection('Questions');
             const result = await questions_collection.deleteOne(query);
             //console.log(result);
             if (result.deletedCount === 0) {
@@ -89,35 +90,13 @@ module.exports = {
             throw error;
         }
     },
-    updateQuestion: async function (question_id, new_title, new_question, new_keywords) {
-        const datetime = new Date();
-        try {
-            const questions_collection = client.db('q&a').collection('Questions');
-            const query = {_id: question_id};
-            const newValues = {
-                $set: {
-                    date: datetime,
-                    question: new_question,
-                    title: new_title,
-                    keywords: new_keywords
-                }
-            };
-            const result = await  questions_collection.updateOne(query, newValues);
-            if (result.modifiedCount === 0) {
-                throw new CustomException("Question Not Found", 404);
-            }
-            return result;
-        } catch (error) {
-            throw error;
-        }
 
-
-    },
+    // mongo has a nice way to compare
     findQuestionByKeywords: async function (keyword_array) {
         const query = {keywords: {$in: keyword_array } };
         console.log(keyword_array);
         try {
-            const questions_collection = client.db('q&a').collection('Questions');
+            const questions_collection = client.db('questions_answers_only').collection('Questions');
             const result = await questions_collection.find(query).toArray();
             console.log(result);
             if (result.length === 0) {
@@ -131,14 +110,9 @@ module.exports = {
     },
     findQuestionByUser: async function (user_id) {
         const query = {_id: user_id};
-        const users_collection = client.db('q&a').collection('Users');
-        const projection = { projection: {_id:1} };
         try {
-            const user_id = await users_collection.findOne(query, projection);
-            if (user_id === null) {
-                throw new CustomException("User Not Found", 404);
-            }
-            const questions_collection = client.db('q&a').collection('Questions');
+
+            const questions_collection = client.db('questions_answers_only').collection('Questions');
             const result = await questions_collection.find(query).toArray();
             console.log(result);
             if (result.length === 0) {

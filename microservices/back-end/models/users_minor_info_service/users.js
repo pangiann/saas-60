@@ -93,7 +93,7 @@ module.exports = {
             return result;
         } catch (error) {
             console.log(error);
-            throw new Error("something went wrong");
+            throw error;
         }
 
 

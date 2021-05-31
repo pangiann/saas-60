@@ -3,8 +3,9 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
-const detailedQARouter = require('./routes/detailed_q&a_service');
+const detailedQARouter = require('./routes/add_q&a_service');
 const usersMinorRouter = require('./routes/users_minor_info_service');
+const usersProfileRouter = require('./routes/users_profile_service');
 const app = express();
 const cors = require('cors')
 app.use(cors())
@@ -18,7 +19,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use('/detailedQA', detailedQARouter);
 app.use('/usersMinor', usersMinorRouter);
-
+app.use('/usersProfile', usersProfileRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
