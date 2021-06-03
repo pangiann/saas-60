@@ -4,6 +4,7 @@ const {OAuth2Client} = require('google-auth-library');
 const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
+const mongodb = require('mongodb');
 
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
@@ -85,7 +86,7 @@ router.get('/questions/questionsPerKeyword',
 // returns all questions that a user has made
 router.get('/questions/user',
     function(req, res, next) {
-        if (!mongodb.ObjectId.isValid(req.body.answerId)) {
+        if (!mongodb.ObjectId.isValid(req.body.userId)) {
             next(createError(404, "Not existing  User Id"));
         }
         else {

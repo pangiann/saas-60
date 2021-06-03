@@ -1,9 +1,9 @@
-const users = require('../../models/users_minor_info_service/users');
+const users = require('../../models/login_register_service/users');
 const {OAuth2Client} = require('google-auth-library');
 const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
-const produce = require('../../models/users_minor_info_service/producer');
+const produce = require('../../models/login_register_service/producer');
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -51,10 +51,7 @@ router.post('/googlelogin',
 
             })
             .catch(err => {
-                res.status(400);
-                res.json({
-                    res: err.message
-                });
+                next(createError(err.code || 400, err.message || "Something went wrong"));
             });
 
     }
@@ -102,6 +99,13 @@ router.post('/googleregister',
                     const passwd = name + tokenId + email;
                     users.insertUser(name, passwd, email)
                         .then(result =>  {
+                            produce.produce_register_event(result.insertedId, name, email)
+                                .then(r => {
+                                    console.log("result successfull")
+                                })
+                                .catch(err => {
+                                    next(createError(err.code || 500, err.message));
+                                })
                             res.json({
                                 id: result.insertedId
                             });
@@ -113,15 +117,13 @@ router.post('/googleregister',
 
             })
             .catch(err => {
-                res.status(400);
-                res.json({
-                    res: err.message
-                });
+                next(createError(err.code || 400, err.message || "Something went wrong"));
             });
 
 
     }
 );
+
 // GET whoami
 router.get('/whoami',
     passport.authenticate('token', {session: false}),
@@ -132,11 +134,10 @@ router.get('/whoami',
                     result
                 })
             })
-            .catch(err =>
-                res.json({
-                    res: err.message
-                })
-            );
+            .catch(err => {
+                next(createError(err.code || 400, err.message || "Something went wrong"));
+            })
     }
 );
+
 module.exports = router;

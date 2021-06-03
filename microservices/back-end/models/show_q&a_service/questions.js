@@ -109,12 +109,11 @@ module.exports = {
         }
     },
     findQuestionByUser: async function (user_id) {
-        const query = {_id: user_id};
+        const query = {user_id: user_id};
         try {
 
             const questions_collection = client.db('questions_answers_only').collection('Questions');
             const result = await questions_collection.find(query).toArray();
-            console.log(result);
             if (result.length === 0) {
                 throw new CustomException("No questions found with this user id", 404);
             }

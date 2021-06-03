@@ -41,6 +41,21 @@ module.exports = {
         }
 
     },
+    showProfile: async function (user_id) {
+        try {
+            const users_collection = client.db('users_profile').collection('Users');
+            const query = {_id: user_id};
+            const result = await users_collection.find(query).toArray();
+
+            if (result.length === 0) {
+                throw new CustomException("User not found", 404)
+            }
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    },
     updateNoQuestions: async function (user_id) {
         const users_collection = client.db('users_profile').collection('Users');
         const query = {_id: ObjectID(user_id)};
