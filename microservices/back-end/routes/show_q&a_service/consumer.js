@@ -23,10 +23,15 @@ const consume = async() => {
             const value = message.value.toString()
             const value_json = JSON.parse(value);
             if (message.key.toString() === "POST_QUESTION") {
-                 questions.insertQuestion(ObjectID(value_json.user_id), ObjectID(value_json.question_id), value_json.title, value_json.question, value_json.question_no, value_json.date, value_json.keywords);
+                 questions.insertQuestion(ObjectID(value_json.user_id), value_json.username, ObjectID(value_json.question_id), value_json.title, value_json.question,
+                                          value_json.question_no, value_json.date, value_json.keywords, value_json.num_of_answers);
             }
             if (message.key.toString() === "POST_ANSWER") {
-                answers.insertAnswer(ObjectID(value_json.answer_id), ObjectID(value_json.question_id), ObjectID(value_json.user_id), value_json.question_no, value_json.answer, value_json.date)
+                answers.insertAnswer(ObjectID(value_json.answer_id), ObjectID(value_json.question_id), ObjectID(value_json.user_id),
+                                     value_json.username, value_json.question_no, value_json.answer, value_json.date)
+            }
+            if (message.key.toString() === "NEW_UPVOTE") {
+                answers.updateNoUpvotes(value_json.answer_id);
             }
         }
 

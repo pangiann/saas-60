@@ -25,7 +25,7 @@ module.exports = {
     // Here an event produced in the kafka bus by add_q&a service where a new answer is added
     // so, we have already answer_id, question_id, user_id, question_no, answer and date for this
     // we create the document, we increment by one value :no_of_answers in questions' document
-    insertAnswer: async function (answer_id, question_id, user_id, question_no, answer, date) {
+    insertAnswer: async function (answer_id, question_id, user_id, username, question_no, answer, date) {
         const answers_collection = client.db('questions_answers_only').collection('Answers');
         const questions_collection = client.db('questions_answers_only').collection('Questions');
         try {
@@ -44,6 +44,7 @@ module.exports = {
             const answer_doc = {
                 _id: answer_id,
                 user_id: user_id,
+                username: username,
                 question_id: update_res.value._id,
                 date: date,
                 answer: answer,
@@ -98,7 +99,7 @@ module.exports = {
     },
     showAnswers: async function () {
         try {
-            const questions_collection = client.db('q&a').collection('Questions');
+            const questions_collection = client.db('q&a').collection('Answers');
             const result = await questions_collection.find().toArray();
             if (result.length === 0) {
                 throw new CustomException("No answers found", 404);
@@ -123,6 +124,23 @@ module.exports = {
                 throw new CustomException("Answer Not Found", 404);
             }
 
+        }
+        catch (error) {
+            throw error;
+        }
+    },
+    updateNoUpvotes: async function (answer_id) {
+        const answers_collection = client.db('questions_answers_only').collection('Answers');
+        const query = {_id: ObjectID(answer_id)};
+        const new_value = {$inc: {upvotes_given: 1}};
+        try {
+            const result = await answers_collection.updateOne(query, new_value);
+            if (result.modifiedCount === 0) {
+                throw new CustomException("Answer Not found", 404);
+            }
+            return {
+                result
+            }
         }
         catch (error) {
             throw error;

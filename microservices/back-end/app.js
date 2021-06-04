@@ -5,7 +5,7 @@ const logger = require('morgan');
 const passport = require('passport');
 const addQARouter = require('./routes/add_q&a_service');
 const showQARouter = require('./routes/show_q&a_service');
-const usersMinorRouter = require('./routes/login_register_service');
+const loginRegisterRouter = require('./routes/login_register_service');
 const usersProfileRouter = require('./routes/users_profile_service');
 const totalAnalyticsRouter = require('./routes/total_analytics_service');
 const app = express();
@@ -21,9 +21,9 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use('/showQA', showQARouter)
 app.use('/addQA', addQARouter);
-app.use('/loginRegister', usersMinorRouter);
+app.use('/loginRegister', loginRegisterRouter);
 app.use('/usersProfile', usersProfileRouter);
-//app.use('/totalAnalytics', totalAnalyticsRouter);
+app.use('/totalAnalytics', totalAnalyticsRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

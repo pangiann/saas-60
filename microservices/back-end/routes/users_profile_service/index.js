@@ -49,25 +49,6 @@ router.get('/user',
     }
 );
 
-router.get('/user/questions',
-    passport.authenticate('token', {session: false}),
-    function(req, res, next) {
-        if (!mongodb.ObjectId.isValid(req.body.userId)) {
-            next(createError(404, "Not existing User Id"));
-        }
-        else {
-            users.showQuestions(ObjectID(req.body.userId))
-                .then(result => {
-                    res.json({
-                        result
-                    });
-                })
-                .catch(err => {
-                    next(createError(err.code || 400, err.message));
 
-                })
-        }
-    }
-);
 
 module.exports = router;

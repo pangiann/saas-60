@@ -50,7 +50,7 @@ module.exports = {
             if (result.length === 0) {
                 throw new CustomException("User not found", 404)
             }
-            return result;
+            return result[0];
         }
         catch (error) {
             throw error;

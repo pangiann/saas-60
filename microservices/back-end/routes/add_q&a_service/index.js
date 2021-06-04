@@ -17,7 +17,15 @@ const ExtractJWT = require('passport-jwt').ExtractJwt;
 const JWT_SECRET = 'top-secret';
 
 
-
+passport.use('token', new JWTstrategy(
+    {
+        secretOrKey: JWT_SECRET,
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
+    },
+    function(token, done) {
+        return done(null, { username: token.username})
+    }
+));
 
 
 router.post('/answer',
@@ -30,7 +38,7 @@ router.post('/answer',
         else {
             answers.insertAnswer(ObjectID(req.body.userId), ObjectID(req.body.questionId), req.body.answer)
                 .then(result => {
-                    produce.produce_addAnswer_event(result.result.insertedId, answer_obj.userId, answer_obj.questionId, result.question_no, answer_obj.answer, result.date)
+                    produce.produce_addAnswer_event(result.result.insertedId, answer_obj.userId, req.user.username, answer_obj.questionId, result.question_no, answer_obj.answer, result.date)
                         .then(r => {
                             console.log("result successfull")
                         })
@@ -132,7 +140,7 @@ router.post('/question',
             questions.insertQuestion(ObjectID(question_obj.userId), question_obj.title, question_obj.question, question_obj.keywords)
                 .then(result => {
                     console.log(result);
-                    produce.produce_addQuestion_event(question_obj.userId, result.result.insertedId, result.question_no, question_obj.title, question_obj.question, question_obj.keywords, result.date)
+                    produce.produce_addQuestion_event(question_obj.userId, req.user.username, result.result.insertedId, result.question_no, question_obj.title, question_obj.question, question_obj.keywords, result.date, 0)
                         .then(r => {
                             console.log("result successfull")
                         })

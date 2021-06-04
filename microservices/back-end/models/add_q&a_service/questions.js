@@ -1,3 +1,5 @@
+// noinspection ExceptionCaughtLocallyJS
+
 const MongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 const createError = require('http-errors');
@@ -16,6 +18,8 @@ function CustomException(message, code) {
 }
 
 CustomException.prototype = Object.create(Error.prototype);
+
+
 async function getNextSequenceValue(questions_collection, sequenceName){
     const sequenceDocument = await questions_collection.findOneAndUpdate(
         {_id: sequenceName},
@@ -29,6 +33,33 @@ async function getNextSequenceValue(questions_collection, sequenceName){
 }
 
 module.exports = {
+    populateQuestion: async function (question_id, question_no, title, user_id, date, question, keywords, num_of_answers) {
+        const questions_collection = client.db('question').collection('Questions');
+        try {
+            const question_doc = {
+                _id: question_id,
+                question_no: question_no,
+                user_id: user_id,
+                date: date,
+                title: title,
+                question: question,
+                keywords: keywords,
+                num_of_answers: num_of_answers
+            }
+            const result = await  questions_collection.insertOne(question_doc);
+            if (result.insertedCount !== 1)  {
+                throw new CustomException("Question not added", 404)
+            }
+            const res = {
+                result: result,
+                question_no: question_no,
+                date: date
+            }
+            return res;
+        } catch (error) {
+            throw error;
+        }
+    },
     insertQuestion: async function (user_id,  title, question, keywords) {
         const questions_collection = client.db('q&a').collection('Questions');
         const datetime = new Date();
