@@ -1,9 +1,21 @@
 import React from 'react';
 import './scss/style.scss';
-import Logo from '../../images/driverslogo.png';
+import Logo from '../../EVlogo3.png';
 import '../Button/Button.jsx';
+import { Link } from 'react-router-dom';
+import {useState, useEffect } from 'react';
 
 class Header extends React.Component {
+    
+    // [click, setClick] = useState(false);
+    constructor(props) {
+        super(props);
+        this.state = {
+          click: true
+        };
+      }
+
+    closeMobileMenu = () => this.setState({click:false});
     
     handleClick(e) {
         e.preventDefault();
@@ -43,7 +55,9 @@ class Header extends React.Component {
                     <div className="overlay has-fade hide-for-desktop"></div>
                     <nav className="cont cont--nav cont--pall flex flex-jc-sb flex-ai-c">
                         <a className="header__logo">
+                            <Link to='/' className='navbar-logo' onClick={this.closeMobileMenu}>
                             <img src={Logo} alt="inCharge" />
+                            </Link>
                         </a>
 
                         <a id="btnHamburger" href="#" onClick={this.handleClick} className="header__toggle hide-for-desktop">
@@ -54,8 +68,23 @@ class Header extends React.Component {
 
 
                         <div className="header__buttons hide-for-mobile">
-                            <a href='' className="sub-button hide-for-mobile">LOG IN</a>
-                            <button type="button" className=" btn_teo hide-for-mobile">Register</button>
+                            <a href='' className="sub-button hide-for-mobile">
+                            <Link
+                            to='/loginregister'
+                            onClick={this.closeMobileMenu}
+                            >
+                            LOG IN
+                            </Link></a>
+                           
+                            <Link
+                            to='/loginregister'
+                            onClick={this.closeMobileMenu}
+                            >
+                            <button type="button" className=" btn_teo hide-for-mobile" >
+                            Register</button>
+                            </Link>
+                           
+                                
                         </div>
                     </nav>
                 </header>
