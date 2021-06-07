@@ -1,0 +1,342 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'PT Sans', sans-serif;
+}
+
+
+.home,
+.services,
+.products,
+.sign-up {
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.services {
+  /* background-image: url('/images/img-2.jpg'); */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
+}
+
+.products {
+  /* background-image: url('/images/img-1.jpg'); */
+  background-position: center;
+  background-size: fill;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
+}
+
+.sign-up {
+  /* background-image: url('/images/img-8.jpg'); */
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  font-size: 100px;
+}
+
+.charging-marker {
+  width:50%;
+  height:50%;
+}
+
+.sliding-pane-station {
+  padding: 0 !important;
+  width: 37% !important;
+}
+
+.dummy {
+
+  width: 100%;
+  height: auto;
+  margin:0;
+  
+}
+.slide-pane__content {
+  padding-left: 00px !important;
+  padding-right: 00px !important;
+}
+
+.pane-title-container {
+  padding-left:10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btnchargecontainer {
+  display: inline-flex;
+  justify-content: center;
+}
+
+.pane-main-content {
+
+  padding:10px;
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  border-radius: 0.5rem;
+}
+.pane-main-content2 {
+  padding:10px;
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  border-radius: 0.5rem;
+}
+
+.pane-main-content p {
+  color:white;
+  margin:5px;
+}
+
+
+.randezvous-pane {
+  padding:10px;
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  border-radius: 0.5rem;
+}
+.randezvous-pane p {
+  font-size:medium;
+  color:white;
+  margin: 15px;
+}
+
+
+.calendar-style {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:10px;
+  /* color:rgb(28, 27, 27) 0%; */
+  /* background: black; */
+  
+}
+.callendarbtns{
+  background-color: white !important;
+  border-radius: 0.5rem;
+}
+
+.columnrendezvous {
+  float: left;
+  width: 25%;
+  text-align: left;
+}
+
+
+/* Clear floats after the columns */
+.rowrendezvous:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+html .react-datepicker {
+  font-family: 'PT Sans', sans-serif;
+  background-color: #fff;
+  font-weight: bold;
+  color: #000;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  display: inline-block;
+  position: center;
+  padding: 13px;
+  margin-top:19px;
+}
+
+
+.clockstyle {
+  border-radius: 2rem !important;
+  --main-font-family: 'PT Sans', sans-serif;
+  --top-colon-color: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  --top-text-color: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  --top-selected-color: #64d7d6;
+  --top-meridiem-color: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  --meridiem-selected-bg-color: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  --meridiem-selected-text-color:linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  --dropdown-shadow: (90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  --clock-wrapper-bg: grey;
+  --done-font-size: 16px;
+  --hand-line-color: #64d7d6;
+  --hand-circle-center: #64d7d6;
+  --hand-circle-outer: #64d7d6;
+  --hand-minute-circle: #64d7d6;
+}
+
+.css-1lmy46j-ClockWrapper {
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%) !important;
+}
+
+
+.containercarimg {
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+
+}
+.resize_fit_center {
+  max-width:100%;
+  max-height:100%;
+  vertical-align: middle;
+  margin-bottom: 10px;
+}
+
+.chargenowstyle{
+  margin-left:25%;
+  margin-right:25%;
+  margin-top:50px;
+  margin-bottom: 70px;
+  background-color:#454d55;
+  padding: 40px;
+  padding-bottom:200px;
+  border-radius: 2rem;
+}
+.chargenowstyle-title-container {
+  padding-left:10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  color: white;
+  
+}
+    .swal2-styled.swal2-confirm {
+      background-color: #64d7d6;
+    } 
+    
+    .swal2-styled.swal2-cancel {
+      background-color: #343a40;
+    } 
+   .react-datepicker__day--selected{
+    background-color: #64d7d6 !important;
+   } 
+
+   h2{
+    color: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+   }
+    
+
+.chargenowstyle-main-content {
+  border-radius: 2rem;
+  padding:40px;
+  background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%);
+  color: white;
+  font-size: 20px;
+}
+
+.columnchargenow {
+  float: left;
+  width: 30%;
+  text-align: left;
+  margin: 1.6%;
+  font-size: 20px;
+  background: #489796;
+  color: #242424;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  display:block;
+  border-radius: 2rem;
+  padding:20px;
+}
+
+.programselection,
+.columnchargenow:hover {
+  transition: all 0.3s ease-out;
+  background: #353434;
+  color: #64d7d6;
+  transition: 250ms;
+  cursor: pointer;
+}
+.rowchargenow:after {
+  content: "";
+  display: table;
+  clear: both;
+  height: 'inherit';
+}
+/* 8EDDFD */
+
+.programselection{
+  border: 5px solid #353434;
+  float: left;
+  width: 30%;
+  text-align: left;
+  margin: 1.6%;
+  font-size: 20px;
+  background: #64d7d6;
+  color: #242424;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  display:block;
+  border-radius: 2rem;
+  padding:15px;
+}
+.fixedbox1{
+  width: 50%;
+  margin-left: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fixedbox2{
+  width: 50%;
+  margin-right: 18%;
+}
+.fixedbox3{
+  width: 50%;
+  margin-left: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fixedbox4{
+  width: 50%;
+  margin-right: 5%;
+}
+
+.fixedbox5{
+  width: 50%;
+  margin-left: 14%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fixedbox6{
+  width: 50%;
+  margin-right: 15%;
+}
+
+
+.programselection2{
+  border: 5px solid #353434;
+  float: left;
+  width: 40%;
+  text-align: left;
+  margin: 5%;
+  font-size: 30px !important;
+  background: #64d7d6;
+  color: #242424;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  display:flex;
+  border-radius: 2rem;
+  padding:15px;
+  height: 7rem;
+}
+
+.programselection2:hover {
+  transition: all 0.3s ease-out;
+  background: #353434;
+  color: #64d7d6;
+  transition: 250ms;
+  cursor: pointer;
+}

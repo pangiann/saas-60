@@ -1,12 +1,21 @@
 import React from 'react';
-import './scss/style.scss';
-import answer from "./images/Answer.jpg";
-import ask from "./images/ask.jpeg";
-import statistics from "./images/statistics.jpg";
-import search_keyword from "./images/search-keyword.jpg";
+import '../ChoicesBoxes/scss/style.scss';
+import answer from "../ChoicesBoxes/images/Answer.jpg";
+import ask from "../ChoicesBoxes/images/ask.jpeg";
+import statistics from "../ChoicesBoxes/images/statistics.jpg";
+import search_keyword from "../ChoicesBoxes/images/search-keyword.jpg";
 import { Link } from 'react-router-dom';
 
-class ChoicesBoxes extends React.Component {
+class Keywords extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+          click: true
+        };
+      }
+
+    closeMobileMenu = () => this.setState({click:false});
+
     render() {
         return (
             <section className="choices">
@@ -14,7 +23,7 @@ class ChoicesBoxes extends React.Component {
                 <div className="choice__content container container--nav container--pall">
 
                     <div className="choice__grid">
-                        <Link to='/keywords'>
+
                         <a href="#" className="choice__item">
                             <div className="choice__image"
                                  style={{backgroundImage: `url(${search_keyword})`}}>
@@ -31,8 +40,6 @@ class ChoicesBoxes extends React.Component {
                                 </div>
                             </div>
                         </a>
-                        </Link>
-                        <Link to='/timesearch'>
                         <a href="#" className="choice__item">
                             <div className="choice__image"
                                  style={{backgroundImage: `url(${statistics})`}}>
@@ -49,8 +56,6 @@ class ChoicesBoxes extends React.Component {
                                 </div>
                             </div>
                         </a>
-                        </Link>
-                        <Link to='/askquestion'>
                         <a href="#" className="choice__item">
                             <div className="choice__image"
                                  style={{backgroundImage: `url(${ask})`}}>
@@ -68,8 +73,6 @@ class ChoicesBoxes extends React.Component {
                                 </div>
                             </div>
                         </a>
-                        </Link>
-                        <Link to='/answerquestion'>
                         <a href="#" className="choice__item">
                             <div className="choice__image"
                                  style={{backgroundImage: `url(${answer})`}}>
@@ -85,7 +88,6 @@ class ChoicesBoxes extends React.Component {
                                 </div>
                             </div>
                         </a>
-                        </Link>
                     </div>
                 </div>
 
@@ -94,4 +96,4 @@ class ChoicesBoxes extends React.Component {
     }
 }
 
-export default ChoicesBoxes;
+export default Keywords;

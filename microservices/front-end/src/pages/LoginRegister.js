@@ -53,7 +53,7 @@ class LoginRegister extends React.Component {
             <div className="container" ref={ref => (this.container = ref)}>
               {isLoginActive && (
                 <Login
-                    containerRef={ref => (this.current = ref)}
+                    // containerRef={ref => (this.current = ref)}
                     changeChoice={this.changeState.bind(this)}
 
                 />
