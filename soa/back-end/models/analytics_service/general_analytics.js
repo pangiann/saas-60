@@ -42,9 +42,10 @@ module.exports = {
 
     },
     showQuestions: async function () {
+        const query = {_id: { $ne: "questionsInfo"} };
         const questions_collection = client.db('q&a').collection('Questions');
         try {
-            return await questions_collection.find().sort( { date: 1 } ).toArray()
+            return await questions_collection.find(query).sort( { date: 1 } ).toArray()
         }
         catch (error) {
             throw error;

@@ -1,6 +1,7 @@
 const users = require('../../models/analytics_service/users_analytics');
 const general = require('../../models/analytics_service/general_analytics');
 const {OAuth2Client} = require('google-auth-library');
+const validator = require('../../middleware/payload_validator');
 const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
@@ -41,9 +42,13 @@ function calculate_statistics(result, first_year, last_year, tot_num, tot_years_
 
 }
 
-
+const expected_user = {
+    "userId" : ""
+}
+const mandatory = ["userId"]
 router.get('/user/number_of_questions',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
             next(createError(404, "Not existing User Id"));
@@ -66,6 +71,7 @@ router.get('/user/number_of_questions',
 
 router.get('/user/number_of_answers',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
             next(createError(404, "Not existing User Id"));
@@ -73,6 +79,11 @@ router.get('/user/number_of_answers',
         else {
             users.usersNoOfAnswers(ObjectID(req.body.userId))
                 .then(result => {
+                    if (result.length === 0) {
+                        result = {
+                            "no_of_answers" : 0
+                        }
+                    }
                     res.json({
                         msg: "Number of answers a user has made",
                         result: result
@@ -88,6 +99,7 @@ router.get('/user/number_of_answers',
 
 router.get('/user/number_of_upvotes_received',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
             next(createError(404, "Not existing User Id"));
@@ -108,27 +120,6 @@ router.get('/user/number_of_upvotes_received',
     }
 );
 
-router.get('/number_of_upvotes_received',
-    passport.authenticate('token', {session: false}),
-    function(req, res, next) {
-        if (!mongodb.ObjectId.isValid(req.body.userId)) {
-            next(createError(404, "Not existing User Id"));
-        }
-        else {
-            users.upvotesReceived(ObjectID(req.body.userId))
-                .then(result => {
-                    res.json({
-                        msg: "Number of upvotes a user has received",
-                        result: result
-                    });
-                })
-                .catch(err => {
-                    next(createError(err.code || 400, err.message));
-
-                })
-        }
-    }
-);
 
 
 
@@ -142,7 +133,6 @@ router.get('/number_of_upvotes_received',
 // ]
 router.get('/questionsPerUser',
     passport.authenticate('token', {session: false}),
-
     function(req, res, next) {
         general.questionsPerUser()
             .then(result => {
@@ -188,9 +178,11 @@ router.get('/questionsPerDay',
     function(req, res, next) {
         general.showQuestions()
             .then(result => {
+                //console.log(result);
                 let first_year = (new Date(result[0].date)).getFullYear();
                 let last_year = (new Date(result[result.length-1].date)).getFullYear();
                 const rows = last_year - first_year + 1;
+                console.log(rows);
                 const columns = 12;
                 let tot_num = Array(rows).fill().map(() => Array(columns).fill(0));
                 let tot_years_num = new Array(rows);

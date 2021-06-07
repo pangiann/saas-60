@@ -88,7 +88,6 @@ router.post('/googleregister',
             .then(response => {
                 const {email_verified, name, email} = response.payload;
                 if (email_verified) {
-                    //const jwt_token = jwt.sign({name: name}, JWT_SECRET, {expiresIn: 36000})
                     const passwd = name + tokenId + email;
                     users.insertUser(name, passwd, email)
                         .then(result =>  {

@@ -1,5 +1,6 @@
 const questions = require('../../models/questions_answers_management/questions');
 const answers = require('../../models/questions_answers_management/answers');
+const validator = require('../../middleware/payload_validator');
 const {OAuth2Client} = require('google-auth-library');
 const createError = require('http-errors');
 const express = require('express');
@@ -71,8 +72,13 @@ passport.use('token', new JWTstrategy(
 // returns all answers of a specific question
 // takes question_id as an argument in body of api
 // returns a json with values: _id, user_id, question_id, date, answer, upvotes
+const expected_question = {
+    "questionId" : ""
+}
+const mandatory_question = ["questionId"]
 router.get('/answers/question',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_question, mandatory_question, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.questionId)) {
             next(createError(404, "Not existing Question Id"));
@@ -95,8 +101,13 @@ router.get('/answers/question',
 
 // show all answers made by a user
 // takes user_id as an argument
+const expected_user = {
+    "userId" : ""
+}
+const mandatory_user = ["userId"]
 router.get('/answers/user',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory_user, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
             next(createError(404, "Not existing  User Id"));
@@ -132,15 +143,21 @@ router.get('/answer',
             })
     }
 );
-
+const expected_post_answer = {
+    "userId" : "",
+    "questionId" : "",
+    "answer" : ""
+}
+const mandatory_post_answer = ["userId", "questionId", "answer"];
 router.post('/answer',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_post_answer, mandatory_post_answer, true),
     function(req, res, next) {
-        const answer_obj = req.body;
         if (!mongodb.ObjectId.isValid(req.body.userId) || !mongodb.ObjectId.isValid(req.body.questionId)) {
             next(createError(404, "Not existing Question or User Id"));
         }
         else {
+
             answers.insertAnswer(ObjectID(req.body.userId), req.user.username, ObjectID(req.body.questionId), req.body.answer)
                 .then(result => {
                     res.json( {
@@ -156,8 +173,13 @@ router.post('/answer',
 
     }
 );
+const expected_delete_answer = {
+    "answerId" : "",
+}
+const mandatory_delete_answer = ["answerId"];
 router.delete('/answer',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_delete_answer, mandatory_delete_answer, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.answerId)) {
             next(createError(404, "Not existing Answer Id"));
@@ -176,9 +198,14 @@ router.delete('/answer',
         }
     }
 );
-
+const expected_put_answer = {
+    "answerId" : "",
+    "answer" : ""
+}
+const mandatory_put_answer = ["answerId", "answer"];
 router.put('/answer',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_put_answer, mandatory_put_answer, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.answerId)) {
             next(createError(404, "Not existing Answer Id"));
@@ -198,8 +225,14 @@ router.put('/answer',
     }
 );
 
+const expected_payload_answer_upvote = {
+    "userId" : "",
+    "answerId" : ""
+}
+const mandatory_answer_upvote = ["userId", "answerId"];
 router.put('/answer/upvote',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_payload_answer_upvote, mandatory_answer_upvote, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.answerId) || !mongodb.ObjectId.isValid(req.body.userId)) {
             next(createError(404, "Not existing  Answer or User Id"));
@@ -207,13 +240,6 @@ router.put('/answer/upvote',
         else {
             answers.upvoteAnswer(ObjectID(req.body.answerId))
                 .then(result => {
-                    produce.produce_newUpvote_event(req.body.answerId, req.body.userId, result.value.user_id)
-                        .then(r => {
-                            console.log("result successfull")
-                        })
-                        .catch(err => {
-                            next(createError(err.code || 500, err.message));
-                        })
                     res.json({
                         res: "Answer has a new upvote"
                     });
@@ -231,6 +257,7 @@ router.put('/answer/upvote',
 
 // show all questions
 // returns json with values: _id, user_id, title, question_no, question, date, keywords, num_of_answers
+
 router.get('/question',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
@@ -249,8 +276,13 @@ router.get('/question',
 
 // show all questions per specific keyword
 // returns questions that matches keywords given in an array
+const expected_questions_keyword = {
+    "keywords" : []
+}
+const mandatory_questions_keyword = ["keywords"];
 router.get('/questions/questionsPerKeyword',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_questions_keyword, mandatory_questions_keyword, true),
     function(req, res, next) {
         questions.findQuestionByKeywords(req.body.keywords)
             .then(result => {
@@ -266,9 +298,11 @@ router.get('/questions/questionsPerKeyword',
     }
 );
 
+
 // returns all questions that a user has made
 router.get('/questions/user',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory_user, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
             next(createError(404, "Not existing  User Id"));
@@ -291,8 +325,16 @@ router.get('/questions/user',
 
 
 // POST question
+const expected_post_question = {
+    "userId" : "",
+    "title" : "",
+    "question" : "",
+    "keywords" : [],
+}
+const mandatory_post_question = ["userId", "title", "question", "keywords"];
 router.post('/question',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_post_question, mandatory_post_question, true),
     function(req, res, next) {
         const question_obj = req.body;
         if (!mongodb.ObjectId.isValid(question_obj.userId)) {
@@ -316,8 +358,17 @@ router.post('/question',
         }
     }
 );
+// Update question
+const expected_put_question = {
+    "questionId" : "",
+    "title" : "",
+    "question" : "",
+    "keywords" : [],
+}
+const mandatory_put_question = ["questionId"];
 router.put('/question',
     passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_put_question, mandatory_put_question, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.questionId)) {
             next(createError(404, "Not existing Question Id"));
@@ -337,7 +388,15 @@ router.put('/question',
         }
     }
 );
+
+
+const expected_delete_question = {
+    "questionId" : ""
+}
+const mandatory_delete_question = ["questionId"];
 router.delete('/question',
+    passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_delete_question, mandatory_delete_question, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.qusetionId)) {
             next(createError(404, "Not existing Question or User Id"));

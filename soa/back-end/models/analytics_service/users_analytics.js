@@ -23,7 +23,7 @@ module.exports = {
             return  await questions_collection.aggregate([
                 { $match: { user_id: user_id } },
                 { $group: {_id: "$user_id", no_of_questions: { $sum: 1 } } },
-                { $project: {_id: 0, user_id: "$_id", no_of_questions: 1 } }
+                { $project: {_id: 0, username: 1, user_id: "$_id", no_of_questions: 1 } }
             ]).toArray();
         }
         catch (error) {

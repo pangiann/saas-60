@@ -101,7 +101,6 @@ module.exports = {
                 $set: {
                     date: datetime,
                     answer: new_answer
-
                 }
             };
             const result = await  answers_collection.updateOne(query, newValues);
