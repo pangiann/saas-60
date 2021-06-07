@@ -1,5 +1,5 @@
 const Broker = require('rascal').BrokerAsPromised;
-const config = require('./config');
+const config = require('./config.json');
 
 (async () => {
     try {

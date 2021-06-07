@@ -60,18 +60,19 @@ module.exports = {
             throw error;
         }
     },
-    insertQuestion: async function (user_id,  title, question, keywords) {
-        const questions_collection = client.db('q&a').collection('Questions');
+    insertQuestion: async function (user_id,  username, title, question, keywords) {
+        const questions_collection = client.db('minor_q&a_info').collection('Questions');
         const datetime = new Date();
         try {
             const seq = await getNextSequenceValue(questions_collection, "questionsInfo");
             console.log(seq);
             const question_doc = {
-                question_no: seq,
                 user_id: user_id,
-                date: datetime,
+                username: username,
                 title: title,
+                question_no: seq,
                 question: question,
+                date: datetime,
                 keywords: keywords,
                 num_of_answers: 0
             }
@@ -93,7 +94,7 @@ module.exports = {
     showQuestions: async function () {
         const query = {_id: { $ne: "questionsInfo"} };
         try {
-            const questions_collection = client.db('q&a').collection('Questions');
+            const questions_collection = client.db('minor_q&a_info').collection('Questions');
             const result = await questions_collection.find(query).toArray();
             //console.log(result);
             //console.log(questions);
@@ -109,7 +110,7 @@ module.exports = {
     deleteQuestion: async function (question_id) {
         const query = {_id: question_id};
         try {
-            const questions_collection = client.db('q&a').collection('Questions');
+            const questions_collection = client.db('minor_q&a_info').collection('Questions');
             const result = await questions_collection.deleteOne(query);
             //console.log(result);
             if (result.deletedCount === 0) {
@@ -124,7 +125,7 @@ module.exports = {
     updateQuestion: async function (question_id, new_title, new_question, new_keywords) {
         const datetime = new Date();
         try {
-            const questions_collection = client.db('q&a').collection('Questions');
+            const questions_collection = client.db('minor_q&a_info').collection('Questions');
             const query = {_id: question_id};
             const newValues = {
                 $set: {
@@ -143,44 +144,6 @@ module.exports = {
             throw error;
         }
 
-
-    },
-    findQuestionByKeywords: async function (keyword_array) {
-        const query = {keywords: {$in: keyword_array } };
-        console.log(keyword_array);
-        try {
-            const questions_collection = client.db('q&a').collection('Questions');
-            const result = await questions_collection.find(query).toArray();
-            console.log(result);
-            if (result.length === 0) {
-                throw new CustomException("No questions found with these keywords", 404);
-            }
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    },
-    findQuestionByUser: async function (user_id) {
-        const query = {_id: user_id};
-        const users_collection = client.db('q&a').collection('Users');
-        const projection = { projection: {_id:1} };
-        try {
-            const user_id = await users_collection.findOne(query, projection);
-            if (user_id === null) {
-                throw new CustomException("User Not Found", 404);
-            }
-            const questions_collection = client.db('q&a').collection('Questions');
-            const result = await questions_collection.find(query).toArray();
-            console.log(result);
-            if (result.length === 0) {
-                throw new CustomException("No questions found with this user id", 404);
-            }
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
 
     }
 

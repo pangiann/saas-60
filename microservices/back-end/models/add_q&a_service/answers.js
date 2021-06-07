@@ -16,11 +16,9 @@ CustomException.prototype = Object.create(Error.prototype);
 client.connect();
 
 module.exports = {
-    insertAnswer: async function (user_id, question_id, answer) {
-        const answers_collection = client.db('q&a').collection('Answers');
-        const questions_collection = client.db('q&a').collection('Questions');
-
-        const projection = { projection: {_id:1} };
+    insertAnswer: async function (user_id, username, question_id, answer) {
+        const answers_collection = client.db('minor_q&a_info').collection('Answers');
+        const questions_collection = client.db('minor_q&a_info').collection('Questions');
         const datetime = new Date();
         try {
             const update_res = await questions_collection.findOneAndUpdate(
@@ -34,6 +32,7 @@ module.exports = {
             }
             const answer_doc = {
                 user_id: user_id,
+                username: username,
                 question_id: update_res.value._id,
                 date: datetime,
                 answer: answer,
@@ -55,32 +54,10 @@ module.exports = {
 
         }
     },
-    showAnswersforQuestion: async function (question_id) {
-        try {
-            const query = {question_id: question_id};
-            const answers_collection = client.db('q&a').collection('Answers');
-            const result = await answers_collection.find(query).toArray();
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    },
-    showAnswersforUser: async function (user_id) {
-        try {
-            const query = {user_id: user_id};
-            const answers_collection = client.db('q&a').collection('Answers');
-            const result = await answers_collection.find(query).toArray();
-            return result;
-        }
-        catch (error) {
-            throw error;
-        }
-    },
     deleteAnswer: async function (answer_id) {
         const query = {_id: answer_id};
         try {
-            const answers_collection = client.db('q&a').collection('Answers');
+            const answers_collection = client.db('minor_q&a_info').collection('Answers');
             const result = await answers_collection.deleteOne(query);
             console.log(result);
             if (result.deletedCount === 0) {
@@ -96,7 +73,7 @@ module.exports = {
     updateAnswer: async function (answer_id, new_answer) {
         const datetime = new Date();
         try {
-            const answers_collection = client.db('q&a').collection('Answers');
+            const answers_collection = client.db('minor_q&a_info').collection('Answers');
             const query = {_id: answer_id};
             const newValues = {
                 $set: {
@@ -118,7 +95,7 @@ module.exports = {
     },
     upvoteAnswer: async function (answer_id) {
         try {
-            const answers_collection = client.db('q&a').collection('Answers');
+            const answers_collection = client.db('minor_q&a_info').collection('Answers');
             const query = {_id: answer_id};
             const newValue = {
                 $inc: {

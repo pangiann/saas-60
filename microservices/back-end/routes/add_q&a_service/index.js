@@ -1,4 +1,3 @@
-const users = require('../../models/add_q&a_service/users');
 const questions = require('../../models/add_q&a_service/questions');
 const answers = require('../../models/add_q&a_service/answers');
 const produce = require('../../models/add_q&a_service/producer')
@@ -36,7 +35,7 @@ router.post('/answer',
             next(createError(404, "Not existing Question or User Id"));
         }
         else {
-            answers.insertAnswer(ObjectID(req.body.userId), ObjectID(req.body.questionId), req.body.answer)
+            answers.insertAnswer(ObjectID(req.body.userId), req.user.username, ObjectID(req.body.questionId), req.body.answer)
                 .then(result => {
                     produce.produce_addAnswer_event(result.result.insertedId, answer_obj.userId, req.user.username, answer_obj.questionId, result.question_no, answer_obj.answer, result.date)
                         .then(r => {
@@ -137,7 +136,7 @@ router.post('/question',
             next(createError(404, "Not existing  User Id"));
         }
         else {
-            questions.insertQuestion(ObjectID(question_obj.userId), question_obj.title, question_obj.question, question_obj.keywords)
+            questions.insertQuestion(ObjectID(question_obj.userId), req.user.username, question_obj.title, question_obj.question, question_obj.keywords)
                 .then(result => {
                     console.log(result);
                     produce.produce_addQuestion_event(question_obj.userId, req.user.username, result.result.insertedId, result.question_no, question_obj.title, question_obj.question, question_obj.keywords, result.date, 0)

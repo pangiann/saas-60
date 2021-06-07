@@ -16,10 +16,11 @@ CustomException.prototype = Object.create(Error.prototype);
 client.connect();
 
 module.exports = {
-    insertAnswer: async function (username, upvotes, date) {
+    insertAnswer: async function (answer_id, username, upvotes, date) {
         const answers_collection = client.db('total_analytics').collection('Answers');
         try {
             const question_doc = {
+                _id: answer_id,
                 username: username,
                 upvotes: upvotes,
                 date: date
@@ -60,7 +61,7 @@ module.exports = {
     },
     updateNoUpvotes: async function (answer_id) {
         const answers_collection = client.db('total_analytics').collection('Answers');
-        const query = {_id: ObjectID(answer_id)};
+        const query = {_id: answer_id};
         const new_value = {$inc: {upvotes_given: 1}};
         try {
             const result = await answers_collection.updateOne(query, new_value);

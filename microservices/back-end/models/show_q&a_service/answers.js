@@ -131,8 +131,8 @@ module.exports = {
     },
     updateNoUpvotes: async function (answer_id) {
         const answers_collection = client.db('questions_answers_only').collection('Answers');
-        const query = {_id: ObjectID(answer_id)};
-        const new_value = {$inc: {upvotes_given: 1}};
+        const query = {_id: answer_id};
+        const new_value = {$inc: {upvotes: 1}};
         try {
             const result = await answers_collection.updateOne(query, new_value);
             if (result.modifiedCount === 0) {

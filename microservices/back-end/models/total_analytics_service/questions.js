@@ -16,10 +16,11 @@ CustomException.prototype = Object.create(Error.prototype);
 client.connect();
 
 module.exports = {
-    insertQuestion: async function (username, keywords, date) {
+    insertQuestion: async function (question_id, username, keywords, date) {
         const questions_collection = client.db('total_analytics').collection('Questions');
         try {
             const question_doc = {
+                _id: question_id,
                 username: username,
                 keywords: keywords,
                 date: date

@@ -29,7 +29,7 @@ async function populateQuestions() {
                     console.log("result successfull")
                 })
                 .catch(err => {
-                    next(createError(err.code || 500, err.message));
+                    throw  err;
                 })
             console.log(result);
         }
