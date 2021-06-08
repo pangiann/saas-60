@@ -41,6 +41,9 @@ class AskQuestion extends React.Component {
 
     render() {
         return (
+            <div>
+            <div className="ask_title">Ask a question</div>
+
             <form>
                 <div>
                     <label>Title</label>
@@ -83,7 +86,7 @@ class AskQuestion extends React.Component {
                     />
                 </div>
             </form>
-
+            </div>
         );
     }
 }

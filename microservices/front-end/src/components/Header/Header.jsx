@@ -90,10 +90,35 @@ class Header extends React.Component {
                 </header>
                 <div className="header__menu has-fade hide-for-desktop">
                     <a href="/">Home</a>
-                    <a href="/">Drivers</a>
-                    <a href="/">Business</a>
-                    <a href="/">Log In</a>
-                    <a href="/">Register</a>
+                    <a href="/">
+                    {/* <Link to='/loginregister' onClick={this.closeMobileMenu}>LOG IN</Link> */}
+                        Profile
+                    </a>
+                    <a href="">
+                    <Link to='/askquestion' onClick={this.closeMobileMenu}>
+                        Ask question
+                    </Link>
+                    </a>
+                    <a href="">
+                    <Link to='/answerquestion' onClick={this.closeMobileMenu}>
+                        Answer question
+                    </Link>
+                    </a>
+                    <a href="">
+                    <Link to='/keywords' onClick={this.closeMobileMenu}>
+                        Keyword Search
+                    </Link>
+                    </a>
+                    <a href="">
+                    <Link to='/timesearch' onClick={this.closeMobileMenu}>
+                        Time Search
+                    </Link>
+                    </a>
+                    <a href="">
+                    <Link to='/loginregister' onClick={this.closeMobileMenu}>
+                        Log In - Register
+                    </Link>
+                    </a>
                 </div>
             </div>
        );

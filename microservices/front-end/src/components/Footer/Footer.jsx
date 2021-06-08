@@ -11,7 +11,7 @@ class Footer extends React.Component {
                     <div className="cont--nav">
 
                         <a className="footer__logo" href="#">
-                            AskMeEverything
+                            AskMeAnything
                         </a>
 
                         <div className="footer__social">

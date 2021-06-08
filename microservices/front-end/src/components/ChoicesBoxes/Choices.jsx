@@ -10,12 +10,13 @@ class ChoicesBoxes extends React.Component {
     render() {
         return (
             <section className="choices">
-
+                <div className="welcome_title">Welcome to <b>AskMeAnything</b>!</div>
                 <div className="choice__content container container--nav container--pall">
-
+                    
                     <div className="choice__grid">
-                        <Link to='/keywords'>
+                        
                         <a href="#" className="choice__item">
+                        <Link to='/keywords'>
                             <div className="choice__image"
                                  style={{backgroundImage: `url(${search_keyword})`}}>
                             </div>
@@ -30,10 +31,12 @@ class ChoicesBoxes extends React.Component {
                                     related questions.
                                 </div>
                             </div>
-                        </a>
                         </Link>
-                        <Link to='/timesearch'>
+                        </a>
+                        
+                        
                         <a href="#" className="choice__item">
+                        <Link to='/timesearch'>
                             <div className="choice__image"
                                  style={{backgroundImage: `url(${statistics})`}}>
                             </div>
@@ -48,10 +51,12 @@ class ChoicesBoxes extends React.Component {
                                     posted questions and answers.
                                 </div>
                             </div>
+                            </Link>
                         </a>
-                        </Link>
-                        <Link to='/askquestion'>
+                        
+                        
                         <a href="#" className="choice__item">
+                        <Link to='/askquestion'>
                             <div className="choice__image"
                                  style={{backgroundImage: `url(${ask})`}}>
                             </div>
@@ -67,10 +72,12 @@ class ChoicesBoxes extends React.Component {
                                     care the rest.
                                 </div>
                             </div>
+                            </Link>
                         </a>
-                        </Link>
-                        <Link to='/answerquestion'>
+                        
+                        
                         <a href="#" className="choice__item">
+                        <Link to='/answerquestion'>
                             <div className="choice__image"
                                  style={{backgroundImage: `url(${answer})`}}>
                             </div>
@@ -84,8 +91,9 @@ class ChoicesBoxes extends React.Component {
                                     question and make someone's life easier.
                                 </div>
                             </div>
+                            </Link>
                         </a>
-                        </Link>
+                        
                     </div>
                 </div>
 
