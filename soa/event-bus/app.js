@@ -3,11 +3,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
-const addQARouter = require('./routes/add_q&a_service');
-const showQARouter = require('./routes/show_q&a_service');
-const loginRegisterRouter = require('./routes/login_register_service');
-const usersProfileRouter = require('./routes/users_profile_service');
-const totalAnalyticsRouter = require('./routes/total_analytics_service');
+const busRouter = require('./routes/index')
 const app = express();
 const cors = require('cors')
 app.use(cors())
@@ -19,14 +15,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(passport.initialize());
-app.use('/showQA', showQARouter)
-app.use('/addQA', addQARouter);
-app.use('/loginRegister', loginRegisterRouter);
-app.use('/usersProfile', usersProfileRouter);
-app.use('/totalAnalytics', totalAnalyticsRouter);
+app.use('/', busRouter)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
+});
+
+app.get('/great', function( req, res) {
+  res.send('Supercoolstuff');
 });
 
 // log errors
@@ -48,3 +44,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+

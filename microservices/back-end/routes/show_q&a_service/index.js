@@ -52,6 +52,8 @@ const JWT_SECRET = 'top-secret';
 // show all questions
 // returns json with values: _id, user_id, title, question_no, question, date, keywords, num_of_answers
 router.get('/question',
+    passport.authenticate('token', {session: false}),
+
     function(req, res, next) {
         questions.showQuestions()
             .then(result => {
@@ -69,6 +71,8 @@ router.get('/question',
 // show all questions per specific keyword
 // returns questions that matches keywords given in an array
 router.get('/questions/questionsPerKeyword',
+    passport.authenticate('token', {session: false}),
+
     function(req, res, next) {
         questions.findQuestionByKeywords(req.body.keywords)
             .then(result => {
@@ -85,6 +89,7 @@ router.get('/questions/questionsPerKeyword',
 
 // returns all questions that a user has made
 router.get('/questions/user',
+    passport.authenticate('token', {session: false}),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
             next(createError(404, "Not existing  User Id"));
@@ -106,7 +111,7 @@ router.get('/questions/user',
 
 // returns all answers of a specific question
 // takes question_id as an argument in body of api
-// a json with values: _id, user_id, question_id, date, answer, upvotes is returned
+// returns a json with values: _id, user_id, question_id, date, answer, upvotes
 router.get('/answers/question',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
@@ -155,22 +160,15 @@ router.get('/answers/user',
 router.get('/answer',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
-        if (!mongodb.ObjectId.isValid(req.body.userId) || !mongodb.ObjectId.isValid(req.body.questionId)) {
-            next(createError(404, "Not existing Question or User Id"));
-        }
-        else {
-            answers.showAnswers()
-                .then(result => {
-                    res.json( {
-                        res: "new answer added",
-                        id: result.insertedId
-                    });
-                })
-                .catch(err => {
-                    next(createError(err.code || 400, err.message || "Something went wrong"));
-                })
-        }
-
+        answers.showAnswers()
+            .then(result => {
+                res.json( {
+                    answers: result
+                });
+            })
+            .catch(err => {
+                next(createError(err.code || 400, err.message || "Something went wrong"));
+            })
     }
 );
 module.exports = router;

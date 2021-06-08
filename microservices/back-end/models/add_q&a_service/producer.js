@@ -8,17 +8,19 @@ const kafka = new Kafka({
 const producer = kafka.producer();
 
 module.exports = {
-    produce_addQuestion_event: async function (user_id,  question_id, question_no, title, question, keywords, date) {
+    produce_addQuestion_event: async function (user_id,  username, question_id, question_no, title, question, keywords, date, num_of_answers) {
         await producer.connect();
         const topic = "questions";
         const obj = {
             question_id: question_id,
+            username: username,
             user_id: user_id,
             question_no: question_no,
             title: title,
             question: question,
             keywords: keywords,
-            date: date
+            date: date,
+            num_of_answers: num_of_answers
         }
         try {
             await producer.send({
@@ -36,11 +38,12 @@ module.exports = {
             console.error("could not write message " + err);
         }
     },
-    produce_addAnswer_event: async function (answer_id, user_id, question_id, question_no, answer, date) {
+    produce_addAnswer_event: async function (answer_id, user_id, username, question_id, question_no, answer, date) {
         await producer.connect();
         const topic = "answers";
         const obj = {
             answer_id: answer_id,
+            username: username,
             question_id: question_id,
             user_id: user_id,
             question_no: question_no,
@@ -58,6 +61,7 @@ module.exports = {
                 ]
             });
             console.log("write succesfull");
+
         }
         catch (err) {
             console.error("could not write message " + err);

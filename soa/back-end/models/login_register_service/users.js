@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 // Replace the uri string with your MongoDB deployment's connection string.
-
+const database_name = "q&a";
 const url = "mongodb://localhost:27017";
 
 const client = new MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
@@ -39,12 +39,18 @@ let compare = (password, hash) => {
     return passwordData.hashedpassword === hash.password;
 
 };
+function CustomException(message, code) {
+    const error = new Error(message);
+
+    error.code = code;
+    return error;
+}
+
+CustomException.prototype = Object.create(Error.prototype);
 module.exports = {
     insertUser: async function (username, password, email) {
-        const users_collection = client.db('q&a').collection('Users');
+        const users_collection = client.db(database_name).collection('Users');
         const salt = crypto.randomBytes(32).toString('hex');
-        console.log(username);
-        console.log(password);
         const json_pass = hash(password, salt);
         const user_doc = {
             username: username,
@@ -53,9 +59,10 @@ module.exports = {
             email: email
         };
         try {
-
             const result = await users_collection.insertOne(user_doc);
-            console.log(result);
+            if (result.insertedCount !== 1) {
+                throw new CustomException("User insertion failed", 404);
+            }
             return result;
 
         }
@@ -66,19 +73,16 @@ module.exports = {
 
     },
     checkUserCreds: async function (username, password) {
-        const users_collection = client.db('q&a').collection('Users');
+        const users_collection = client.db(database_name).collection('Users');
         const query = {username: username};
-        console.log(username);
-        console.log(password);
-        const projection = { projection: {password: 1, salt:1, _id:0}};
+        const projection = { projection: {password: 1, salt:1, _id:0} };
         try {
             const hash = await users_collection.findOne(query, projection);
-            console.log(hash);
-            const result = compare(password, hash);
-            console.log(result);
-            return result;
+            if (hash === null) {
+                throw new CustomException("User Not found", 404)
+            }
+            return compare(password, hash);
         } catch (error) {
-            console.log(error);
             return false;
         }
 
@@ -88,15 +92,17 @@ module.exports = {
         const query = { username: name };
         const projection ={projection: {password: 0, salt: 0}};
         try {
-            const result = await client.db('q&a').collection('Users').findOne(query, projection);
-            console.log(result);
+            const result = await client.db(database_name).collection('Users').findOne(query, projection);
+            if (result === null) {
+                throw new CustomException("User Not Found", 404);
+            }
             return result;
         } catch (error) {
-            console.log(error);
-            throw new Error("something went wrong");
+            throw error;
         }
 
 
 
     }
 };
+

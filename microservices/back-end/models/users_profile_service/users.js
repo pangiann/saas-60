@@ -2,7 +2,7 @@ const MongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 const createError = require('http-errors');
 // Replace the uri string with your MongoDB deployment's connection string.
-const ObjectID = require('bson').ObjectID;
+const {ObjectID} = require("bson");
 const url = "mongodb://localhost:27017";
 const client = new MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -50,7 +50,7 @@ module.exports = {
             if (result.length === 0) {
                 throw new CustomException("User not found", 404)
             }
-            return result;
+            return result[0];
         }
         catch (error) {
             throw error;

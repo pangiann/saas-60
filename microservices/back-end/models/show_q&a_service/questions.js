@@ -34,18 +34,19 @@ module.exports = {
     // Here an event produced in the kafka bus by add_q&a service where a new question is added
     // so, we have already q question_id, user_id, question_no, answer and date for this
     // we create the document and insert it in the database
-    insertQuestion: async function (user_id,  question_id, title, question, question_no, date, keywords) {
+    insertQuestion: async function (user_id,  username, question_id, title, question, question_no, date, keywords, num_of_answers) {
         const questions_collection = client.db('questions_answers_only').collection('Questions');
         try {
             const question_doc = {
                 _id: question_id,
                 user_id: user_id,
+                username: username,
                 title: title,
                 question_no: question_no,
                 question: question,
                 date: date,
                 keywords: keywords,
-                num_of_answers: 0
+                num_of_answers: num_of_answers
             }
             const result = await  questions_collection.insertOne(question_doc);
 

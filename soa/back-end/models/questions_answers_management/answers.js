@@ -2,12 +2,11 @@ const MongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 const createError = require('http-errors');
 // Replace the uri string with your MongoDB deployment's connection string.
-
+const database_name = 'q&a';
 const url = "mongodb://localhost:27017";
 const client = new MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
 function CustomException(message, code) {
     const error = new Error(message);
-
     error.code = code;
     return error;
 }
@@ -17,8 +16,10 @@ client.connect();
 
 module.exports = {
     insertAnswer: async function (user_id, username, question_id, answer) {
-        const answers_collection = client.db('minor_q&a_info').collection('Answers');
-        const questions_collection = client.db('minor_q&a_info').collection('Questions');
+        const answers_collection = client.db('q&a').collection('Answers');
+        const questions_collection = client.db('q&a').collection('Questions');
+
+        const projection = { projection: {_id:1} };
         const datetime = new Date();
         try {
             const update_res = await questions_collection.findOneAndUpdate(
@@ -26,7 +27,7 @@ module.exports = {
                 {$inc:{num_of_answers:1}},
                 {returnOriginal: false}
             );
-            console.log(update_res);
+            //console.log(update_res);
             if (update_res.value === null) {
                 throw new CustomException("Question Not Found", 404);
             }
@@ -49,17 +50,38 @@ module.exports = {
             }
 
         } catch (error) {
-
             throw error;
 
+        }
+    },
+    showAnswersforQuestion: async function (question_id) {
+        try {
+            const query = {question_id: question_id};
+            const answers_collection = client.db('q&a').collection('Answers');
+            const result = await answers_collection.find(query).toArray();
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    },
+    showAnswersforUser: async function (user_id) {
+        try {
+            const query = {user_id: user_id};
+            const answers_collection = client.db('q&a').collection('Answers');
+            const result = await answers_collection.find(query).toArray();
+            return result;
+        }
+        catch (error) {
+            throw error;
         }
     },
     deleteAnswer: async function (answer_id) {
         const query = {_id: answer_id};
         try {
-            const answers_collection = client.db('minor_q&a_info').collection('Answers');
+            const answers_collection = client.db('q&a').collection('Answers');
             const result = await answers_collection.deleteOne(query);
-            console.log(result);
+            //console.log(result);
             if (result.deletedCount === 0) {
                 throw new CustomException("Answer Not Found", 404);
 
@@ -73,13 +95,12 @@ module.exports = {
     updateAnswer: async function (answer_id, new_answer) {
         const datetime = new Date();
         try {
-            const answers_collection = client.db('minor_q&a_info').collection('Answers');
+            const answers_collection = client.db('q&a').collection('Answers');
             const query = {_id: answer_id};
             const newValues = {
                 $set: {
                     date: datetime,
                     answer: new_answer
-
                 }
             };
             const result = await  answers_collection.updateOne(query, newValues);
@@ -95,7 +116,7 @@ module.exports = {
     },
     upvoteAnswer: async function (answer_id) {
         try {
-            const answers_collection = client.db('minor_q&a_info').collection('Answers');
+            const answers_collection = client.db('q&a').collection('Answers');
             const query = {_id: answer_id};
             const newValue = {
                 $inc: {
@@ -118,6 +139,20 @@ module.exports = {
         }
 
 
+    },
+    showAnswers: async function () {
+        try {
+            const questions_collection = client.db('q&a').collection('Answers');
+            const result = await questions_collection.find().toArray();
+            if (result.length === 0) {
+                throw new CustomException("No answers found", 404);
+
+            }
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
     }
 
 };

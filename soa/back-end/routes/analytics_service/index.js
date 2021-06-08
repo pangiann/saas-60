@@ -1,12 +1,12 @@
-const questions = require('../../models/total_analytics_service/questions');
-const answers = require('../../models/total_analytics_service/answers');
+const users = require('../../models/analytics_service/users_analytics');
+const general = require('../../models/analytics_service/general_analytics');
 const {OAuth2Client} = require('google-auth-library');
+const validator = require('../../middleware/payload_validator');
 const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
 const mongodb = require('mongodb');
-
-const passport = require('passport')
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 
 const jwt = require('jsonwebtoken');
@@ -14,6 +14,10 @@ const {ObjectID} = require("bson");
 const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const JWT_SECRET = 'top-secret';
+
+const google_client = new OAuth2Client("1074766905977-lm80vj56vtkl2r3qh0urnv1eeaut71ns.apps.googleusercontent.com");
+
+
 
 function calculate_statistics(result, first_year, last_year, tot_num, tot_years_num) {
     const rows = last_year - first_year + 1;
@@ -38,22 +42,86 @@ function calculate_statistics(result, first_year, last_year, tot_num, tot_years_
 
 }
 
+const expected_user = {
+    "userId" : ""
+}
+const mandatory = ["userId"]
+router.get('/user/number_of_questions',
+    passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory, true),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.userId)) {
+            next(createError(404, "Not existing User Id"));
+        }
+        else {
+            users.usersNoOfQuestions(ObjectID(req.body.userId))
+                .then(result => {
+                    res.json({
+                        msg: "Number of questions a user has made",
+                        result: result
+                    });
+                })
+                .catch(err => {
+                    next(createError(err.code || 400, err.message));
 
-// schema of questions:
-// {
-//      _id:
-//      username:
-//      keywords:
-//      date:
-// }
+                })
+        }
+    }
+);
 
-// schema of answers:
-// {
-//      _id:
-//      username:
-//      upvotes:
-//      date:
-// }
+router.get('/user/number_of_answers',
+    passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory, true),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.userId)) {
+            next(createError(404, "Not existing User Id"));
+        }
+        else {
+            users.usersNoOfAnswers(ObjectID(req.body.userId))
+                .then(result => {
+                    if (result.length === 0) {
+                        result = {
+                            "no_of_answers" : 0
+                        }
+                    }
+                    res.json({
+                        msg: "Number of answers a user has made",
+                        result: result
+                    });
+                })
+                .catch(err => {
+                    next(createError(err.code || 400, err.message));
+
+                })
+        }
+    }
+);
+
+router.get('/user/number_of_upvotes_received',
+    passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory, true),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.userId)) {
+            next(createError(404, "Not existing User Id"));
+        }
+        else {
+            users.upvotesReceived(ObjectID(req.body.userId))
+                .then(result => {
+                    res.json({
+                        msg: "Number of upvotes a user has received",
+                        result: result
+                    });
+                })
+                .catch(err => {
+                    next(createError(err.code || 400, err.message));
+
+                })
+        }
+    }
+);
+
+
+
 
 // show question per user, e.g. pangiann asked 5 questions, mairi asked 3 questions etc.
 // returns json in form:
@@ -65,9 +133,8 @@ function calculate_statistics(result, first_year, last_year, tot_num, tot_years_
 // ]
 router.get('/questionsPerUser',
     passport.authenticate('token', {session: false}),
-
     function(req, res, next) {
-        questions.questionsPerUser()
+        general.questionsPerUser()
             .then(result => {
                 res.json( {
                     result
@@ -93,7 +160,7 @@ router.get('/questionsPerUser',
 router.get('/questionsPerKeyword',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
-        questions.questionsPerKeyword()
+        general.questionsPerKeyword()
             .then(result => {
                 res.json( {
                     result
@@ -109,17 +176,17 @@ router.get('/questionsPerKeyword',
 router.get('/questionsPerDay',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
-        questions.showQuestions()
+        general.showQuestions()
             .then(result => {
-                console.log(result[0].date)
+                //console.log(result);
                 let first_year = (new Date(result[0].date)).getFullYear();
                 let last_year = (new Date(result[result.length-1].date)).getFullYear();
                 const rows = last_year - first_year + 1;
+                console.log(rows);
                 const columns = 12;
                 let tot_num = Array(rows).fill().map(() => Array(columns).fill(0));
                 let tot_years_num = new Array(rows);
                 calculate_statistics(result, first_year, last_year, tot_num, tot_years_num);
-
 
                 res.json( {
                     'msg' : 'Total Questions',
@@ -149,7 +216,7 @@ router.get('/questionsPerDay',
 router.get('/answersPerUser',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
-        answers.answersPerUser()
+        general.answersPerUser()
             .then(result => {
                 res.json( {
                     result
@@ -167,7 +234,7 @@ router.get('/answersPerUser',
 router.get('/answersPerDay',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
-        answers.showAnswers()
+        general.showAnswers()
             .then(result => {
                 let first_year = (new Date(result[0].date)).getFullYear();
                 let last_year = (new Date(result[result.length-1].date)).getFullYear();
@@ -193,4 +260,3 @@ router.get('/answersPerDay',
     }
 );
 module.exports = router;
-

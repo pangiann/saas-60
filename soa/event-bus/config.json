@@ -1,0 +1,54 @@
+{
+  "vhosts": {
+    "v10": {
+      "connection": {
+        "url": "amqp://localhost"
+      },
+      "exchanges": {
+        "event_exchange": {
+          "assert": true,
+          "check": true,
+          "type": "direct"
+        }
+      },
+      "queues": {
+        "events_queue": {
+          "options": {
+            "durable": false
+          }
+        }
+      },
+      "bindings": {
+        "test_bind": {
+          "source": "event_exchange",
+          "destination": "events_queue",
+          "destinationType": "queue",
+          "bindingKey": "new_event"
+        }
+      },
+      "publications": {
+        "publish_event": {
+          "vhost": "v10",
+          "exchange": "event_exchange",
+          "confirm": true,
+          "timeout": 10000,
+          "routingKey": "new_event"
+        }
+      },
+      "subscriptions": {
+        "events_subscriber": {
+          "queue": "events_queue",
+          "vhost": "v10",
+          "retry": {
+            "delay": 1000
+          },
+          "redeliveries": {
+            "limit": 5
+          },
+          "prefetch": 10
+        }
+
+      }
+    }
+  }
+}
