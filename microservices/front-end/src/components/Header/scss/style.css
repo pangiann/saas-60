@@ -193,7 +193,7 @@ a, a:visited, a:hover {
   right: 0px;
   bottom: 0px;
   left: 0px;
-  background-image: linear-gradient(#208313, transparent);
+  background-image: linear-gradient(#6a98ce, transparent);
 }
 .header nav {
   position: relative;
@@ -242,7 +242,7 @@ a, a:visited, a:hover {
 }
 
 .footer {
-  background-color: #208313;
+  background-color: #6a98ce;
   color: #000000;
   padding: 2.5rem;
   text-align: center;
