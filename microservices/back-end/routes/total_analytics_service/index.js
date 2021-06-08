@@ -65,7 +65,6 @@ function calculate_statistics(result, first_year, last_year, tot_num, tot_years_
 // ]
 router.get('/questionsPerUser',
     passport.authenticate('token', {session: false}),
-
     function(req, res, next) {
         questions.questionsPerUser()
             .then(result => {

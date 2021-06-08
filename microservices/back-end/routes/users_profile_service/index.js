@@ -13,8 +13,6 @@ const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const JWT_SECRET = 'top-secret';
 
-const google_client = new OAuth2Client("1074766905977-lm80vj56vtkl2r3qh0urnv1eeaut71ns.apps.googleusercontent.com");
-
 
 
 // return JSON:
@@ -27,6 +25,15 @@ const google_client = new OAuth2Client("1074766905977-lm80vj56vtkl2r3qh0urnv1eea
 //   upvotes_given:
 //   upvotes_received:
 // }
+passport.use('token', new JWTstrategy(
+    {
+        secretOrKey: JWT_SECRET,
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
+    },
+    function(token, done) {
+        return done(null, { username: token.username})
+    }
+));
 
 router.get('/user',
     passport.authenticate('token', {session: false}),

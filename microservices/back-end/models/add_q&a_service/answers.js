@@ -2,7 +2,6 @@ const MongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 const createError = require('http-errors');
 // Replace the uri string with your MongoDB deployment's connection string.
-
 const url = "mongodb://localhost:27017";
 const client = new MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
 function CustomException(message, code) {
@@ -20,13 +19,17 @@ module.exports = {
         const answers_collection = client.db('minor_q&a_info').collection('Answers');
         const questions_collection = client.db('minor_q&a_info').collection('Questions');
         const datetime = new Date();
+
         try {
+            // update number of answers in question's document
+            // in order to know how many answers a question has
             const update_res = await questions_collection.findOneAndUpdate(
                 {_id: question_id},
                 {$inc:{num_of_answers:1}},
                 {returnOriginal: false}
             );
-            console.log(update_res);
+            //console.log(update_res);
+            // if update fails throw error
             if (update_res.value === null) {
                 throw new CustomException("Question Not Found", 404);
             }
@@ -38,6 +41,7 @@ module.exports = {
                 answer: answer,
                 upvotes: 0
             }
+            // insert new answer with above fields
             const result = await  answers_collection.insertOne(answer_doc);
             if (result.insertedCount !== 1) {
                 throw new CustomException("Answer insertion failed", 404);
@@ -55,6 +59,7 @@ module.exports = {
         }
     },
     deleteAnswer: async function (answer_id) {
+        // delete answer with specific id
         const query = {_id: answer_id};
         try {
             const answers_collection = client.db('minor_q&a_info').collection('Answers');
@@ -95,6 +100,7 @@ module.exports = {
     },
     upvoteAnswer: async function (answer_id) {
         try {
+            // find answer with specific id (query) and increment upvote field by one (new value)
             const answers_collection = client.db('minor_q&a_info').collection('Answers');
             const query = {_id: answer_id};
             const newValue = {
