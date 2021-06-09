@@ -6,8 +6,12 @@ const createError = require('http-errors');
 const BSON = require('bson');
 
 // Replace the uri string with your MongoDB deployment's connection string.
-
-const url = "mongodb://localhost:27017";
+const myArgs = process.argv.slice(2);
+let url;
+if (myArgs[0] !== 'localhost') {
+    url = process.env.MONGO_URL;
+}
+else  url = "mongodb://localhost:27017/"
 const client = new MongoClient(url, {useNewUrlParser: true,  useUnifiedTopology: true});
 client.connect();
 function CustomException(message, code) {

@@ -5,11 +5,28 @@ const answers = require('../models/answers');
 const {ObjectID} = require("bson");
 const { Kafka } = require('kafkajs');
 const MAX_RETRIES = 10;
-
-const kafka = new Kafka({
-    clientId: 'askMeAnything',
-    brokers: ['localhost:9093', "localhost:9094", "localhost:9095"]
-})
+const myArgs = process.argv.slice(2);
+console.log(myArgs)
+let kafka;
+if (myArgs[0] !== 'localhost') {
+    kafka = new Kafka({
+        clientId: 'askMeAnything',
+        brokers: ['pkc-epwny.eastus.azure.confluent.cloud:9092'],
+        ssl: true,
+        sasl: {
+            username : process.env.KAFKA_KEY,
+            password : process.env.KAFKA_SECRET,
+            mechanism : 'PLAIN'
+        }
+    })
+}
+else {
+    kafka = new Kafka({
+        clientId: 'askMeAnything',
+        brokers: ['localhost:9093', "localhost:9094", "localhost:9095"]
+    })
+    console.log("okay");
+}
 
 const consumer = kafka.consumer({groupId: "ShowQ&AProfile"})
 
@@ -39,6 +56,7 @@ const consume = async() => {
             messages_topics_partition[topic] = partition;
             try {
                 if (message.key.toString() === "POST_QUESTION") {
+                    console.log("niceee")
                     await questions.insertQuestion(ObjectID(value_json.user_id), value_json.username, ObjectID(value_json.question_id), value_json.title, value_json.question,
                         value_json.question_no, value_json.date, value_json.keywords, value_json.num_of_answers);
                 }

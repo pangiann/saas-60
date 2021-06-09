@@ -3,8 +3,12 @@ const crypto = require('crypto');
 const createError = require('http-errors');
 const {ObjectID} = require("bson");
 // Replace the uri string with your MongoDB deployment's connection string.
-
-const url = "mongodb+srv://pangiann:panatha4ever@saas-60.7e7gc.mongodb.net/test?authSource=admin&replicaSet=atlas-o23qsd-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true";
+let url;
+const myArgs = process.argv.slice(2);
+if (myArgs[0] !== 'localhost') {
+    url = process.env.MONGO_URL;
+}
+else url = "mongodb://localhost:27017"
 const client = new MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
 function CustomException(message, code) {
     const error = new Error(message);

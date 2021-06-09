@@ -5,11 +5,28 @@ const {ObjectID} = require("bson");
 const { Kafka } = require('kafkajs');
 const MAX_RETRIES = 10;
 
-const kafka = new Kafka({
-    clientId: 'askMeAnything',
-    autoCommit: false,
-    brokers: ['localhost:9093', "localhost:9094", "localhost:9095"]
-})
+let kafka;
+const myArgs = process.argv.slice(2);
+console.log(myArgs)
+if (myArgs[0] !== 'localhost') {
+    kafka = new Kafka({
+        clientId: 'askMeAnything',
+        brokers: ['pkc-epwny.eastus.azure.confluent.cloud:9092'],
+        ssl: true,
+        sasl: {
+            username : process.env.KAFKA_KEY,
+            password : process.env.KAFKA_SECRET,
+            mechanism : 'PLAIN'
+        }
+    })
+}
+else {
+    kafka = new Kafka({
+        clientId: 'askMeAnything',
+        brokers: ['localhost:9093', "localhost:9094", "localhost:9095"]
+    })
+    console.log("okay");
+}
 
 const consumer = kafka.consumer({groupId: "total_analytics"})
 function sleep(ms) {
