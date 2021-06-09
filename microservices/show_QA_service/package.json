@@ -22,9 +22,7 @@
     "payload-validator": "^1.0.4",
     "pug": "2.0.0-beta11",
     "random-questions": "^1.0.1",
-    "rascal": "^13.0.3"
-  },
-  "devDependencies": {
+    "rascal": "^13.0.3",
     "bson": "^4.3.0",
     "faker": "^5.5.3",
     "google-auth-library": "^7.0.4",

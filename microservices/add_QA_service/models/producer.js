@@ -1,6 +1,5 @@
 
 const { Kafka } = require('kafkajs')
-const KafkaNode = require('node-rdkafka');
 let kafka;
 const myArgs = process.argv.slice(2);
 console.log(myArgs)
