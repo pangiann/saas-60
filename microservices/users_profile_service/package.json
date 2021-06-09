@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "concurrently \"node ./bin/www localhost \" \" node ./routes/consumer.js localhost \" "
+    "start": "concurrently \"node ./bin/www \" \" node ./routes/consumer.js \" "
   },
   "dependencies": {
     "amqplib": "^0.8.0",
