@@ -15,6 +15,16 @@ const JWTstrategy = require('passport-jwt').Strategy;
 const ExtractJWT = require('passport-jwt').ExtractJwt;
 const JWT_SECRET = 'top-secret';
 
+passport.use('token', new JWTstrategy(
+    {
+        secretOrKey: JWT_SECRET,
+        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken()
+    },
+    function(token, done) {
+        return done(null, { username: token.username})
+    }
+));
+
 function calculate_statistics(result, first_year, last_year, tot_num, tot_years_num) {
     const rows = last_year - first_year + 1;
     const columns = 12;
