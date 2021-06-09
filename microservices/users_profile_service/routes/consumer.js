@@ -1,7 +1,7 @@
 //const users_model = require('models/users_profile_service/users')
 
 const users = require('../models/users');
-const MAX_RETRIES = 10;
+const MAX_RETRIES = 1;
 const { Kafka } = require('kafkajs')
 
 let kafka;
@@ -26,6 +26,8 @@ else {
     })
     console.log("okay");
 }
+
+
 const consumer = kafka.consumer({groupId: "UsersProfile"})
 function CustomException(message, code) {
     const error = new Error(message);
