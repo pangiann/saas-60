@@ -27,7 +27,6 @@ else {
     console.log("okay");
 }
 
-
 const consumer = kafka.consumer({groupId: "UsersProfile"})
 function CustomException(message, code) {
     const error = new Error(message);
