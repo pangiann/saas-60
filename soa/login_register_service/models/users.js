@@ -7,7 +7,7 @@ let url;
 if (myArgs[0] !== 'localhost') {
     url = process.env.MONGO_URL;
 }
-else  url = "mongodb://mongo:27017/"
+else  url = "mongodb://localhost:27017/"
 
 const client = new MongoClient(url, {useNewUrlParser: true, useUnifiedTopology: true});
 client.connect();

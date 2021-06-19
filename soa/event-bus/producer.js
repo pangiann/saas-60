@@ -16,9 +16,9 @@ const axios = require('axios');
         }
         const config = {
             method: 'post',
-            url: 'http://localhost:3000/bus/qa_management',
+            url: 'https://soa-event-bus.herokuapp.com/bus/analytics',
             headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmF0aGEiLCJpYXQiOjE2MjMwNjcyMTksImV4cCI6MTYyMzEwMzIxOX0.uAmVkSUSeUyEa9uA7I9tt6ZkR2p9HRG0xqJLPk0iC4E',
+                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmF0aGEiLCJpYXQiOjE2MjQxMTc2MTUsImV4cCI6MTYyNDE1MzYxNX0.sjCKMRYqqBVP80qulD7fj1UO3QdG_-fvhaOEX6HtMpE',
                 'Content-Type': 'application/json'
             },
             data: message_doc

@@ -2,13 +2,10 @@ const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
-const redis = require('../temp');
-const REDIS_PORT = 6379;
-const REDIS_HOST = "localhost";
+
 const TotalConnections = 20
 const pool = require('redis-connection-pool')('myRedisPool', {
-    host: REDIS_HOST,
-    port: REDIS_PORT,
+    url: process.env.REDIS_URL,
     max_clients: TotalConnections,
     perform_checks: false,
     database: 0
@@ -20,7 +17,9 @@ function CustomException(message, code) {
   error.code = code;
   return error;
 }
-const qa_management_url = "http://localhost:5000/"
+const qa_management_url = "https://soa-qa-management.herokuapp.com/"
+const login_register_url = "https://login-register-service.herokuapp.com/"
+const analytics_url = "https://soa-analytics.herokuapp.com/"
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
@@ -106,7 +105,7 @@ router.post('/bus/loginRegister',
         //pushMessages('requests', 'qa_management', request_event)
         const config = {
             method: request_method,
-            url: qa_management_url + request_base_route + "/" + request_name,
+            url: login_register_url + request_base_route + "/" + request_name,
             headers: {
                 'Authorization': req.headers.authorization,
                 'Content-Type': 'application/json'
@@ -138,7 +137,7 @@ router.post('/bus/analytics',
         //pushMessages('requests', 'qa_management', request_event)
         const config = {
             method: request_method,
-            url: qa_management_url + request_base_route + "/" + request_name,
+            url: analytics_url + request_base_route + "/" + request_name,
             headers: {
                 'Authorization': req.headers.authorization,
                 'Content-Type': 'application/json'
