@@ -3,7 +3,7 @@ const { Kafka } = require('kafkajs')
 
 let kafka;
 const myArgs = process.argv.slice(2);
-console.log(myArgs)
+//console.log(myArgs)
 if (myArgs[0] !== 'localhost') {
     kafka = new Kafka({
         clientId: 'askMeAnything',

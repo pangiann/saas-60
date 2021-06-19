@@ -2,10 +2,11 @@ const MongoClient = require('mongodb').MongoClient;
 const crypto = require('crypto');
 // Replace the uri string with your MongoDB deployment's connection string.
 const myArgs = process.argv.slice(2);
-console.log(myArgs)
+//console.log(myArgs)
 let url;
-if (myArgs[0] !== 'localhost') {
+if (myArgs[1] !== 'localhost-db') {
     url = process.env.MONGO_URL;
+
 }
 else  url = "mongodb://localhost:27017"
 
