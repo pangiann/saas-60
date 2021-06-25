@@ -1,5 +1,5 @@
 import React from "react";
-import loginImg from "../../EVlogo.png";
+import loginImg from "../../mylogo2.png";
 import GoogleLogin from "react-google-login";
 import {base_url} from "../../base_url";
 import Swal from "sweetalert2";

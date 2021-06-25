@@ -10,82 +10,70 @@ class AskQuestion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          title: '',
-          description: '',
-          keyword1:'',
-          keyword2:'',
-          keyword3:''
+            title: '',
+            description: '',
+            keywords: ''
         };
-      }
+    }
 
-    handleTitleChange = (event) => {this.setState({
-        title: event.target.value
-    })
+    handleTitleChange = (event) => {
+        this.setState({
+            title: event.target.value
+        })
     }
-    handleDescriptionChange = (event) => {this.setState({
-        description: event.target.value
-    })
+    handleDescriptionChange = (event) => {
+        this.setState({
+            description: event.target.value
+        })
     }
-    handleKeyword1Change = (event) => {this.setState({
-        keyword1: event.target.value
-    })
-    }
-    handleKeyword2Change = (event) => {this.setState({
-        keyword2: event.target.value
-    })
-    }
-    handleKeyword3Change = (event) => {this.setState({
-        keyword3: event.target.value
-    })
+    handleKeywordsChange = (event) => {
+        this.setState({
+            keyword1: event.target.value
+        })
     }
 
     render() {
         return (
             <div>
-            <div className="ask_title">Ask a question</div>
+                <div className="ask_title">Ask a new question!</div>
 
-            <form>
-                <div>
-                    <label>Title</label>
-                    <input
-                    type="text"
-                    value={this.state.title}
-                    onChange={this.handleTitleChange}
-                    />
-                </div>
-                <div>
-                    <label>Description</label>
-                    <textarea
-                    type="text"
-                    value={this.state.description}
-                    onChange={this.handleDescriptionChange}
-                    />
-                </div>
-                <div className="keywords">
-                    <label>Keyword 1</label>
-                    <input
-                    type="text"
-                    value={this.state.keyword1}
-                    onChange={this.handleKeyword1Change}
-                    />
-                </div>
-                <div className="keywords">
-                    <label>Keyword 2</label>
-                    <input
-                    type="text"
-                    value={this.state.keyword2}
-                    onChange={this.handleKeyword2Change}
-                    />
-                </div>
-                <div className="keywords">
-                    <label>Keyword 3</label>
-                    <input
-                    type="text"
-                    value={this.state.keyword3}
-                    onChange={this.handleKeyword3Change}
-                    />
-                </div>
-            </form>
+                <form>
+                    <div className="outside-box">
+                        <div className="title">Title</div>
+                        <div className="inside-box">
+                            <input
+                                type="text"
+                                value={this.state.title}
+                                onChange={this.handleTitleChange}
+                            />
+                        </div>
+                    </div>
+                    <div className="outside-box">
+                        <div className="title">Description</div>
+                        <div className="inside-box">
+                            <textarea
+                                type="text"
+                                value={this.state.description}
+                                onChange={this.handleDescriptionChange}
+                            />
+                        </div>
+                    </div>
+                    <div className="outside-box">
+                        <div className="title">Keywords</div>
+                        <div className="inside-box">
+                            <input
+                                type="text"
+                                value={this.state.keyword1}
+                                onChange={this.handleKeywordsChange}
+                            />
+                        </div>
+                    </div>
+                    <button type="button" className='button'
+                    // onClick={ () =>  reserveSlot(point.id , moment(selectedDate).format('YYYY-MM-DD') + " :00")}
+                    >
+                        Post your question now!
+                    </button>
+                </form>
             </div>
         );
     }

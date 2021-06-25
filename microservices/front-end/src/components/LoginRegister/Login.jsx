@@ -1,5 +1,5 @@
 import React from "react";
-import loginImg from "../../EVlogo.png";
+import loginImg from "../../mylogo2.png";
 import {base_url} from "../../base_url";
 //import { Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2'

@@ -1,6 +1,6 @@
 import React from 'react';
 import './scss/style.scss';
-import Logo from '../../EVlogo3.png';
+import Logo from '../../mylogo.png';
 import '../Button/Button.jsx';
 import { Link } from 'react-router-dom';
 import {useState, useEffect } from 'react';
