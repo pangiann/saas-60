@@ -28,7 +28,7 @@ class AskQuestion extends React.Component {
     }
     handleKeywordsChange = (event) => {
         this.setState({
-            keyword1: event.target.value
+            keywords: event.target.value
         })
     }
 
@@ -44,6 +44,7 @@ class AskQuestion extends React.Component {
                             <input
                                 type="text"
                                 value={this.state.title}
+                                placeholder="The question in one sentence"
                                 onChange={this.handleTitleChange}
                             />
                         </div>
@@ -54,6 +55,7 @@ class AskQuestion extends React.Component {
                             <textarea
                                 type="text"
                                 value={this.state.description}
+                                placeholder="More information about your question"
                                 onChange={this.handleDescriptionChange}
                             />
                         </div>
@@ -63,7 +65,8 @@ class AskQuestion extends React.Component {
                         <div className="inside-box">
                             <input
                                 type="text"
-                                value={this.state.keyword1}
+                                value={this.state.keywords}
+                                placeholder="Add keywords space separeted"
                                 onChange={this.handleKeywordsChange}
                             />
                         </div>
