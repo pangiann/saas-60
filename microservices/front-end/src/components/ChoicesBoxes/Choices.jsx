@@ -10,9 +10,9 @@ class ChoicesBoxes extends React.Component {
     render() {
         return (
             <section className="choices">
-                <div className="welcome_title">Welcome to <b>AskMeAnything</b>!</div>
+                
                 <div className="choice__content container container--nav container--pall">
-                    
+                <div className="welcome_title">Welcome to <b>AskMeAnything</b>!</div>
                     <div className="choice__grid">
                         
                         <a href="#" className="choice__item">
@@ -48,7 +48,8 @@ class ChoicesBoxes extends React.Component {
                                 <div className="choice__description">
                                     Select a time period of your
                                     preferance and see all the 
-                                    posted questions and answers.
+                                    analytics regarding posted 
+                                    questions and answers.
                                 </div>
                             </div>
                             </Link>

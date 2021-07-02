@@ -5,6 +5,8 @@ import ask from "../ChoicesBoxes/images/ask.jpeg";
 import statistics from "../ChoicesBoxes/images/statistics.jpg";
 import search_keyword from "../ChoicesBoxes/images/search-keyword.jpg";
 import { Link } from 'react-router-dom';
+import {show_qa_url} from "../../base_url";
+
 
 class AnswerQuestion extends React.Component {
     constructor(props) {
@@ -13,6 +15,54 @@ class AnswerQuestion extends React.Component {
           click: true
         };
       }
+      componentDidMount(){
+        // var myHeaders = new Headers();
+        // var decoded = jwt_decode( getCookie('charge_evolution_token'));
+        // myHeaders.append("Content-Type", "application/json");
+        // myHeaders.append("charge_evolution_token",  getCookie('charge_evolution_token'));
+        // var requestOptions = {
+        //   method: 'GET',
+        //   headers: myHeaders,
+        //   redirect: 'follow'
+        // };
+        const myHeaders = new Headers();
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+
+        fetch(show_qa_url + "/question", requestOptions)
+        .then(response => {
+            if (response.status === 200) {
+                return response.text();
+            } else {
+                throw new Error(response.status);
+            }
+        })
+        .then(result => {
+            const json_obj = JSON.parse(result);
+            Swal.fire({
+                title: 'Success',
+                text: json_obj.msg,
+                icon: 'success',
+                customClass: "swal_ok_button",
+                confirmButtonColor: "#242424"
+            }).then(function () {
+                window.location.href = '/loginregister';
+            })
+
+        })
+        .catch(error => {
+            Swal.fire({
+                title: 'Error!',
+                text: error,
+                icon: 'error',
+                customClass: "swal_ok_button",
+                confirmButtonColor: "#242424"
+            });
+        });
+    }
 
     closeMobileMenu = () => this.setState({click:false});
 

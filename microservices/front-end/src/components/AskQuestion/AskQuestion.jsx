@@ -80,42 +80,44 @@ class AskQuestion extends React.Component {
                 <form>
                     <div className="outside-box">
                         <div className="title">Title</div>
-                        <div className="inside-box">
+                        {/* <div className="inside-box"> */}
                             <input
                                 type="text"
                                 value={this.state.title}
                                 placeholder="The question in one sentence"
                                 onChange={this.handleTitleChange}
                             />
-                        </div>
+                        {/* </div> */}
                     </div>
                     <div className="outside-box">
                         <div className="title">Description</div>
-                        <div className="inside-box">
+                        {/* <div className="inside-box"> */}
                             <textarea
                                 type="text"
                                 value={this.state.description}
                                 placeholder="More information about your question"
                                 onChange={this.handleDescriptionChange}
                             />
-                        </div>
+                        {/* </div> */}
                     </div>
                     <div className="outside-box">
                         <div className="title">Keywords</div>
-                        <div className="inside-box">
+                        {/* <div className="inside-box"> */}
                             <input
                                 type="text"
                                 value={this.state.keywords}
-                                placeholder="Add keywords space separeted"
+                                placeholder="Add keywords space separated"
                                 onChange={this.handleKeywordsChange}
                             />
-                        </div>
+                        {/* </div> */}
                     </div>
-                    <button type="button" className='button'
+                    <Link to='/'>
+                    <button type="button" className='button_ask'
                     // onClick={ () =>  reserveSlot(point.id , moment(selectedDate).format('YYYY-MM-DD') + " :00")}
                     >
                         Post your question now!
                     </button>
+                    </Link>
                 </form>
             </div>
         );

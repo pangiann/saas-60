@@ -2,6 +2,7 @@
     background-color: white;
     padding-right: 50px;
     padding-left: 50px;
+    margin-top: -3rem;
 }
 
 .choice {
@@ -12,7 +13,7 @@
         display: flex;
         justify-content: center;
         @include breakpoint-down(medium) {
-            margin-top: 3rem;
+            margin-top: 1rem;
         }
         margin-left: auto;
         margin-right: auto;
@@ -83,6 +84,6 @@
     color: $darkBlue;
     font-size: 1.3625rem;
     line-height: 1.2;
-    margin-left: 2rem;
-    margin-top: 1rem;
+    // margin-left: 2rem;
+    margin-bottom: 3rem;
 }
