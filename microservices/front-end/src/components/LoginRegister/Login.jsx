@@ -1,6 +1,6 @@
 import React from "react";
 import loginImg from "../../mylogo2.png";
-import {base_url} from "../../base_url";
+import {login_register_url} from "../../base_url";
 //import { Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import GoogleLogin from 'react-google-login';
@@ -41,7 +41,7 @@ export class Login extends React.Component {
             redirect: 'follow'
         };
 
-        fetch(base_url + "/signin", requestOptions)
+        fetch(login_register_url + "/signin", requestOptions)
             .then(response => {
                 if (response.status === 200) {
                     return response.text();
@@ -85,7 +85,7 @@ export class Login extends React.Component {
             body: raw,
             redirect: 'follow'
         };
-        fetch(base_url + "/googlelogin", requestOptions)
+        fetch(login_register_url + "/googlelogin", requestOptions)
              .then(response => response.json())
              .then(result => {
                 console.log(result);
