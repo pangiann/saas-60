@@ -7,21 +7,16 @@
 
 }
 .title{
-    // background-color: $limeBlue;
     line-height: 1.2;
     width: 13rem;
     color: $darkBlue;
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
-    // padding: 1rem;
-    // padding-left: 2rem;
-    // border-radius: 10px;
 }
 .outside-box{
     padding-right: 50px;
     padding-left: 50px;
     margin-left: 5%;
-    // margin-right: 5%;
     padding-bottom: 1rem;
 }
 input[type="text"],
@@ -33,8 +28,6 @@ textarea[type="text"]  {
   }
 textarea{
     padding-bottom: 10%;
-    // width: 150%;
-
 }
 .button_ask{
     background-color: $limeBlue;
