@@ -1,6 +1,6 @@
-.answer_title{
+.title_of_question{
     color: $darkBlue;
-    font-size: 1.3625rem;
+    font-size: 1.5rem;
     line-height: 1.2;
     margin-left: calc(5% + 50px);
     margin-top: 1rem;
@@ -20,14 +20,27 @@
     margin-right: 10%;
     margin-top: 2rem;
     padding-bottom: 1rem;
-    border: 1.5px solid $darkBlue;
+    border: 2px solid $darkBlue;
     border-radius: 8px;
     display: block;
     font-family: 'Public Sans', sans-serif;
 
 }
-.title_of_question{
-    font-size: 1.5rem;
+.box_of_answer{
+    padding-right: 50px;
+    padding-left: 50px;
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+    border: 1.5px solid $limeBlue;
+    border-radius: 8px;
+    display: block;
+    font-family: 'Public Sans', sans-serif;
+
+}
+.text_of_question{
+    font-size: 1.3rem;
     padding: 1%;
     color: $darkBlue;
 }
@@ -35,7 +48,7 @@
     font-size: $font-med;
     padding-left: 1%;
     color: $darkBlue;
-    margin-top: 2%;
+    margin-top: 0.5%;
     display: flex;
 }
 .those{

@@ -1,9 +1,5 @@
 import React from 'react';
-import '../ChoicesBoxes/scss/style.scss';
-import answer from "../ChoicesBoxes/images/Answer.jpg";
-import ask from "../ChoicesBoxes/images/ask.jpeg";
-import statistics from "../ChoicesBoxes/images/statistics.jpg";
-import search_keyword from "../ChoicesBoxes/images/search-keyword.jpg";
+import './scss/style.scss';
 import { Link } from 'react-router-dom';
 import {show_qa_url} from "../../base_url";
 import Cookies from "js-cookie";
@@ -16,54 +12,24 @@ class ShowQuestion extends React.Component {
           questions: []
         };
       }
-    async componentDidMount(){
-      console.log(Cookies.get("token_id"));
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + document.cookies["token_id"])
-      const requestOptions = {
-          method: 'GET',
-          headers: myHeaders,
-          redirect: 'follow'
-      };
-
-      const response = await fetch(show_qa_url + "/question", requestOptions)
-      const json = await response.json();
-        await this.setState({
-          questions: json
-        })
-        await console.log(this.state.questions);
-       
-      // .then(response => {
-      //     if (response.status === 200) {
-      //         return response.text();
-      //     } else {
-      //         throw new Error(response.status);
-      //     }
-      // })
-
-
-      // .then(result => {
-      //     const json_obj = JSON.parse(result);
-      //     Swal.fire({
-      //         title: 'Success',
-      //         text: json_obj.msg,
-      //         icon: 'success',
-      //         customClass: "swal_ok_button",
-      //         confirmButtonColor: "#242424"
-      //     }).then(function () {
-      //         window.location.href = '/loginregister';
-      //     })
-
-      // })
-      // .catch(error => {
-      //     Swal.fire({
-      //         title: 'Error!',
-      //         text: error,
-      //         icon: 'error',
-      //         customClass: "swal_ok_button",
-      //         confirmButtonColor: "#242424"
-      //     });
-      // });
+      async componentDidMount(){
+        console.log(Cookies.get("token_id"));
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"))
+  
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+  
+        const response = await fetch(show_qa_url + "/question", requestOptions)
+        const json = await response.json();
+        // console.log(json);
+          await this.setState({
+            questions: json.result
+          })
+          await console.log(this.state.questions);
   }
 
     closeMobileMenu = () => this.setState({click:false});
@@ -71,15 +37,32 @@ class ShowQuestion extends React.Component {
     render() {
         return (
             <div>
+              <div className="title_of_question">Answer a question!</div>
             {this.state.questions.map(question => 
                 <div key={question._id} className="box_of_question"> 
-                  <p>{question.title}</p>
+                  <div className="text_of_question">
+                  {question.question}
+                  </div>
                   
-                  <p>Answers: {question.num_of_answers}</p>
-                  {/* <p>Keywords: {question.keywords}</p> */}
-                  <p>Written by: {question.author}</p>
+                  {/* {question.keywords.map(keyword =>
+                  <div className="keyword_display">
+                  <p>Keywords: {keyword}</p>
+                  </div>
+                  )} */}
+                   <div className="author">
+                  Written by: {question.username}
+                  </div>
+                  <div className="author">
+                  Keywords: &nbsp;
+                  {/* <div className="keyword_display"></div> */}
+                  </div>
 
-                <div>
+                  
+                  <div className="those">
+                  <div className="num_of_answers">
+                  Answers: {question.num_of_answers}
+                  </div>
+                 
                     <Link to= {
                       {
                           pathname: "/question", 
@@ -90,9 +73,10 @@ class ShowQuestion extends React.Component {
                       
                     } type="button"  className="answer_button" >
                       {/* <i class="fas fa-plug"></i> */}
-                      &nbsp;&nbsp;Answer now!
+                      Answer now!
                     </Link>
-                </div>                    
+
+                </div>                  
                 </div>
                 ) 
                 

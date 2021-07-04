@@ -30,7 +30,7 @@ class AnswerQuestion extends React.Component {
         await this.setState({
           questions: json.result
         })
-        await console.log(this.state.questions);
+        // await console.log(this.state.questions);
   }
 
     closeMobileMenu = () => this.setState({click:false});
@@ -53,6 +53,11 @@ class AnswerQuestion extends React.Component {
                    <div className="author">
                   Written by: {question.username}
                   </div>
+                  <div className="author">
+                  Keywords: &nbsp;
+                  {/* <div className="keyword_display"></div> */}
+                  </div>
+
                   
                   <div className="those">
                   <div className="num_of_answers">
