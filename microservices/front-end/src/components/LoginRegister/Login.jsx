@@ -92,7 +92,6 @@ export class Login extends React.Component {
              })
              .catch(error => console.log('error', error));
 
-
     }
     responseFailGoogle(response) {
         console.log(response);

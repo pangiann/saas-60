@@ -1,9 +1,5 @@
 import React from 'react';
 import './scss/style.scss';
-import answer from "../ChoicesBoxes/images/Answer.jpg";
-import ask from "../ChoicesBoxes/images/ask.jpeg";
-import statistics from "../ChoicesBoxes/images/statistics.jpg";
-import search_keyword from "../ChoicesBoxes/images/search-keyword.jpg";
 import { Link } from 'react-router-dom';
 import {show_qa_url} from "../../base_url";
 
