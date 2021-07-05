@@ -68,6 +68,17 @@ module.exports = {
         }
 
     },
+    showSpecificQuestion: async function (question_id) {
+        try {
+            const query = {_id: question_id};
+            const questions_collection = client.db('questions_answers_only').collection('Questions');
+            const result = await questions_collection.find(query).toArray();
+            return result;
+        }
+        catch (error) {
+            throw error;
+        } 
+    },
     showQuestions: async function () {
         try {
             const questions_collection = client.db('questions_answers_only').collection('Questions');

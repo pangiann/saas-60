@@ -8,3 +8,4 @@ data
 Dockerfile
 .dockerignore
 docker-compose.yml
+deploy_files
