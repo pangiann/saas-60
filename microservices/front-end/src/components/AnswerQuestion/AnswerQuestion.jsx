@@ -16,7 +16,7 @@ class AnswerQuestion extends React.Component {
     async componentDidMount(){
       console.log(Cookies.get("token_id"));
       const myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"))
+      // myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"))
 
       const requestOptions = {
           method: 'GET',
@@ -41,7 +41,7 @@ class AnswerQuestion extends React.Component {
               <div className="answer_title">Answer a question!</div>
             {this.state.questions.map(question => 
                 <div key={question._id} className="box_of_question"> 
-                  <div className="title_of_question">
+                  <div className="title_of_question1">
                   {question.title}
                   </div>
                   
@@ -67,9 +67,8 @@ class AnswerQuestion extends React.Component {
                     <Link to= {
                       {
                           pathname: "/question", 
-                          state: {
-                            selected_question : question._id
-                          }
+                          state: question._id
+                          
                       }
                       
                     } type="button"  className="answer_button" >
