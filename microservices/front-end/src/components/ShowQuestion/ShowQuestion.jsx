@@ -4,33 +4,32 @@ import { Link } from 'react-router-dom';
 import {show_qa_url} from "../../base_url";
 import Cookies from "js-cookie";
 
-class AnswerQuestion extends React.Component {
+class ShowQuestion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
           click: true,
-          questions: [],
-          question:[]
+          questions: []
         };
       }
-    async componentDidMount(){
-      console.log(Cookies.get("token_id"));
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"))
-
-      const requestOptions = {
-          method: 'GET',
-          headers: myHeaders,
-          redirect: 'follow'
-      };
-
-      const response = await fetch(show_qa_url + "/question", requestOptions)
-      const json = await response.json();
-      // console.log(json);
-        await this.setState({
-          questions: json.result
-        })
-        // await console.log(this.state.questions);
+      async componentDidMount(){
+        console.log(Cookies.get("token_id"));
+        const myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"))
+  
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+  
+        const response = await fetch(show_qa_url + "/question", requestOptions)
+        const json = await response.json();
+        // console.log(json);
+          await this.setState({
+            questions: json.result
+          })
+          await console.log(this.state.questions);
   }
 
     closeMobileMenu = () => this.setState({click:false});
@@ -38,11 +37,11 @@ class AnswerQuestion extends React.Component {
     render() {
         return (
             <div>
-              <div className="answer_title">Answer a question!</div>
+              <div className="title_of_question">Answer a question!</div>
             {this.state.questions.map(question => 
                 <div key={question._id} className="box_of_question"> 
-                  <div className="title_of_question">
-                  {question.title}
+                  <div className="text_of_question">
+                  {question.question}
                   </div>
                   
                   {/* {question.keywords.map(keyword =>
@@ -87,4 +86,4 @@ class AnswerQuestion extends React.Component {
     }
 }
 
-export default AnswerQuestion;
+export default ShowQuestion;

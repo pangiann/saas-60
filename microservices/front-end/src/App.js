@@ -7,6 +7,7 @@ import Keywords from './components/Keywords/Keywords';
 import TimeSearch from './components/TimeSearch/TimeSearch';
 import AskQuestion from './components/AskQuestion/AskQuestion';
 import AnswerQuestion from './components/AnswerQuestion/AnswerQuestion';
+import ShowQuestion from './components/ShowQuestion/ShowQuestion';
 import Home from './pages/Home';
 
 
@@ -28,6 +29,8 @@ function App() {
                   {AskQuestion}/>
             <Route path='/answerquestion' exact component=
                 {AnswerQuestion}/>
+            <Route path='/question' exact component=
+                {ShowQuestion}/>
 
           </Switch>
           <Footer />

@@ -1,7 +1,7 @@
 import React from "react";
 import loginImg from "../../mylogo2.png";
 import GoogleLogin from "react-google-login";
-import {base_url} from "../../base_url";
+import {login_register_url} from "../../base_url";
 import Swal from "sweetalert2";
 
 
@@ -38,7 +38,7 @@ export class Register extends React.Component {
             redirect: 'follow'
         };
 
-        fetch(base_url + "/register", requestOptions)
+        fetch(login_register_url + "/register", requestOptions)
             .then(response => {
                 if (response.status === 200) {
                     return response.text();
@@ -57,7 +57,6 @@ export class Register extends React.Component {
                 }).then(function () {
                     window.location.href = '/loginregister';
                 })
-
 
             })
             .catch(error => {
@@ -81,7 +80,7 @@ export class Register extends React.Component {
             body: raw,
             redirect: 'follow'
         };
-        fetch(base_url + "/googleregister", requestOptions)
+        fetch(login_register_url + "/googleregister", requestOptions)
             .then(response => response.json())
             .then(result => {
                 console.log(result);
@@ -136,38 +135,5 @@ export class Register extends React.Component {
         );
     }
 
-    // handleRegister() {
-    //     var username = document.getElementById("username").value;    
-    //     var password = document.getElementById("password").value; 
-    //     var first_name = document.getElementById("first_name").value; 
-    //     var last_name = document.getElementById("last_name").value; 
-    //     var email = document.getElementById("email").value; 
-    //     var telephone_number = document.getElementById("telephone").value; 
-
-    //     var myHeaders = new Headers();
-    //     myHeaders.append("Content-Type", "application/json");
-    //     var raw = JSON.stringify({username , password,first_name,last_name,email,telephone_number });
-
-    //     var requestOptions = {
-    //     method: 'POST',
-    //     headers: myHeaders,
-    //     body: raw,
-    //     redirect: 'follow'
-    //     };
-
-    //     fetch("http://localhost:5000/api/users/register", requestOptions)
-    //     .then(response => response.json())
-    //     .then(result => {
-    //         if (result.status == 200) {
-    //             document.cookie = "charge_evolution_token=" + result.token;
-    //             window.location.href = '/';
-    //         }
-    //         else {
-    //             alert(result.msg);
-    //         }
-    //     })
-    //     .catch(error => console.log('error', error));
-    //     }      
-
-
+  
 }
