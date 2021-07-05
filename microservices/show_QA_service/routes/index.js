@@ -83,7 +83,7 @@ const expected_question = {
     "questionId" : ""
 }
 const mandatory_question = ["questionId"]
-router.get('/questions/question_id',
+router.post('/questions/question_id',
     validator.payloadValidator(expected_question, mandatory_question, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.questionId)) {
@@ -110,7 +110,7 @@ const expected_questions_keyword = {
     "keywords" : []
 }
 const mandatory_questions_keyword = ["keywords"];
-router.get('/questions/questionsPerKeyword',
+router.post('/questions/questionsPerKeyword',
     validator.payloadValidator(expected_questions_keyword, mandatory_questions_keyword, true),
     function(req, res, next) {
         questions.findQuestionByKeywords(req.body.keywords)
@@ -130,7 +130,7 @@ const expected_user = {
 }
 const mandatory_user = ["userId"]
 // returns all questions that a user has made
-router.get('/questions/user',
+router.post('/questions/user',
     validator.payloadValidator(expected_user, mandatory_user, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
@@ -155,7 +155,7 @@ router.get('/questions/user',
 // takes question_id as an argument in body of api
 // returns a json with values: _id, user_id, question_id, date, answer, upvotes
 
-router.get('/answers/question',
+router.post('/answers/question',
     validator.payloadValidator(expected_question, mandatory_question, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.questionId)) {
@@ -179,7 +179,7 @@ router.get('/answers/question',
 // show all answers made by a user
 // takes user_id as an argument
 
-router.get('/answers/user',
+router.post('/answers/user',
     passport.authenticate('token', {session: false}),
     validator.payloadValidator(expected_user, mandatory_user, true),
     function(req, res, next) {
