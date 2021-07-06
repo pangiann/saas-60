@@ -1,89 +1,80 @@
 import React from 'react';
 import './scss/style.scss';
 import { Link } from 'react-router-dom';
-import {show_qa_url} from "../../base_url";
+import { show_qa_url } from "../../base_url";
 import Cookies from "js-cookie";
 
 class AnswerQuestion extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          click: true,
-          questions: [],
-          question:[]
-        };
-      }
-    async componentDidMount(){
-      console.log(Cookies.get("token_id"));
-      const myHeaders = new Headers();
-      // myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"))
+  constructor(props) {
+    super(props);
+    this.state = {
+      click: true,
+      questions: [],
+      question: []
+    };
+  }
+  async componentDidMount() {
+    console.log(Cookies.get("token_id"));
+    const myHeaders = new Headers();
+    // myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"))
 
-      const requestOptions = {
-          method: 'GET',
-          headers: myHeaders,
-          redirect: 'follow'
-      };
+    const requestOptions = {
+      method: 'GET',
+      headers: myHeaders,
+      redirect: 'follow'
+    };
 
-      const response = await fetch(show_qa_url + "/question", requestOptions)
-      const json = await response.json();
-      // console.log(json);
-        await this.setState({
-          questions: json.result
-        })
-        // await console.log(this.state.questions);
+    const response = await fetch(show_qa_url + "/question", requestOptions)
+    const json = await response.json();
+    // console.log(json);
+    await this.setState({
+      questions: json.result
+    })
+    // await console.log(this.state.questions);
   }
 
-    closeMobileMenu = () => this.setState({click:false});
+  closeMobileMenu = () => this.setState({ click: false });
 
-    render() {
-        return (
-            <div>
-              <div className="answer_title">Answer a question!</div>
-            {this.state.questions.map(question => 
-                <div key={question._id} className="box_of_question"> 
-                  <div className="title_of_question1">
+  render() {
+    return (
+      <div>
+        <div className="answer_title">Answer a question!</div>
+        {this.state.questions.map(question =>
+          <div key={question._id}>
+            <Link to={{ pathname: "/question", state: question._id }}>
+              <div className="box_of_question">
+
+                <div className="title_of_question1">
                   {question.title}
-                  </div>
-                  
-                  {/* {question.keywords.map(keyword =>
+                </div>
+
+                {/* {question.keywords.map(keyword =>
                   <div className="keyword_display">
                   <p>Keywords: {keyword}</p>
                   </div>
                   )} */}
-                   <div className="author">
+                <div className="author">
                   Written by: {question.username}
-                  </div>
-                  <div className="author">
+                </div>
+                <div className="author">
                   Keywords: &nbsp;
                   {/* <div className="keyword_display"></div> */}
-                  </div>
-
-                  
-                  <div className="those">
+                </div>
+                <div className="those">
                   <div className="num_of_answers">
-                  Answers: {question.num_of_answers}
+                    Answers: {question.num_of_answers}
                   </div>
-                 
-                    <Link to= {
-                      {
-                          pathname: "/question", 
-                          state: question._id
-                          
-                      }
-                      
-                    } type="button"  className="answer_button" >
-                      {/* <i class="fas fa-plug"></i> */}
-                      Answer now!
-                    </Link>
+                  <button type="button" className="answer_button" >
+                    Answer now!
+                  </button>
+                </div>
+              </div></Link> </div>
+        )
 
-                </div>                  
-                </div>
-                ) 
-                
-                }
-                </div>
-        );
-    }
+        }
+      </div>
+    );
+  }
 }
 
 export default AnswerQuestion;

@@ -4,7 +4,7 @@ import './scss/App.css';
 import './scss/BalanceTable.css';
 
 import moment from 'moment';
-import pointimg from "../ChoicesBoxes/images/statistics.jpg";
+import pointimg from "../images/statistics.jpg";
 import "react-datepicker/dist/react-datepicker.css"
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2'
