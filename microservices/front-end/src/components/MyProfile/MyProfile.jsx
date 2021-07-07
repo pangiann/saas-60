@@ -1,7 +1,7 @@
 import React from 'react';
 import './scss/style.scss';
 import { Link } from 'react-router-dom';
-import { show_qa_url } from "../../base_url";
+import { show_qa_url, show_user } from "../../base_url";
 import Cookies from "js-cookie";
 import ProfileIcon from '../../profile-icon.png';
 import answer from "../images/Answer.jpg";
@@ -63,28 +63,26 @@ class MyProfile extends React.Component {
     render() {
         return (
             <div>
-                <div className="welcome_title_of_profile">My Profile</div>
-
-                <div className="profile-box2">
-                    <div className="picture2">
-                        <img src={ProfileIcon} />
-                    </div>
-
-                    <div className="info-box">
-                        <p>Username:</p>
-                        <p>Email:</p>
-                        <p>Number of questions:</p>
-                        <p>Number of answers:</p>
-                        <p>Upvotes given:</p>
-                        <p>Upvotes received:</p>
-
-                    </div>
-                </div>
-
-                <br></br>
                 <section className="choices">
 
                     <div className="choice__content container container--nav container--pall">
+                        <div className="welcome_title_of_profile">My Profile</div>
+
+                        <div className="profile-box2">
+                            <div className="picture2">
+                                <img src={ProfileIcon} />
+                            </div>
+
+                            <div className="info-box">
+                                <p>Username:</p>
+                                <p>Email:</p>
+                                <p>Number of questions:</p>
+                                <p>Number of answers:</p>
+                                <p>Upvotes given:</p>
+                                <p>Upvotes received:</p>
+
+                            </div>
+                        </div>
                         <div className="choice__grid">
 
                             <a href="#" className="choice__item">
@@ -98,7 +96,7 @@ class MyProfile extends React.Component {
                                             My Q&A
                                         </div>
                                         <div className="choice__description">
-                                            View all the questions and 
+                                            View all the questions and
                                             answers that you have posted.
                                         </div>
                                     </div>

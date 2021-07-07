@@ -9,6 +9,8 @@ import AskQuestion from './components/AskQuestion/AskQuestion';
 import AnswerQuestion from './components/AnswerQuestion/AnswerQuestion';
 import ShowQuestion from './components/ShowQuestion/ShowQuestion';
 import MyProfile from './components/MyProfile/MyProfile';
+import MyQnA from './components/MyQnA/MyQnA';
+
 import Home from './pages/Home';
 
 
@@ -34,6 +36,8 @@ function App() {
             {ShowQuestion} />
           <Route path='/myprofile' exact component=
             {MyProfile} />
+          <Route path='/myqna' exact component=
+            {MyQnA} />
         </Switch>
         <Footer />
       </Router>

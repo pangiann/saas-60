@@ -3,6 +3,7 @@ import './scss/style.scss';
 import { Link } from 'react-router-dom';
 import { show_qa_url } from "../../base_url";
 import Cookies from "js-cookie";
+import FeedQuestion from "./FeedQuestion.jsx";
 
 class AnswerQuestion extends React.Component {
   constructor(props) {
@@ -14,10 +15,8 @@ class AnswerQuestion extends React.Component {
     };
   }
   async componentDidMount() {
-    console.log(Cookies.get("token_id"));
+    // console.log(Cookies.get("token_id"));
     const myHeaders = new Headers();
-    // myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"))
-
     const requestOptions = {
       method: 'GET',
       headers: myHeaders,
@@ -26,7 +25,7 @@ class AnswerQuestion extends React.Component {
 
     const response = await fetch(show_qa_url + "/question", requestOptions)
     const json = await response.json();
-    // console.log(json);
+    console.log(json);
     await this.setState({
       questions: json.result
     })
@@ -35,46 +34,19 @@ class AnswerQuestion extends React.Component {
 
   closeMobileMenu = () => this.setState({ click: false });
 
+
   render() {
     return (
       <div>
         <div className="answer_title">Answer a question!</div>
         {this.state.questions.map(question =>
-          <div key={question._id}>
-            <Link to={{ pathname: "/question", state: question._id }}>
-              <div className="box_of_question">
-
-                <div className="title_of_question1">
-                  {question.title}
-                </div>
-
-                {/* {question.keywords.map(keyword =>
-                  <div className="keyword_display">
-                  <p>Keywords: {keyword}</p>
-                  </div>
-                  )} */}
-                <div className="author">
-                  Written by: {question.username}
-                </div>
-                <div className="author">
-                  Keywords: &nbsp;
-                  {/* <div className="keyword_display"></div> */}
-                </div>
-                <div className="those">
-                  <div className="num_of_answers">
-                    Answers: {question.num_of_answers}
-                  </div>
-                  <button type="button" className="answer_button" >
-                    Answer now!
-                  </button>
-                </div>
-              </div></Link> </div>
+          <FeedQuestion question={question} />
         )
-
         }
       </div>
     );
   }
 }
+
 
 export default AnswerQuestion;

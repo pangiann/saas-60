@@ -69,6 +69,31 @@ class Header extends React.Component {
 
                         <div className="header__buttons hide-for-mobile">
                             <a href='' className="sub-button hide-for-mobile">
+                                <a href="">
+                                    <Link to='/myprofile' onClick={this.closeMobileMenu}>
+                                        Profile
+                                    </Link>
+                                </a>
+                                <a href="">
+                                    <Link to='/askquestion' onClick={this.closeMobileMenu}>
+                                        Ask question
+                                    </Link>
+                                </a>
+                                <a href="">
+                                    <Link to='/answerquestion' onClick={this.closeMobileMenu}>
+                                        Answer question
+                                    </Link>
+                                </a>
+                                <a href="">
+                                    <Link to='/keywords' onClick={this.closeMobileMenu}>
+                                        Keyword Search
+                                    </Link>
+                                </a>
+                                <a href="">
+                                    <Link to='/timesearch' onClick={this.closeMobileMenu}>
+                                        Time Search
+                                    </Link>
+                                </a>
                                 <Link
                                     to='/loginregister'
                                     onClick={this.closeMobileMenu}
@@ -125,6 +150,197 @@ class Header extends React.Component {
         );
 
     }
+
+
+
+    // const headernotauth = () => {
+    // return (
+    //     <div>
+    //         <header className="header">
+    //             <div className="overlay has-fade hide-for-desktop"></div>
+    //             <nav className="cont cont--nav cont--pall flex flex-jc-sb flex-ai-c">
+    //                 <a className="header__logo">
+    //                     <Link to='/' className='navbar-logo' onClick={this.closeMobileMenu}>
+    //                         <img src={Logo} alt="inCharge" />
+    //                     </Link>
+    //                 </a>
+    //                 <a id="btnHamburger" href="#" onClick={this.handleClick} className="header__toggle hide-for-desktop">
+    //                     <span></span>
+    //                     <span></span>
+    //                     <span></span>
+    //                 </a>
+    //                 <div className="header__buttons hide-for-mobile">
+    //                     <a href='' className="sub-button hide-for-mobile">
+    //                         <a href="">
+    //                             <Link to='/myprofile' onClick={this.closeMobileMenu}>
+    //                                 Profile
+    //                             </Link>
+    //                         </a>
+    //                         <a href="">
+    //                             <Link to='/askquestion' onClick={this.closeMobileMenu}>
+    //                                 Ask question
+    //                             </Link>
+    //                         </a>
+    //                         <a href="">
+    //                             <Link to='/answerquestion' onClick={this.closeMobileMenu}>
+    //                                 Answer question
+    //                             </Link>
+    //                         </a>
+    //                         <a href="">
+    //                             <Link to='/keywords' onClick={this.closeMobileMenu}>
+    //                                 Keyword Search
+    //                             </Link>
+    //                         </a>
+    //                         <a href="">
+    //                             <Link to='/timesearch' onClick={this.closeMobileMenu}>
+    //                                 Time Search
+    //                             </Link>
+    //                         </a>
+    //                         <Link
+    //                             to='/loginregister'
+    //                             onClick={this.closeMobileMenu}
+    //                         >
+    //                             LOG IN
+    //                         </Link></a>
+    //                     <Link
+    //                         to='/loginregister'
+    //                         onClick={this.closeMobileMenu}
+    //                     >
+    //                         <button type="button" className=" btn_teo hide-for-mobile" >
+    //                             Register</button>
+    //                     </Link>
+    //                 </div>
+    //             </nav>
+    //         </header>
+    //         <div className="header__menu has-fade hide-for-desktop">
+    //             <a href="/">Home</a>
+    //             <a href="">
+    //                 <Link to='/myprofile' onClick={this.closeMobileMenu}>
+    //                     Profile
+    //                 </Link>
+    //             </a>
+    //             <a href="">
+    //                 <Link to='/askquestion' onClick={this.closeMobileMenu}>
+    //                     Ask question
+    //                 </Link>
+    //             </a>
+    //             <a href="">
+    //                 <Link to='/answerquestion' onClick={this.closeMobileMenu}>
+    //                     Answer question
+    //                 </Link>
+    //             </a>
+    //             <a href="">
+    //                 <Link to='/keywords' onClick={this.closeMobileMenu}>
+    //                     Keyword Search
+    //                 </Link>
+    //             </a>
+    //             <a href="">
+    //                 <Link to='/timesearch' onClick={this.closeMobileMenu}>
+    //                     Time Search
+    //                 </Link>
+    //             </a>
+    //             <a href="">
+    //                 <Link to='/loginregister' onClick={this.closeMobileMenu}>
+    //                     Log In - Register
+    //                 </Link>
+    //             </a>
+    //         </div>
+    //     </div>
+    // );}
+    // const headerauth = () => {
+    //     return (
+    //         <div>
+    //             <header className="header">
+    //                 <div className="overlay has-fade hide-for-desktop"></div>
+    //                 <nav className="cont cont--nav cont--pall flex flex-jc-sb flex-ai-c">
+    //                     <a className="header__logo">
+    //                         <Link to='/' className='navbar-logo' onClick={this.closeMobileMenu}>
+    //                             <img src={Logo} alt="inCharge" />
+    //                         </Link>
+    //                     </a>
+    //                     <a id="btnHamburger" href="#" onClick={this.handleClick} className="header__toggle hide-for-desktop">
+    //                         <span></span>
+    //                         <span></span>
+    //                         <span></span>
+    //                     </a>
+    //                     <div className="header__buttons hide-for-mobile">
+    //                         <a href='' className="sub-button hide-for-mobile">
+    //                             <a href="">
+    //                                 <Link to='/myprofile' onClick={this.closeMobileMenu}>
+    //                                     Profile
+    //                                 </Link>
+    //                             </a>
+    //                             <a href="">
+    //                                 <Link to='/askquestion' onClick={this.closeMobileMenu}>
+    //                                     Ask question
+    //                                 </Link>
+    //                             </a>
+    //                             <a href="">
+    //                                 <Link to='/answerquestion' onClick={this.closeMobileMenu}>
+    //                                     Answer question
+    //                                 </Link>
+    //                             </a>
+    //                             <a href="">
+    //                                 <Link to='/keywords' onClick={this.closeMobileMenu}>
+    //                                     Keyword Search
+    //                                 </Link>
+    //                             </a>
+    //                             <a href="">
+    //                                 <Link to='/timesearch' onClick={this.closeMobileMenu}>
+    //                                     Time Search
+    //                                 </Link>
+    //                             </a>
+    //                             <Link
+    //                                 to='/loginregister'
+    //                                 onClick={this.closeMobileMenu}
+    //                             >
+    //                                 LOG IN
+    //                             </Link></a>
+    //                         <Link
+    //                             to='/loginregister'
+    //                             onClick={this.closeMobileMenu}
+    //                         >
+    //                             <button type="button" className=" btn_teo hide-for-mobile" >
+    //                                 Register</button>
+    //                         </Link>
+    //                     </div>
+    //                 </nav>
+    //             </header>
+    //             <div className="header__menu has-fade hide-for-desktop">
+    //                 <a href="/">Home</a>
+    //                 <a href="">
+    //                     <Link to='/myprofile' onClick={this.closeMobileMenu}>
+    //                         Profile
+    //                     </Link>
+    //                 </a>
+    //                 <a href="">
+    //                     <Link to='/askquestion' onClick={this.closeMobileMenu}>
+    //                         Ask question
+    //                     </Link>
+    //                 </a>
+    //                 <a href="">
+    //                     <Link to='/answerquestion' onClick={this.closeMobileMenu}>
+    //                         Answer question
+    //                     </Link>
+    //                 </a>
+    //                 <a href="">
+    //                     <Link to='/keywords' onClick={this.closeMobileMenu}>
+    //                         Keyword Search
+    //                     </Link>
+    //                 </a>
+    //                 <a href="">
+    //                     <Link to='/timesearch' onClick={this.closeMobileMenu}>
+    //                         Time Search
+    //                     </Link>
+    //                 </a>
+    //                 <a href="">
+    //                     <Link to='/loginregister' onClick={this.closeMobileMenu}>
+    //                         Log In - Register
+    //                     </Link>
+    //                 </a>
+    //             </div>
+    //         </div>
+    //     );}
 }
 
 export default Header;
