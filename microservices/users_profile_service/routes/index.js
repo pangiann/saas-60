@@ -35,7 +35,7 @@ passport.use('token', new JWTstrategy(
     }
 ));
 
-router.get('/user',
+router.post('/user',
     passport.authenticate('token', {session: false}),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
