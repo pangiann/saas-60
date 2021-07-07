@@ -1,9 +1,9 @@
 import React from 'react';
 import './scss/style.scss';
-import answer from "./images/Answer.jpg";
-import ask from "./images/ask.jpeg";
-import statistics from "./images/statistics.jpg";
-import search_keyword from "./images/search-keyword.jpg";
+import answer from "../images/Answer.jpg";
+import ask from "../images/ask.jpeg";
+import statistics from "../images/statistics.jpg";
+import search_keyword from "../images/search-keyword.jpg";
 import { Link } from 'react-router-dom';
 
 class ChoicesBoxes extends React.Component {
