@@ -131,6 +131,7 @@ const expected_user = {
 const mandatory_user = ["userId"]
 // returns all questions that a user has made
 router.post('/questions/user',
+    passport.authenticate('token', {session: false}),
     validator.payloadValidator(expected_user, mandatory_user, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.userId)) {
