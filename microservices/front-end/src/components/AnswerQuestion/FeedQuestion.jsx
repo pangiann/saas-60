@@ -1,8 +1,6 @@
 import React from 'react';
 import './scss/style.scss';
 import { Link } from 'react-router-dom';
-import { show_qa_url } from "../../base_url";
-import Cookies from "js-cookie";
 
 
 class FeedQuestion extends React.Component {
@@ -17,7 +15,7 @@ class FeedQuestion extends React.Component {
     async componentDidMount() {
         await this.setState({
             question: this.props.question,
-            keywords: this.props.question.keywords == undefined ? ["sdjkbsdkjb"] : this.props.question.keywords
+            keywords: this.props.question.keywords == undefined ? [] : this.props.question.keywords
         })
     }
 

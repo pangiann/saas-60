@@ -4,6 +4,10 @@ import Logo from '../../mylogo.png';
 import '../Button/Button.jsx';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import Cookies from "js-cookie";
+import { show_user } from "../../base_url";
+
+
 
 class Header extends React.Component {
 
@@ -11,9 +15,39 @@ class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            click: true
+            click: true,
+            logged: false,
+            username: ''
         };
     }
+    async componentDidMount() {
+        if (Cookies.get("token_id") != '') {
+
+            var myHeaders = new Headers();
+            myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"));
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({ "userId": Cookies.get("user_id") });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+            const response = await fetch(show_user + "/user", requestOptions)
+            const json = await response.json();
+            // console.log(json.result);
+            await this.setState({
+                username: json.result.username
+            })
+            await this.setState({
+                logged: true
+            })
+        }
+    }
+
 
     closeMobileMenu = () => this.setState({ click: false });
 
@@ -48,7 +82,61 @@ class Header extends React.Component {
         }
     }
 
+
+
     render() {
+        const renderprofile = () => {
+            if (this.state.logged) {
+                return (
+                    <a href="">
+
+                        <Link to='/myprofile' onClick={this.closeMobileMenu}>
+                            Profile
+                        </Link>
+                    </a>
+                );
+            } else {
+                return <></>;
+            }
+        }
+        const renderlogout = () => {
+            if (this.state.logged) {
+                return (
+                    <>
+                        <a className="username2">
+                            <b>{this.state.username}</b>
+                        </a>
+
+                        <Link
+                            to='/loginregister'
+                            onClick={this.closeMobileMenu}
+                        >
+                            <button type="button" className=" btn_teo hide-for-mobile" >
+                                Logout</button>
+                        </Link>
+                    </>
+                );
+            } else {
+                return (
+                    <>
+                        <Link
+                            to='/loginregister'
+                            onClick={this.closeMobileMenu}
+                        >
+                            LOG IN
+                        </Link>
+
+                        <Link
+                            to='/loginregister'
+                            onClick={this.closeMobileMenu}
+                        >
+                            <button type="button" className=" btn_teo hide-for-mobile" >
+                                Register</button>
+                        </Link>
+                    </>
+                );
+            }
+        }
         return (
             <div>
                 <header className="header">
@@ -69,11 +157,8 @@ class Header extends React.Component {
 
                         <div className="header__buttons hide-for-mobile">
                             <a href='' className="sub-button hide-for-mobile">
-                                <a href="">
-                                    <Link to='/myprofile' onClick={this.closeMobileMenu}>
-                                        Profile
-                                    </Link>
-                                </a>
+                                {renderprofile()}
+
                                 <a href="">
                                     <Link to='/askquestion' onClick={this.closeMobileMenu}>
                                         Ask question
@@ -94,20 +179,8 @@ class Header extends React.Component {
                                         Time Search
                                     </Link>
                                 </a>
-                                <Link
-                                    to='/loginregister'
-                                    onClick={this.closeMobileMenu}
-                                >
-                                    LOG IN
-                                </Link></a>
-
-                            <Link
-                                to='/loginregister'
-                                onClick={this.closeMobileMenu}
-                            >
-                                <button type="button" className=" btn_teo hide-for-mobile" >
-                                    Register</button>
-                            </Link>
+                                {renderlogout()}
+                            </a>
 
 
                         </div>
@@ -151,196 +224,6 @@ class Header extends React.Component {
 
     }
 
-
-
-    // const headernotauth = () => {
-    // return (
-    //     <div>
-    //         <header className="header">
-    //             <div className="overlay has-fade hide-for-desktop"></div>
-    //             <nav className="cont cont--nav cont--pall flex flex-jc-sb flex-ai-c">
-    //                 <a className="header__logo">
-    //                     <Link to='/' className='navbar-logo' onClick={this.closeMobileMenu}>
-    //                         <img src={Logo} alt="inCharge" />
-    //                     </Link>
-    //                 </a>
-    //                 <a id="btnHamburger" href="#" onClick={this.handleClick} className="header__toggle hide-for-desktop">
-    //                     <span></span>
-    //                     <span></span>
-    //                     <span></span>
-    //                 </a>
-    //                 <div className="header__buttons hide-for-mobile">
-    //                     <a href='' className="sub-button hide-for-mobile">
-    //                         <a href="">
-    //                             <Link to='/myprofile' onClick={this.closeMobileMenu}>
-    //                                 Profile
-    //                             </Link>
-    //                         </a>
-    //                         <a href="">
-    //                             <Link to='/askquestion' onClick={this.closeMobileMenu}>
-    //                                 Ask question
-    //                             </Link>
-    //                         </a>
-    //                         <a href="">
-    //                             <Link to='/answerquestion' onClick={this.closeMobileMenu}>
-    //                                 Answer question
-    //                             </Link>
-    //                         </a>
-    //                         <a href="">
-    //                             <Link to='/keywords' onClick={this.closeMobileMenu}>
-    //                                 Keyword Search
-    //                             </Link>
-    //                         </a>
-    //                         <a href="">
-    //                             <Link to='/timesearch' onClick={this.closeMobileMenu}>
-    //                                 Time Search
-    //                             </Link>
-    //                         </a>
-    //                         <Link
-    //                             to='/loginregister'
-    //                             onClick={this.closeMobileMenu}
-    //                         >
-    //                             LOG IN
-    //                         </Link></a>
-    //                     <Link
-    //                         to='/loginregister'
-    //                         onClick={this.closeMobileMenu}
-    //                     >
-    //                         <button type="button" className=" btn_teo hide-for-mobile" >
-    //                             Register</button>
-    //                     </Link>
-    //                 </div>
-    //             </nav>
-    //         </header>
-    //         <div className="header__menu has-fade hide-for-desktop">
-    //             <a href="/">Home</a>
-    //             <a href="">
-    //                 <Link to='/myprofile' onClick={this.closeMobileMenu}>
-    //                     Profile
-    //                 </Link>
-    //             </a>
-    //             <a href="">
-    //                 <Link to='/askquestion' onClick={this.closeMobileMenu}>
-    //                     Ask question
-    //                 </Link>
-    //             </a>
-    //             <a href="">
-    //                 <Link to='/answerquestion' onClick={this.closeMobileMenu}>
-    //                     Answer question
-    //                 </Link>
-    //             </a>
-    //             <a href="">
-    //                 <Link to='/keywords' onClick={this.closeMobileMenu}>
-    //                     Keyword Search
-    //                 </Link>
-    //             </a>
-    //             <a href="">
-    //                 <Link to='/timesearch' onClick={this.closeMobileMenu}>
-    //                     Time Search
-    //                 </Link>
-    //             </a>
-    //             <a href="">
-    //                 <Link to='/loginregister' onClick={this.closeMobileMenu}>
-    //                     Log In - Register
-    //                 </Link>
-    //             </a>
-    //         </div>
-    //     </div>
-    // );}
-    // const headerauth = () => {
-    //     return (
-    //         <div>
-    //             <header className="header">
-    //                 <div className="overlay has-fade hide-for-desktop"></div>
-    //                 <nav className="cont cont--nav cont--pall flex flex-jc-sb flex-ai-c">
-    //                     <a className="header__logo">
-    //                         <Link to='/' className='navbar-logo' onClick={this.closeMobileMenu}>
-    //                             <img src={Logo} alt="inCharge" />
-    //                         </Link>
-    //                     </a>
-    //                     <a id="btnHamburger" href="#" onClick={this.handleClick} className="header__toggle hide-for-desktop">
-    //                         <span></span>
-    //                         <span></span>
-    //                         <span></span>
-    //                     </a>
-    //                     <div className="header__buttons hide-for-mobile">
-    //                         <a href='' className="sub-button hide-for-mobile">
-    //                             <a href="">
-    //                                 <Link to='/myprofile' onClick={this.closeMobileMenu}>
-    //                                     Profile
-    //                                 </Link>
-    //                             </a>
-    //                             <a href="">
-    //                                 <Link to='/askquestion' onClick={this.closeMobileMenu}>
-    //                                     Ask question
-    //                                 </Link>
-    //                             </a>
-    //                             <a href="">
-    //                                 <Link to='/answerquestion' onClick={this.closeMobileMenu}>
-    //                                     Answer question
-    //                                 </Link>
-    //                             </a>
-    //                             <a href="">
-    //                                 <Link to='/keywords' onClick={this.closeMobileMenu}>
-    //                                     Keyword Search
-    //                                 </Link>
-    //                             </a>
-    //                             <a href="">
-    //                                 <Link to='/timesearch' onClick={this.closeMobileMenu}>
-    //                                     Time Search
-    //                                 </Link>
-    //                             </a>
-    //                             <Link
-    //                                 to='/loginregister'
-    //                                 onClick={this.closeMobileMenu}
-    //                             >
-    //                                 LOG IN
-    //                             </Link></a>
-    //                         <Link
-    //                             to='/loginregister'
-    //                             onClick={this.closeMobileMenu}
-    //                         >
-    //                             <button type="button" className=" btn_teo hide-for-mobile" >
-    //                                 Register</button>
-    //                         </Link>
-    //                     </div>
-    //                 </nav>
-    //             </header>
-    //             <div className="header__menu has-fade hide-for-desktop">
-    //                 <a href="/">Home</a>
-    //                 <a href="">
-    //                     <Link to='/myprofile' onClick={this.closeMobileMenu}>
-    //                         Profile
-    //                     </Link>
-    //                 </a>
-    //                 <a href="">
-    //                     <Link to='/askquestion' onClick={this.closeMobileMenu}>
-    //                         Ask question
-    //                     </Link>
-    //                 </a>
-    //                 <a href="">
-    //                     <Link to='/answerquestion' onClick={this.closeMobileMenu}>
-    //                         Answer question
-    //                     </Link>
-    //                 </a>
-    //                 <a href="">
-    //                     <Link to='/keywords' onClick={this.closeMobileMenu}>
-    //                         Keyword Search
-    //                     </Link>
-    //                 </a>
-    //                 <a href="">
-    //                     <Link to='/timesearch' onClick={this.closeMobileMenu}>
-    //                         Time Search
-    //                     </Link>
-    //                 </a>
-    //                 <a href="">
-    //                     <Link to='/loginregister' onClick={this.closeMobileMenu}>
-    //                         Log In - Register
-    //                     </Link>
-    //                 </a>
-    //             </div>
-    //         </div>
-    //     );}
 }
 
 export default Header;

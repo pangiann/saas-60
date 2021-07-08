@@ -76,12 +76,7 @@ h2 {
 
 a, a:visited, a:hover {
   text-decoration: none;
-}
-
-.cont--nav {
-  max-width: 83.375rem;
-  margin: 0 auto;
-}
+}1rem
 .cont--sec {
   max-width: 130rem;
   margin: 0 auto;
@@ -347,5 +342,8 @@ a, a:visited, a:hover {
   color: #2d314d;
   font-size: 15px;
 }
-
+.username2{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
 /*# sourceMappingURL=style.css.map */

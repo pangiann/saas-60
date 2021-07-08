@@ -60,6 +60,8 @@ export class Login extends React.Component {
                     confirmButtonColor: "#242424"
                 }).then(function () {
                     document.cookie = "token_id = " + json_obj.token;
+                    document.cookie = "user_id=" + json_obj.userId;
+
                     window.location.href = '/';
                 })
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import './scss/style.scss';
 import { Link } from 'react-router-dom';
-import { show_qa_url, show_user } from "../../base_url";
+import {  show_user } from "../../base_url";
 import Cookies from "js-cookie";
 import ProfileIcon from '../../profile-icon.png';
 import answer from "../images/Answer.jpg";
@@ -14,47 +14,35 @@ class MyProfile extends React.Component {
         super(props);
         this.state = {
             click: true,
-            user: {},
-            question: {},
-            question_id: this.props.location.state,
-            answers: [],
-            keywords: [],
-            description: ''
+            user: {}
         };
     }
-    //   async componentDidMount() {
-    //     console.log(Cookies.get("token_id"));
-    //     const myHeaders = new Headers();
-    //     myHeaders.append("Content-Type", "application/json");
-    //     const raw = JSON.stringify({ "questionId": this.state.question_id });
-    //     const requestOptions = {
-    //       method: 'POST',
-    //       headers: myHeaders,
-    //       body: raw,
-    //       redirect: 'follow'
-    //     };
-    //     const response = await fetch(show_qa_url + "/questions/question_id", requestOptions)
-    //     const json = await response.json();
-    //     console.log(json);
-    //     await this.setState({
-    //       question: json.result[0]
-    //     })
-    //     await this.setState({
-    //       keywords: this.state.question.keywords
-    //     })
-    //     const response2 = await fetch(show_qa_url + "/answers/question", requestOptions)
-    //     const json2 = await response2.json();
-    //     console.log(json2);
-    //     await this.setState({
-    //       answers: json2.result
-    //     })
-    //     await console.log(this.state.answers);
-    //   }
-    //   handleDescriptionChange = (event) => {
-    //     this.setState({
-    //       description: event.target.value
-    //     })
-    //   }
+      async componentDidMount() {
+        console.log(Cookies.get("token_id"));
+
+
+
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"));
+        myHeaders.append("Content-Type", "application/json");
+        
+        var raw = JSON.stringify({"userId":Cookies.get("user_id")});
+        
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+        
+        const response = await fetch(show_user + "/user", requestOptions)
+        const json = await response.json();
+        console.log(json.result);
+        await this.setState({
+          user: json.result
+        })
+      }
+
 
 
 
@@ -74,19 +62,19 @@ class MyProfile extends React.Component {
                             </div>
 
                             <div className="info-box">
-                                <p>Username:</p>
-                                <p>Email:</p>
-                                <p>Number of questions:</p>
-                                <p>Number of answers:</p>
-                                <p>Upvotes given:</p>
-                                <p>Upvotes received:</p>
+                                <p>Username: <b>{this.state.user.username}</b></p>
+                                <p>Email: <b>{this.state.user.email}</b></p>
+                                <p>Number of questions: <b>{this.state.user.num_of_questions}</b></p>
+                                <p>Number of answers: <b>{this.state.user.number_of_answers}</b></p>
+                                <p>Upvotes given: <b>{this.state.user.upvotes_given}</b></p>
+                                <p>Upvotes received: <b>{this.state.user.upvotes_received}</b></p>
 
                             </div>
                         </div>
                         <div className="choice__grid">
 
                             <a href="#" className="choice__item">
-                                <Link to='/keywords'>
+                                <Link to='/myqna'>
                                     <div className="choice__image"
                                         style={{ backgroundImage: `url(${search_keyword})` }}>
                                     </div>
