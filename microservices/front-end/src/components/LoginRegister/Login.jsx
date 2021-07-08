@@ -2,6 +2,7 @@ import React from "react";
 import loginImg from "../../mylogo2.png";
 import {login_register_url} from "../../base_url";
 //import { Redirect } from 'react-router-dom';
+import validator from 'validator'
 import Swal from 'sweetalert2'
 import GoogleLogin from 'react-google-login';
 
@@ -119,7 +120,7 @@ export class Login extends React.Component {
                 </div>
             </div>
             <div className="login_button">
-                <button type="button" className="btn_teo" onClick={this.handleLogin}>
+                <button type="button" className="btn_teo btn_form" onClick={this.handleLogin}>
                     Login
                 </button>
             </div>
@@ -130,9 +131,10 @@ export class Login extends React.Component {
                 onFailure={this.responseFailGoogle}
                 cookiePolicy={'single_host_origin'}
             />
-            <div className="other_option hide-for-desktop">
-                <a onClick={changeChoice} className="log_option" name="Register">Not Registered Yet?</a>
+            <div className="other_option">
+                <a onClick={changeChoice} className="log_option" name="Register">Not registered yet to Ask-me-anything?</a>
             </div>
+
 
         </div>
         );

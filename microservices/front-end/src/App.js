@@ -5,8 +5,8 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import Keywords from './components/Keywords/Keywords';
 import TimeSearch from './components/TimeSearch/TimeSearch';
-import AskQuestion from './components/AskQuestion/AskQuestion';
-import AnswerQuestion from './components/AnswerQuestion/AnswerQuestion';
+import AskQuestionPage from './pages/AskQuestion';
+import AnswerQuestionPage from './pages/AnswerQuestion';
 import ShowQuestion from './components/ShowQuestion/ShowQuestion';
 import MyProfile from './components/MyProfile/MyProfile';
 import MyQnA from './components/MyQnA/MyQnA';
@@ -29,9 +29,9 @@ function App() {
           <Route path='/timesearch' exact component=
             {TimeSearch} />
           <Route path='/askquestion' exact component=
-            {AskQuestion} />
+            {AskQuestionPage} />
           <Route path='/answerquestion' exact component=
-            {AnswerQuestion} />
+            {AnswerQuestionPage} />
           <Route path='/question' exact component=
             {ShowQuestion} />
           <Route path='/myprofile' exact component=

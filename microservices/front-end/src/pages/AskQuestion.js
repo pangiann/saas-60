@@ -1,12 +1,14 @@
 import React,{ useState} from 'react';
-import '../components/Home/scss/style.scss';
+import '../components/AskQuestion/scss/style.scss';
+import Header from '../components/Header/Header';
+import AskQuestion from "../components/AskQuestion/AskQuestion";
 import ChoicesBoxes from '../components/ChoicesBoxes/Choices'
 import { Link } from 'react-router-dom';
 import '../App.css';
-import Header from '../components/Header/Header';
 
 
-class Home extends React.Component  {
+
+class AskQuestionPage extends React.Component  {
 
     constructor(props) {
         super(props);
@@ -16,10 +18,10 @@ class Home extends React.Component  {
     }
     render() {
         return (
-            <ChoicesBoxes/>
+            <AskQuestion/>
         );
     }
 }
 
 
-export default Home;
+export default AskQuestionPage;

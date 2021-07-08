@@ -3,6 +3,8 @@ import "../components/LoginRegister/scss/style.scss";
 import { Login } from "../components/LoginRegister/Login";
 import { Register } from "../components/LoginRegister/Register";
 import "../components/Header/scss/style.scss"
+import validator from 'validator'
+
 class LoginRegister extends React.Component {
     constructor(props) {
       super(props);
@@ -11,33 +13,12 @@ class LoginRegister extends React.Component {
       };
       
     }
-  
     componentDidMount() {
       //Add .right by default
-      this.rightSide.classList.add("right");
     }
 
     changeState() {
       const { isLoginActive } = this.state;
-      const LoginClass = document.getElementById("log");
-      if (!isLoginActive) {
-          LoginClass.classList.remove("LeftPadding");
-          LoginClass.classList.add("RightPadding");
-      }
-      else {
-          LoginClass.classList.remove("RightPadding");
-          LoginClass.classList.add("LeftPadding");
-      }
-      if (isLoginActive) {
-        this.rightSide.classList.remove("right");
-        this.rightSide.classList.add("left");
-
-
-      } else {
-        this.rightSide.classList.remove("left");
-        this.rightSide.classList.add("right");
-
-      }
       this.setState(prevState => ({ isLoginActive: !prevState.isLoginActive }));
     }
 
@@ -48,7 +29,7 @@ class LoginRegister extends React.Component {
       const currentActive = isLoginActive ? "login" : "register";
 
       return (
-        <div className="LoginRegister RightPadding" id="log" >
+        <div className="LoginRegister " id="log" >
           <div className="login"  >
             <div className="container" ref={ref => (this.container = ref)}>
               {isLoginActive && (
@@ -66,27 +47,10 @@ class LoginRegister extends React.Component {
 
               )}
             </div>
-            <RightSide
-              current={current}
-              currentActive={currentActive}
-              containerRef={ref => (this.rightSide = ref)}
-              onClick={this.changeState.bind(this)}
-            />
           </div>
         </div>
       );
     }
   }
-  
-  const RightSide = props => {
-    return (
 
-          <div className="right-side " ref={props.containerRef} onClick={props.onClick} >
-            <div className="inner-container ">
-              <div className="text">{props.current}</div>
-            </div>
-          </div>
-
-    );
-  };
   export default LoginRegister;

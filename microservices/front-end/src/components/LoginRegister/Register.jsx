@@ -3,6 +3,7 @@ import loginImg from "../../mylogo2.png";
 import GoogleLogin from "react-google-login";
 import {login_register_url} from "../../base_url";
 import Swal from "sweetalert2";
+import validator from 'validator';
 
 
 export class Register extends React.Component {
@@ -11,14 +12,50 @@ export class Register extends React.Component {
         this.state = {
             username: '' ,
             password: '',
-            email: ''
+            email: '',
+            formErrors: {email: '', password: ''},
+            emailValid: false,
+            passwordValid: false,
+            formValid: false
         };
     }
-    changeStateHandler = (event) => {
-        let nam = event.target.name;
-        let val = event.target.value;
-        this.setState({[nam]: val});
+    handleUserInput = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({[name]: value},
+            () => { this.validateField(name, value) });
     }
+
+    validateField = (fieldName, value) => {
+        let fieldValidationErrors = this.state.formErrors;
+        let emailValid = this.state.emailValid;
+        let passwordValid = this.state.passwordValid;
+
+        switch(fieldName) {
+            case 'email':
+                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+                break;
+            case 'password':
+                passwordValid = value.length >= 6;
+                fieldValidationErrors.password = passwordValid ? '': ' is too short';
+                break;
+            default:
+                break;
+        }
+        this.setState({formErrors: fieldValidationErrors,
+            emailValid: emailValid,
+            passwordValid: passwordValid
+        }, this.validateForm);
+    }
+
+    validateForm() {
+        this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+    }
+
+
+
+
     handleRegister = (event) => {
         let username = this.state.username;
         let password = this.state.password;
@@ -99,6 +136,7 @@ export class Register extends React.Component {
         let styleObj2 = {lineHeight: 2}
         return (
         <div className="base.container" >
+
             <div className="content">
                 <div className="image">
                     <img src={loginImg} />    
@@ -106,20 +144,36 @@ export class Register extends React.Component {
                 <div className="form" style={styleObj2}>
                     <div className="form-group">
                         <label htmlFor="username"><b> Username: </b></label>
-                        <input className = "input_field" type="text" name="username" onChange={this.changeStateHandler} placeholder="username..." id="username" />
+                        <input className = "input_field" type="text" name="username" onChange={this.handleUserInput} placeholder="Username" id="username" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="password"> <b>Password:</b></label>
-                        <input className = "input_field" type="password" name="password" onChange={this.changeStateHandler} placeholder="password..." id="password" />
+                        <input className = "input_field" type="password" name="password" onChange={this.handleUserInput} placeholder="Password" id="password" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="email"> <b> Email: &nbsp;&nbsp;&nbsp;</b></label>
-                        <input className = "input_field" type="text" name="email" onChange={this.changeStateHandler} placeholder="email..." id="email" />
+                        <input className = "input_field" type="text" name="email" onChange={this.handleUserInput} placeholder="Email Address" id="email" />
                     </div>
                 </div>
             </div>
+            <div className={"panel"}>
+                <div className='formErrors'>
+                    {Object.keys(this.state.formErrors).map((fieldName, i) => {
+                        if(this.state.formErrors[fieldName].length > 0){
+                            return (
+                                <p key={i}>{fieldName} {this.state.formErrors[fieldName]}</p>
+                            )
+                        } else {
+
+                            return (
+                                <p className={"hide-for-desktop hide-for-mobile"} />
+                            )
+                        }
+                    })}
+                </div>
+            </div>
             <div className="register_button">
-                <button type="button" className="btn_teo"  onClick={this.handleRegister}>Register</button>
+                <button type="button" className="btn_teo btn_form"  onClick={this.handleRegister}>Register</button>
             </div>
             <GoogleLogin
                 clientId="1074766905977-lm80vj56vtkl2r3qh0urnv1eeaut71ns.apps.googleusercontent.com"
@@ -128,7 +182,7 @@ export class Register extends React.Component {
                 onFailure={this.responseFailGoogle}
                 cookiePolicy={'single_host_origin'}
             />
-            <div className="other_option hide-for-desktop">
+            <div className="other_option ">
                 <a onClick={changeChoice} className="log_option" name="Log In">Already Registered?</a>
             </div>
         </div>

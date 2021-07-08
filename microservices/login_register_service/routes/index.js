@@ -45,6 +45,7 @@ router.post('/googlelogin',
                     res.json({
                         name: name,
                         email: email,
+
                         token: jwt.sign({name: name}, JWT_SECRET, {expiresIn: 36000})
                     });
                 }
@@ -60,10 +61,20 @@ router.post('/googlelogin',
 router.post('/signin',
     passport.authenticate('signin', {session: false}),
     function(req, res, next) {
-        res.json({
-            msg: "Successful login",
-            token: jwt.sign(req.user, JWT_SECRET, {expiresIn: 36000})
-        });
+
+        users.findUser(req.user.username)
+            .then(result  => {
+                console.log(result._id);
+                res.json({
+                    msg: "Successful login",
+                    userId: result._id,
+                    token: jwt.sign(req.user, JWT_SECRET, {expiresIn: 36000})
+                });
+            })
+            .catch(err => {
+                next(createError(err.code || 400, err.message));
+            })
+
     }
 );
 // POST register
