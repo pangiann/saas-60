@@ -107,7 +107,6 @@
 
 }
 .input_field {
-
   padding: 0 0.8rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
@@ -117,15 +116,16 @@
 
 }
 
-input[type=text], input[type=password], select, textarea{
-  width: 100%;
+input[type=text], input[type=password]{
+  display: inline-block;
+  width: 90%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
   resize: vertical;
-  @include breakpoint-up(medium){
-    max-width: 100%;
+  @include breakpoint-down(medium){
+    max-width: 90%;
     font-size: 1.125rem;
 
   }
@@ -137,6 +137,7 @@ input[type=text]:focus, input[type=password]:focus {
 }
 
 label {
+  margin-left: 1.2rem;
   display: block;
   text-align: left;
   font-size: 0.8rem;
@@ -146,9 +147,7 @@ label {
   @include breakpoint-down(medium){
     font-size: 0.8rem;
   }
-  @include breakpoint-up(medium){
-    flex: 1;
-  }
+
 }
 
 .logo-img {
@@ -157,7 +156,7 @@ label {
 }
 
 .btn_form {
-  width: 100%;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 0rem;

@@ -156,22 +156,7 @@ export class Register extends React.Component {
                     </div>
                 </div>
             </div>
-            <div className={"panel"}>
-                <div className='formErrors'>
-                    {Object.keys(this.state.formErrors).map((fieldName, i) => {
-                        if(this.state.formErrors[fieldName].length > 0){
-                            return (
-                                <p key={i}>{fieldName} {this.state.formErrors[fieldName]}</p>
-                            )
-                        } else {
 
-                            return (
-                                <p className={"hide-for-desktop hide-for-mobile"} />
-                            )
-                        }
-                    })}
-                </div>
-            </div>
             <div className="register_button">
                 <button type="button" className="btn_teo btn_form"  onClick={this.handleRegister}>Register</button>
             </div>
