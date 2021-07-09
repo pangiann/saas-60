@@ -25,7 +25,7 @@ passport.use('token', new JWTstrategy(
     }
 ));
 
-function calculate_statistics(result, first_year, last_year, tot_num, tot_years_num) {
+function calculate_statistics(result, first_year, last_year, tot_num_per_day, tot_num_per_month, tot_years_num) {
     const rows = last_year - first_year + 1;
     const columns = 12;
     let year = first_year;
@@ -38,12 +38,15 @@ function calculate_statistics(result, first_year, last_year, tot_num, tot_years_
         }
         else {
             const month = (new Date(result[j].date)).getMonth();
-            tot_num[i][month]++
+            const day = (new Date(result[j].date)).getDay();
+
+            tot_num_per_day[i][month][day]++
+            tot_num_per_month[i][month]++
             j++;
         }
     }
     for (let i = 0; i < rows; i++) {
-        tot_years_num[i] = tot_num[i].reduce((a, b) => a + b, 0)
+        tot_years_num[i] = tot_num_per_month[i].reduce((a, b) => a + b, 0)
     }
 
 }
@@ -95,12 +98,11 @@ router.get('/questionsPerUser',
 // [
 //      {
 //            "keyword_sum": 3,
-//            "keywords": "everything
+//            "keywords":
 //      }
 //]
 
 router.get('/questionsPerKeyword',
-    passport.authenticate('token', {session: false}),
     function(req, res, next) {
         questions.questionsPerKeyword()
             .then(result => {
@@ -116,7 +118,6 @@ router.get('/questionsPerKeyword',
 );
 
 router.get('/questionsPerDay',
-    passport.authenticate('token', {session: false}),
     function(req, res, next) {
         questions.showQuestions()
             .then(result => {
@@ -125,9 +126,10 @@ router.get('/questionsPerDay',
                 let last_year = (new Date(result[result.length-1].date)).getFullYear();
                 const rows = last_year - first_year + 1;
                 const columns = 12;
-                let tot_num = Array(rows).fill().map(() => Array(columns).fill(0));
+                let tot_num_per_day = Array(rows).fill().map(() => Array(columns).fill().map(() => Array(31).fill(0)));
+                let tot_num_per_month = Array(rows).fill().map(() => Array(columns).fill(0));
                 let tot_years_num = new Array(rows);
-                calculate_statistics(result, first_year, last_year, tot_num, tot_years_num);
+                calculate_statistics(result, first_year, last_year, tot_num_per_day, tot_num_per_month, tot_years_num);
 
 
                 res.json( {
@@ -135,7 +137,8 @@ router.get('/questionsPerDay',
                     'questions' : result,
                     'first_year' : first_year,
                     'last_year' : last_year,
-                    'tot_num' : tot_num,
+                    'tot_num_per_day' : tot_num_per_day,
+                    'tot_num_per_month' : tot_num_per_month,
                     'tot_years_num' : tot_years_num
                 });
             })

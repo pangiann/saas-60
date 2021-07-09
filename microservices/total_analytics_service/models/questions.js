@@ -59,7 +59,7 @@ module.exports = {
         try {
             return await questions_collection.aggregate([
                 {$unwind: "$keywords" }, {$group: {_id: "$keywords", keyword_sum: {$sum: 1}}},
-                {$project: {_id: 0, keywords: "$_id", keyword_sum: 1}},
+                {$project: {_id: 0, keyword: "$_id", keyword_sum: 1}},
                 {$sort: {keyword_sum: -1} }
             ]).toArray();
         }

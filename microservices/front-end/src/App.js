@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import LoginRegister from './pages/LoginRegister';
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
-import Keywords from './components/Keywords/Keywords';
+import QuestionsPerKeywordPage from './pages/QuestionsPerKeyword';
+import QuestionsPerTimePage from "./pages/QuestionsPerTime";
 import TimeSearch from './components/TimeSearch/TimeSearch';
 import AskQuestionPage from './pages/AskQuestion';
 import AnswerQuestionPage from './pages/AnswerQuestion';
@@ -25,9 +26,9 @@ function App() {
           <Route path='/loginregister' exact component=
             {LoginRegister} />
           <Route path='/keywords' exact component=
-            {Keywords} />
+            {QuestionsPerKeywordPage} />
           <Route path='/timesearch' exact component=
-            {TimeSearch} />
+            {QuestionsPerTimePage} />
           <Route path='/askquestion' exact component=
             {AskQuestionPage} />
           <Route path='/answerquestion' exact component=
