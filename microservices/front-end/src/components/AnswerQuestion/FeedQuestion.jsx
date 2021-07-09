@@ -15,7 +15,7 @@ class FeedQuestion extends React.Component {
     async componentDidMount() {
         await this.setState({
             question: this.props.question,
-            keywords: this.props.question.keywords == undefined ? [] : this.props.question.keywords
+            keywords: this.props.question.keywords === undefined ? [] : this.props.question.keywords
         })
     }
 
@@ -30,24 +30,22 @@ class FeedQuestion extends React.Component {
                         </div>
                         
                         <div className="author">
-                            Written by: {this.state.question.username}
+                            Asked by: {this.state.question.username}
                         </div>
-                        <div className="author">
-                            Keywords: &nbsp;
+                        <div className="flex">
                             {this.state.keywords.map(keyword =>
-                            <div className="keyword_display" key={Math.random()}>
-                                <p>{keyword}</p>
-                            </div>
-                        )}
+                                <div className="keyword_display" key={Math.random()}>
+                                    <p>{keyword}</p>
+                                </div>
+                            )}
+
                         </div>
                         <div className="those">
                             <div className="num_of_answers">
                                 Answers: {this.state.question.num_of_answers}
                             </div>
-                            <button type="button" className="answer_button" >
-                                Answer now!
-                            </button>
                         </div>
+
                     </div>
                 </Link>
             </div>

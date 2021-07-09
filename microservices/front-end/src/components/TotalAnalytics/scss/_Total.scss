@@ -1,0 +1,46 @@
+.tot_anal_flex {
+    display: flex;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    .tot_box {
+        margin: auto;
+        display: grid;
+        gap: 2.3rem;
+        //grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+        grid-template-columns: 1fr;
+
+        @include breakpoint-up(medium) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include breakpoint-up(large) {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        justify-content: center;
+        justify-self: center;
+        align-self: center;
+        .box_info {
+            @include breakpoint-down(medium) {
+                padding: 0.2rem 0.5rem;
+                font-size: 1rem;
+            }
+            //border: 1px solid #6a98ce;
+            border-radius: 4px;
+            padding: 0.4rem 1rem;
+            font-family: "Open Sans", sans-serif;
+            .info {
+
+                text-align: center;
+                font-weight: bold;
+                color: #6a98ce;
+            }
+            p {
+                text-align: center;
+                color: #6a98ce;
+                margin: 0;
+            }
+        }
+    }
+
+}

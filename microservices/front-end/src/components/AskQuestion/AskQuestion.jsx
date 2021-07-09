@@ -1,7 +1,9 @@
 import React from 'react';
 import './scss/style.scss';
 import { Link } from 'react-router-dom';
-import {show_qa_url} from "../../base_url";
+import {add_qa_url, show_qa_url} from "../../base_url";
+import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 class AskQuestion extends React.Component {
     constructor(props) {
@@ -28,6 +30,49 @@ class AskQuestion extends React.Component {
             keywords: event.target.value
         })
     }
+    submitQuestion = (event) => {
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + Cookies.get('token_id'));
+        myHeaders.append("Content-Type", "application/json");
+        console.log(this.state.keywords.split(' '))
+        var raw = JSON.stringify({
+            "userId": Cookies.get('user_id'),
+            "title": this.state.title,
+            "question":this.state.description,
+            "keywords": this.state.keywords.split(' ')
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch(add_qa_url + "/question", requestOptions)
+            .then(response => {
+                if (response.status === 200) {
+                    return response.text();
+                } else {
+                    throw new Error(response.status);
+                }
+            })
+            .then(result => {
+                console.log(result)
+                window.location.replace("/");
+                //window.location.reload();
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: 'Error!',
+                    text: error,
+                    icon: 'error',
+                    customClass: "swal_ok_button",
+                    confirmButtonColor: "#242424"
+                });
+            });
+
+    }
 
     render() {
         return (
@@ -36,7 +81,7 @@ class AskQuestion extends React.Component {
 
                 <form>
                     <div className="outside-box">
-                        <div className="title">Title</div>
+                        <div className="quest_title">Title</div>
                         {/* <div className="inside-box"> */}
                             <input
                                 type="text"
@@ -47,7 +92,7 @@ class AskQuestion extends React.Component {
                         {/* </div> */}
                     </div>
                     <div className="outside-box">
-                        <div className="title">Description</div>
+                        <div className="quest_title">Description</div>
                         {/* <div className="inside-box"> */}
                             <textarea
                                 type="text"
@@ -58,7 +103,7 @@ class AskQuestion extends React.Component {
                         {/* </div> */}
                     </div>
                     <div className="outside-box">
-                        <div className="title">Keywords</div>
+                        <div className="quest_title">Keywords</div>
                         {/* <div className="inside-box"> */}
                             <input
                                 type="text"
@@ -68,13 +113,11 @@ class AskQuestion extends React.Component {
                             />
                         {/* </div> */}
                     </div>
-                    <Link to='/'>
-                    <button type="button" className='button_ask'
-                    // onClick={ () =>  reserveSlot(point.id , moment(selectedDate).format('YYYY-MM-DD') + " :00")}
-                    >
-                        Post your question now!
+
+                    <button type="button" className='button_ask' onClick={this.submitQuestion}>
+                        [+] Ask the Question
                     </button>
-                    </Link>
+
                 </form>
             </div>
         );

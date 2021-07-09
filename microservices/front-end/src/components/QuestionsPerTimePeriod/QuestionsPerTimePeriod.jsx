@@ -1,5 +1,8 @@
 import React from 'react';
 import './scss/style.scss';
+import jwt from 'jwt-decode'
+import Cookies from "js-cookie";
+
 import { Link } from 'react-router-dom';
 import {show_analytics} from "../../base_url";
 import { Chart } from "react-google-charts";
@@ -9,6 +12,7 @@ class QuestionsPerTimePeriod extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            isLoginActive: false,
             tot_num_per_day_arr: [[]],
             tot_num_per_month_arr: [[]],
             tot_years_num_arr: [[]],
@@ -26,15 +30,39 @@ class QuestionsPerTimePeriod extends React.Component {
         };
     }
     componentDidMount() {
+        let api_request = "/questionsPerDay"
         const myHeaders = new Headers();
-
-        const requestOptions = {
+        let requestOptions = {
             method: 'GET',
             headers: myHeaders,
             redirect: 'follow'
-        };
+        }
+        if (Cookies.get("token_id") !== undefined && Cookies.get("user_id") !== undefined) {
+            this.setState({
+                isLoginActive: true
+            })
+            let auth_token = Cookies.get("token_id")
+            api_request = "/questionsPerDay/user"
+            const decodedToken = jwt(auth_token);
 
-        fetch(show_analytics + "/questionsPerDay", requestOptions)
+            myHeaders.append("Authorization", "Bearer " + auth_token);
+            myHeaders.append("Content-Type", "application/json");
+
+            let raw = JSON.stringify(
+                {"username": decodedToken.username}
+            );
+
+            requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+
+        }
+
+
+        fetch(show_analytics + api_request, requestOptions)
             .then(response => {
 
                 if (response.status === 200) {

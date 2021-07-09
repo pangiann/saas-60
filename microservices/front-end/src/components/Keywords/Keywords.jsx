@@ -1,5 +1,5 @@
-import React from 'react';
-import './scss/style.scss';
+/*import React from 'react';
+//import './scss/style.scss';
 import FeedQuestion from "../AnswerQuestion/FeedQuestion.jsx";
 import { show_qa_url } from "../../base_url";
 
@@ -64,3 +64,4 @@ class Keywords extends React.Component {
 }
 
 export default Keywords;
+*/

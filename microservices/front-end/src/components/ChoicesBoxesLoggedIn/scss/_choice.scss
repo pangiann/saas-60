@@ -1,12 +1,14 @@
-.choices {
+.choices_profiled {
     background-color: white;
     padding-right: 50px;
     padding-left: 50px;
-    margin-top: -7rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
 }
 
 .choice {
     &__content {
+        padding: 1.5rem;
 
     }
     &__top {
@@ -86,4 +88,5 @@
     line-height: 1.2;
     // margin-left: 2rem;
     margin-bottom: 3rem;
+    margin-top: 3rem;
 }

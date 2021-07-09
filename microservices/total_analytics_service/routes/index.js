@@ -5,7 +5,7 @@ const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
 const mongodb = require('mongodb');
-
+const validator = require('../middleware/payload_validator');
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy;
 
@@ -77,7 +77,6 @@ function calculate_statistics(result, first_year, last_year, tot_num_per_day, to
 //      }
 // ]
 router.get('/questionsPerUser',
-    passport.authenticate('token', {session: false}),
     function(req, res, next) {
         questions.questionsPerUser()
             .then(result => {
@@ -149,6 +148,43 @@ router.get('/questionsPerDay',
     }
 );
 
+const expected_user = {
+    "username" : ""
+}
+const mandatory_user = ["username"]
+router.post('/questionsPerDay/user',
+    passport.authenticate('token', {session: false}),
+    validator.payloadValidator(expected_user, mandatory_user, true),
+    function(req, res, next) {
+        questions.showQuestionsOfUser(req.body.username)
+            .then(result => {
+                console.log(result[0].date)
+                let first_year = (new Date(result[0].date)).getFullYear();
+                let last_year = (new Date(result[result.length-1].date)).getFullYear();
+                const rows = last_year - first_year + 1;
+                const columns = 12;
+                let tot_num_per_day = Array(rows).fill().map(() => Array(columns).fill().map(() => Array(31).fill(0)));
+                let tot_num_per_month = Array(rows).fill().map(() => Array(columns).fill(0));
+                let tot_years_num = new Array(rows);
+                calculate_statistics(result, first_year, last_year, tot_num_per_day, tot_num_per_month, tot_years_num);
+
+
+                res.json( {
+                    'msg' : 'Total Questions for User',
+                    'questions' : result,
+                    'first_year' : first_year,
+                    'last_year' : last_year,
+                    'tot_num_per_day' : tot_num_per_day,
+                    'tot_num_per_month' : tot_num_per_month,
+                    'tot_years_num' : tot_years_num
+                });
+            })
+            .catch(err => {
+                next(createError(err.code || 400, err.message));
+
+            })
+    }
+);
 
 // show question per user, e.g. pangiann asked 5 questions, mairi asked 3 questions etc.
 // returns json in form:
@@ -159,7 +195,6 @@ router.get('/questionsPerDay',
 //      }
 // ]
 router.get('/answersPerUser',
-    passport.authenticate('token', {session: false}),
     function(req, res, next) {
         answers.answersPerUser()
             .then(result => {
@@ -177,7 +212,6 @@ router.get('/answersPerUser',
 
 
 router.get('/answersPerDay',
-    passport.authenticate('token', {session: false}),
     function(req, res, next) {
         answers.showAnswers()
             .then(result => {

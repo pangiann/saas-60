@@ -3,11 +3,8 @@ import './scss/style.scss';
 import { Link } from 'react-router-dom';
 import {  show_user } from "../../base_url";
 import Cookies from "js-cookie";
-import ProfileIcon from '../../profile-icon.png';
-import answer from "../images/Answer.jpg";
-import ask from "../images/ask.jpeg";
-import statistics from "../images/statistics.jpg";
-import search_keyword from "../images/search-keyword.jpg";
+
+import ChoicesBoxesLoggedIn from "../ChoicesBoxesLoggedIn/ChoicesBoxesLoggedIn";
 
 class MyProfile extends React.Component {
     constructor(props) {
@@ -51,113 +48,69 @@ class MyProfile extends React.Component {
     render() {
         return (
             <div>
-                <section className="choices">
 
-                    <div className="choice__content container container--nav container--pall">
-                        <div className="welcome_title_of_profile">My Profile</div>
+                <section className="hero">
+                    <div className="hero__background">
+                        <div className="hero__title">
+                            <div className="bullet">
+                                <div className="bullet__one">
 
-                        <div className="profile-box2">
-                            <div className="picture2">
-                                <img src={ProfileIcon} />
+                                </div>
                             </div>
-
-                            <div className="info-box">
-                                <p>Username: <b>{this.state.user.username}</b></p>
-                                <p>Email: <b>{this.state.user.email}</b></p>
-                                <p>Number of questions: <b>{this.state.user.num_of_questions}</b></p>
-                                <p>Number of answers: <b>{this.state.user.number_of_answers}</b></p>
-                                <p>Upvotes given: <b>{this.state.user.upvotes_given}</b></p>
-                                <p>Upvotes received: <b>{this.state.user.upvotes_received}</b></p>
-
-                            </div>
+                            <h3> Profile Info </h3>
                         </div>
-                        <div className="choice__grid">
+                        <div className="hero__info">
+                            <div className="circle">
+                                <div className="circle__one">
 
-                            <a href="#" className="choice__item">
-                                <Link to='/myqna'>
-                                    <div className="choice__image"
-                                        style={{ backgroundImage: `url(${search_keyword})` }}>
-                                    </div>
+                                </div>
+                            </div>
+                            <p id="username">Username: {this.state.user.username}</p>
+                        </div>
+                        <div className="hero__info">
+                            <div className="circle">
+                                <div className="circle__one">
 
-                                    <div className="choice__text">
-                                        <div className="choice__title">
-                                            My Q&A
-                                        </div>
-                                        <div className="choice__description">
-                                            View all the questions and
-                                            answers that you have posted.
-                                        </div>
-                                    </div>
-                                </Link>
-                            </a>
+                                </div>
+                            </div>
+                            <p id="email">Email: {this.state.user.email}</p>
+                        </div>
+                        <div className="hero__info">
+                            <div className="circle">
+                                <div className="circle__one">
 
+                                </div>
+                            </div>
+                            <p id="num_of_questions">Number of Questions: {this.state.user.num_of_questions}</p>
+                        </div>
 
-                            <a href="#" className="choice__item">
-                                <Link to='/timesearch'>
-                                    <div className="choice__image"
-                                        style={{ backgroundImage: `url(${statistics})` }}>
-                                    </div>
+                        <div className="hero__info">
+                            <div className="circle">
+                                <div className="circle__one">
 
-                                    <div className="choice__text">
-                                        <div className="choice__title">
-                                            My contributions per day
-                                        </div>
-                                        <div className="choice__description">
-                                            Select a time period of your
-                                            preferance and see all the
-                                            analytics regarding your posted
-                                            questions and answers.
-                                        </div>
-                                    </div>
-                                </Link>
-                            </a>
+                                </div>
+                            </div>
+                            <p id="name">Number of Answers: {this.state.user.num_of_answers}</p>
+                        </div>
+                        <div className="hero__info">
+                            <div className="circle">
+                                <div className="circle__one">
 
+                                </div>
+                            </div>
+                            <p id="address">Upvotes Given: {this.state.user.upvotes_given}</p>
+                        </div>
+                        <div className="hero__info">
+                            <div className="circle">
+                                <div className="circle__one">
 
-                            <a href="#" className="choice__item">
-                                <Link to='/askquestion'>
-                                    <div className="choice__image"
-                                        style={{ backgroundImage: `url(${ask})` }}>
-                                    </div>
-
-                                    <div className="choice__text">
-                                        <div className="choice__title">
-                                            Ask a new question
-                                        </div>
-                                        <div className="choice__description">
-                                            Struggling with finding answers
-                                            to a problem? Post a new question
-                                            and let our community take
-                                            care the rest.
-                                        </div>
-                                    </div>
-                                </Link>
-                            </a>
-
-
-                            <a href="#" className="choice__item">
-                                <Link to='/answerquestion'>
-                                    <div className="choice__image"
-                                        style={{ backgroundImage: `url(${answer})` }}>
-                                    </div>
-
-                                    <div className="choice__text">
-                                        <div className="choice__title">
-                                            Answer a question
-                                        </div>
-                                        <div className="choice__description">
-                                            Are you Mr. BigBrains? Answer a
-                                            question and make someone's life easier.
-                                        </div>
-                                    </div>
-                                </Link>
-                            </a>
-
+                                </div>
+                            </div>
+                            <p id="address">Upvotes Received: {this.state.user.upvotes_received}</p>
                         </div>
                     </div>
-
                 </section>
-
-                <br></br>
+                <ChoicesBoxesLoggedIn />
 
             </div>
         );

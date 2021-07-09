@@ -75,8 +75,7 @@ module.exports = {
             const query = {question_id: question_id};
             const answers_collection = client.db('questions_answers_only').collection('Answers');
             // toArray() is used to prettify the answer and convert to json
-            const result = await answers_collection.find(query).toArray();
-
+            const result = await answers_collection.find(query).sort( { date: -1 } ).toArray();
             // if length of result is zero it means that no answers found for this question_id, so return 404 error
             if (result.length === 0) {
                 throw new CustomException("No answers found for this question id", 404);
@@ -91,7 +90,7 @@ module.exports = {
         try {
             const query = {user_id: user_id};
             const answers_collection = client.db('questions_answers_only').collection('Answers');
-            const result = await answers_collection.find(query).toArray();
+            const result = await answers_collection.find(query).sort( { date: -1 } ).toArray();
             if (result === null) {
                 throw new CustomException("No answers for this user", 400);
             }
@@ -104,7 +103,7 @@ module.exports = {
     showAnswers: async function () {
         try {
             const questions_collection = client.db('q&a').collection('Answers');
-            const result = await questions_collection.find().toArray();
+            const result = await questions_collection.find().sort( { date: -1 } ).toArray();
             if (result.length === 0) {
                 throw new CustomException("No answers found", 404);
 

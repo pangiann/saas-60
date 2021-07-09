@@ -4,6 +4,7 @@ import ChoicesBoxes from '../components/ChoicesBoxes/Choices'
 import { Link } from 'react-router-dom';
 import '../App.css';
 import Header from '../components/Header/Header';
+import TotalAnalytics from "../components/TotalAnalytics/TotalAnalytics";
 
 
 class Home extends React.Component  {
@@ -16,7 +17,11 @@ class Home extends React.Component  {
     }
     render() {
         return (
-            <ChoicesBoxes/>
+            <div>
+                <ChoicesBoxes/>
+                <TotalAnalytics />
+            </div>
+
         );
     }
 }

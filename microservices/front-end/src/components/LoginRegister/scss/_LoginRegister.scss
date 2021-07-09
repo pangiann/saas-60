@@ -39,26 +39,11 @@
     transform: rotate(360deg);
   }
 }
-.LeftPadding {
-  padding-left: 15rem;
-  @include breakpoint-down(medium) {
-    padding-left: 4rem;
-  }
 
-}
-.RightPadding {
-  padding-right: 15rem;
-  @include breakpoint-down(medium) {
-    padding-right: 4rem;
-  }
-
-}
 //Login Main Container
 .login {
   width: 27em;
   height: auto;
-  //padding-right: 60rem;
-  //min-height: 44em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -80,49 +65,7 @@
 
     //transition: transform 200ms ease-in-out;
   }
-  .right-side {
-    @include breakpoint-down(medium) {
-      display: none;
-    }
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 90%;
-    background-color: #6a98ce;
-    width: 100%;
-    position: absolute;
-    right: -34%;
-    border-radius: 6px;
-    z-index: 1;
-    transition: all 400ms ease-in-out;
-    cursor: pointer;
-    box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.281);
 
-
-    &.right {
-
-      right: -40%;
-      align-items: flex-end;
-      &:hover {
-        right: -45%;
-      }
-    }
-    &.left {
-      right: 40%;
-      align-items: flex-start;
-      &:hover {
-        right: 45%;
-      }
-    }
-
-    .text {
-      font-size: 21px;
-      font-weight: 500;
-      color: #fff;
-      margin-right: 3em;
-      margin-left: 3em;
-    }
-  }
 }
 
 .image {
@@ -151,8 +94,10 @@
 }
 
 .form-group {
-  display: inline-block;
-  width: 90%;
+
+  margin:auto;
+  //display: block;
+  width: 100%;
   align-items: center;
   @include breakpoint-up(medium){
     justify-content: center;
@@ -162,21 +107,18 @@
 
 }
 .input_field {
-  width: 90%;
-  display: inline-block;
+
   padding: 0 0.8rem;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
   resize: vertical;
-  @include breakpoint-up(medium){
-    flex: 3;
-  }
+
 }
 
 input[type=text], input[type=password], select, textarea{
-  width: 90%;
+  width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -199,7 +141,6 @@ label {
   text-align: left;
   font-size: 0.8rem;
   color: #62748e;
-  margin-left: 1.5rem;
   margin-bottom: 0rem;
   padding-bottom: 0rem;
   @include breakpoint-down(medium){
@@ -216,7 +157,7 @@ label {
 }
 
 .btn_form {
-  width: 82%;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 0rem;

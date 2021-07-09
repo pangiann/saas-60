@@ -54,6 +54,17 @@ module.exports = {
         }
 
     },
+    showQuestionsOfUser: async function (username) {
+        const questions_collection = client.db('total_analytics').collection('Questions');
+        const query = {username: username}
+        try {
+            return await questions_collection.find(query).sort( { date: 1 } ).toArray()
+        }
+        catch (error) {
+            throw error;
+        }
+
+    },
     questionsPerKeyword: async function () {
         const questions_collection = client.db('total_analytics').collection('Questions');
         try {

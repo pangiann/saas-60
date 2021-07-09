@@ -5,7 +5,6 @@ import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import QuestionsPerKeywordPage from './pages/QuestionsPerKeyword';
 import QuestionsPerTimePage from "./pages/QuestionsPerTime";
-import TimeSearch from './components/TimeSearch/TimeSearch';
 import AskQuestionPage from './pages/AskQuestion';
 import AnswerQuestionPage from './pages/AnswerQuestion';
 import ShowQuestion from './components/ShowQuestion/ShowQuestion';

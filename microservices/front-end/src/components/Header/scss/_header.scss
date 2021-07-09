@@ -1,6 +1,8 @@
 .header {
     
-    
+    &__page_choices {
+        width: 50%;
+    }
     &.open {
 
         
@@ -86,16 +88,44 @@
 
     }
 
-
-    &__buttons {
+    &__links {
         a {
-            font-size: $font-med;
-            color: $darkBlue;
-            
+            color: #777;
+            font-weight: bold;
             &:not(:last-child) {
-                margin-right: 45px;
+                margin-right: 1rem;
             }
-        }   
+        }
+    }
+    &__buttons {
+
+
+
+
+    }
+    .btn_header {
+        font-size: 21px;
+        margin: 1rem;
+        //width: 100px;
+        //height: 50px;
+        justify-self: center;
+        align-self: center;
+        padding: 0.5rem 1.5rem;
+        background-color: #6a98ce;
+        color: #fff;
+        border: 0px;
+        border-radius: 10px;
+        transition: all 250ms ease-in-out;
+        cursor: pointer;
+        &:hover {
+            opacity:80%;
+            background-color: #6a98ce;
+        }
+        &:focus {
+            outline: none;
+        }
+
+
     }
 
     

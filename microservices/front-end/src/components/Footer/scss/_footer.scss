@@ -4,6 +4,7 @@
     color: #000000;
     padding: 2.5rem;
     text-align: center;
+    margin-top: 1.5rem;
 
     .cont--nav {
         @include breakpoint-up(large) {

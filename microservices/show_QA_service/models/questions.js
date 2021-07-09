@@ -82,7 +82,7 @@ module.exports = {
     showQuestions: async function () {
         try {
             const questions_collection = client.db('questions_answers_only').collection('Questions');
-            const result = await questions_collection.find().toArray();
+            const result = await questions_collection.find().sort( { date: -1 } ).toArray();
 
             return result;
         }
@@ -115,7 +115,7 @@ module.exports = {
         console.log(keyword_array);
         try {
             const questions_collection = client.db('questions_answers_only').collection('Questions');
-            const result = await questions_collection.find(query).toArray();
+            const result = await questions_collection.find(query).sort( { date: -1 } ).toArray();
             console.log(result);
             if (result.length === 0) {
                 throw new CustomException("No questions found with these keywords", 404);
@@ -131,7 +131,7 @@ module.exports = {
         try {
 
             const questions_collection = client.db('questions_answers_only').collection('Questions');
-            const result = await questions_collection.find(query).toArray();
+            const result = await questions_collection.find(query).sort( { date: -1 } ).toArray();
             if (result.length === 0) {
                 throw new CustomException("No questions found with this user id", 404);
             }

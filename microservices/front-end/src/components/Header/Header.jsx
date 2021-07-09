@@ -18,7 +18,7 @@ class Header extends React.Component {
         };
     }
     async componentDidMount() {
-        if (Cookies.get("token_id") != '') {
+        if (Cookies.get("token_id") !== '') {
 
             var myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"));
@@ -110,7 +110,7 @@ class Header extends React.Component {
                             to='/'
                             onClick={this.logout}
                         >
-                            <button type="button" className=" btn_teo hide-for-mobile" >
+                            <button type="button" className=" btn_header hide-for-mobile" >
                                 Logout</button>
                         </Link>
                     </>
@@ -129,7 +129,7 @@ class Header extends React.Component {
                             to='/loginregister'
                             onClick={this.closeMobileMenu}
                         >
-                            <button type="button" className=" btn_teo hide-for-mobile" >
+                            <button type="button" className="btn_header  hide-for-mobile" >
                                 Register</button>
                         </Link>
                     </>
@@ -139,7 +139,7 @@ class Header extends React.Component {
         return (
             <div>
                 <header className="header">
-                    <div className="overlay has-fade hide-for-desktop"></div>
+                    <div className="overlay has-fade hide-for-desktop"/>
                     <nav className="cont cont--nav cont--pall flex flex-jc-sb flex-ai-c">
                         <a className="header__logo">
                             <Link to='/' className='navbar-logo' onClick={this.closeMobileMenu}>
@@ -148,40 +148,40 @@ class Header extends React.Component {
                         </a>
 
                         <a id="btnHamburger" href="#" onClick={this.handleClick} className="header__toggle hide-for-desktop">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                            <span/>
+                            <span/>
+                            <span/>
                         </a>
 
 
-                        <div className="header__buttons hide-for-mobile">
-                            <a href='' className="sub-button hide-for-mobile">
-                                {renderprofile()}
+                        <div className="header__links hide-for-mobile">
+                                <div className={"page_choices"}>
+                                    {renderprofile()}
+                                    <a href="">
+                                        <Link to='/askquestion' >
+                                            AskQuestion
+                                        </Link>
+                                    </a>
+                                    <a href="">
+                                        <Link to='/answerquestion' onClick={this.closeMobileMenu}>
+                                            AnsQuestion
+                                        </Link>
+                                    </a>
+                                    <a href="">
+                                        <Link to='/keywords' onClick={this.closeMobileMenu}>
+                                            Keywords
+                                        </Link>
+                                    </a>
+                                    <a href="">
+                                        <Link to='/timesearch' onClick={this.closeMobileMenu}>
+                                            TimeSearch
+                                        </Link>
+                                    </a>
+                                </div>
 
-                                <a href="">
-                                    <Link to='/askquestion' onClick={this.closeMobileMenu}>
-                                        Ask question
-                                    </Link>
-                                </a>
-                                <a href="">
-                                    <Link to='/answerquestion' onClick={this.closeMobileMenu}>
-                                        Answer question
-                                    </Link>
-                                </a>
-                                <a href="">
-                                    <Link to='/keywords' onClick={this.closeMobileMenu}>
-                                        Keyword Search
-                                    </Link>
-                                </a>
-                                <a href="">
-                                    <Link to='/timesearch' onClick={this.closeMobileMenu}>
-                                        Time Search
-                                    </Link>
-                                </a>
+                        </div>
+                        <div className={"header__buttons hide-for-mobile"}>
                                 {renderlogout()}
-                            </a>
-
-
                         </div>
                     </nav>
                 </header>
