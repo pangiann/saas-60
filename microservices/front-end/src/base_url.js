@@ -1,5 +1,5 @@
-export let login_register_url = "http://localhost:4000/loginRegister";
-export let show_qa_url = "http://localhost:4001/showQA";
-export let show_analytics = "http://localhost:4003/totalAnalytics";
-export let show_user = "http://localhost:4004/usersProfile";
-export let add_qa_url = "http://localhost:4002/addQA";
+export let login_register_url = "https://pacific-reef-02909.herokuapp.com/loginRegister";
+export let show_qa_url = "https://show-qa-service.herokuapp.com/showQA";
+export let show_analytics = "https://show-qa-service.herokuapp.com/showQA";
+export let show_user = "https://users-profile-service.herokuapp.com/usersProfile";
+export let add_qa_url = "http://thawing-temple-79171.herokuapp.com/addQA";
