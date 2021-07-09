@@ -1,97 +1,64 @@
 import React from 'react';
-import '../ChoicesBoxes/scss/style.scss';
-import answer from "../images/Answer.jpg";
-import ask from "../images/ask.jpeg";
-import statistics from "../images/statistics.jpg";
-import search_keyword from "../images/search-keyword.jpg";
+import './scss/style.scss';
+import FeedQuestion from "../AnswerQuestion/FeedQuestion.jsx";
+import { show_qa_url } from "../../base_url";
+
 import { Link } from 'react-router-dom';
 
 class Keywords extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          click: true
+            click: true,
+            questions: [],
+            question: [],
+            keyword: ""
         };
-      }
+    }
+    async componentDidMount() {
+        // console.log(Cookies.get("token_id"));
+        const myHeaders = new Headers();
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
 
-    closeMobileMenu = () => this.setState({click:false});
+        const response = await fetch(show_qa_url + "/question", requestOptions)
+        const json = await response.json();
+        console.log(json);
+        await this.setState({
+            questions: json.result
+        })
+        // await console.log(this.state.questions);
+    }
+
+    closeMobileMenu = () => this.setState({ click: false });
+
+    handleKeywordsChange = (event) => {
+        this.setState({
+            keyword: event.target.value
+        })
+    }
+
 
     render() {
         return (
-            <section className="choices">
-
-                <div className="choice__content container container--nav container--pall">
-
-                    <div className="choice__grid">
-
-                        <a href="#" className="choice__item">
-                            <div className="choice__image"
-                                 style={{backgroundImage: `url(${search_keyword})`}}>
-                            </div>
-
-                            <div className="choice__text">
-                                <div className="choice__title">
-                                    Questions per Keyword
-                                </div>
-                                <div className="choice__description">
-                                    View the most used keywords
-                                    and insert one to see all 
-                                    related questions.
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#" className="choice__item">
-                            <div className="choice__image"
-                                 style={{backgroundImage: `url(${statistics})`}}>
-                            </div>
-
-                            <div className="choice__text">
-                                <div className="choice__title">
-                                    Questions per Time Period
-                                </div>
-                                <div className="choice__description">
-                                    Select a time period of your
-                                    preferance and see all the 
-                                    posted questions and answers.
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#" className="choice__item">
-                            <div className="choice__image"
-                                 style={{backgroundImage: `url(${ask})`}}>
-                            </div>
-
-                            <div className="choice__text">
-                                <div className="choice__title">
-                                    Ask a new question
-                                </div>
-                                <div className="choice__description">
-                                    Struggling with finding answers
-                                    to a problem? Post a new question
-                                    and let our community take 
-                                    care the rest.
-                                </div>
-                            </div>
-                        </a>
-                        <a href="#" className="choice__item">
-                            <div className="choice__image"
-                                 style={{backgroundImage: `url(${answer})`}}>
-                            </div>
-
-                            <div className="choice__text">
-                                <div className="choice__title">
-                                    Answer a question
-                                </div>
-                                <div className="choice__description">
-                                    Are you Mr. BigBrains? Answer a
-                                    question and make someone's life easier.
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+            <div>
+                <div className="answer_title4">
+                    <div className="smalltitle">Keyword Search: &nbsp;&nbsp;</div>
+                    <input
+                        type="text"
+                        value={this.state.keyword}
+                        placeholder="Insert a keyword"
+                        onChange={this.handleKeywordsChange}
+                    />
                 </div>
-
-            </section>
+                {this.state.questions.map(question =>
+                    <FeedQuestion question={question} />
+                )
+                }
+            </div>
         );
     }
 }
