@@ -3,11 +3,8 @@ import './scss/style.scss';
 import Logo from '../../mylogo.png';
 import '../Button/Button.jsx';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Cookies from "js-cookie";
 import { show_user } from "../../base_url";
-
-
 
 class Header extends React.Component {
 
@@ -35,7 +32,6 @@ class Header extends React.Component {
                 body: raw,
                 redirect: 'follow'
             };
-
             const response = await fetch(show_user + "/user", requestOptions)
             const json = await response.json();
             // console.log(json.result);
@@ -48,8 +44,14 @@ class Header extends React.Component {
         }
     }
 
-
     closeMobileMenu = () => this.setState({ click: false });
+    logout = () => {
+            document.cookie = Cookies.get("token_id") + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.cookie = Cookies.get("user_id") + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            this.setState({
+                logged: false
+            })
+    }
 
     handleClick(e) {
         e.preventDefault();
@@ -71,7 +73,6 @@ class Header extends React.Component {
         }
         else { // open hamburger menu
             body.classList.add('noscroll');
-
             header.classList.add('open');
             fadeElems.forEach(function (element) {
                 element.classList.remove('fade-out');
@@ -81,8 +82,6 @@ class Header extends React.Component {
 
         }
     }
-
-
 
     render() {
         const renderprofile = () => {
@@ -108,8 +107,8 @@ class Header extends React.Component {
                         </a>
 
                         <Link
-                            to='/loginregister'
-                            onClick={this.closeMobileMenu}
+                            to='/'
+                            onClick={this.logout}
                         >
                             <button type="button" className=" btn_teo hide-for-mobile" >
                                 Logout</button>
