@@ -4,7 +4,7 @@ const router = express.Router();
 const axios = require('axios');
 const qs = require('qs');
 const fetch = require("node-fetch");
-
+//const React = require('react');
 const myArgs = process.argv.slice(2);
 //console.log(myArgs)
 let qa_management_url;
@@ -175,7 +175,9 @@ router.post('/bus/analytics',
         const request_method = request_event.method;
         const request_data = request_event.data;
         var myHeaders = new fetch.Headers();
+        console.log(req.headers);
         if (req.headers.authorization !== undefined) {
+
             myHeaders.append("Authorization", req.headers.authorization)
         }
         myHeaders.append("Content-Type", "application/json");
@@ -196,13 +198,14 @@ router.post('/bus/analytics',
             };
 
         }
+        console.log(requestOptions);
 
         console.log(analytics_url + "/"  + request_name)
         fetch(analytics_url + "/" + request_name, requestOptions)
             .then(response => response.text())
             .then(result => {
                 result = JSON.parse(result)
-                pushMessages(request_base_route, request_name, result);
+                //pushMessages(request_base_route, request_name, result);
                 res.json({
                     result
                 })

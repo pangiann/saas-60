@@ -32,17 +32,20 @@ class QuestionsPerTimePeriod extends React.Component {
     componentDidMount() {
         let api_request = "questionsPerDay"
         const myHeaders = new Headers();
-        let requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        }
+        myHeaders.append("Content-Type", "application/json");
+
         let raw = JSON.stringify({
             base_route: "analytics",
             api_route: api_request,
             method: "get",
             data: {}
         })
+        let requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        }
         if (Cookies.get("token_id") !== undefined && Cookies.get("user_id") !== undefined) {
             this.setState({
                 isLoginActive: true
@@ -52,7 +55,6 @@ class QuestionsPerTimePeriod extends React.Component {
             const decodedToken = jwt(auth_token);
 
             myHeaders.append("Authorization", "Bearer " + auth_token);
-            myHeaders.append("Content-Type", "application/json");
             const data =  JSON.stringify(
                 {"username": decodedToken.username}
             );

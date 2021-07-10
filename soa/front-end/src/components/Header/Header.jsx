@@ -23,7 +23,7 @@ class Header extends React.Component {
             var myHeaders = new Headers();
             myHeaders.append("Authorization", "Bearer " + Cookies.get("token_id"));
             myHeaders.append("Content-Type", "application/json");
-            const data = JSON.stringify({ "userId": Cookies.get("user_id") });
+            const data = JSON.stringify({ userId : Cookies.get("user_id") });
             const raw = JSON.stringify({
                 base_route: "analytics",
                 api_route: "user",
