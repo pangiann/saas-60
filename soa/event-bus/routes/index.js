@@ -121,10 +121,11 @@ router.post('/bus/loginRegister',
         console.log(request_data.username)
         urlencoded.append("username", request_data.username);
         urlencoded.append("password", request_data.password);
-
+        var myHeaders = new fetch.Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
         var requestOptions = {
             method: request_method,
-            headers: req.headers,
+            headers: myHeaders,
             body: urlencoded,
             redirect: 'follow'
         };
