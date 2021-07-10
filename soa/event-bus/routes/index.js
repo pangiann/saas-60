@@ -17,6 +17,7 @@ if (myArgs[0] === 'localhost') {
     redis_url = "amqp://localhost"
 }
 else {
+    console.log("hello")
     qa_management_url = "https://soa-qa-management.herokuapp.com/questionsAnswers"
     login_register_url = "https://soa-login-register.herokuapp.com/loginRegister"
     analytics_url = "https://soa-analytics.herokuapp.com/analytics"
@@ -145,6 +146,7 @@ router.post('/bus/loginRegister',
 const request_list = ['questionsPerUser', 'questionsPerDay', 'answersPerUser', 'answersPerDay']
 router.post('/bus/analytics',
     function(req, res, next) {
+        console.log("hello")
         const request_event = req.body;
         const request_name = request_event.api_route;
         const request_base_route = request_event.base_route;
