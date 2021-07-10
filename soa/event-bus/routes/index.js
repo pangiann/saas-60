@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 const qs = require('qs');
+const fetch = require("node-fetch");
 
 const myArgs = process.argv.slice(2);
 //console.log(myArgs)
@@ -23,6 +24,7 @@ else {
     analytics_url = "https://soa-analytics.herokuapp.com/analytics"
     redis_url = process.env.REDIS_URL
 }
+/*
 const TotalConnections = 20
 const pool = require('redis-connection-pool')('myRedisPool', {
     url: redis_url,
@@ -37,12 +39,16 @@ function CustomException(message, code) {
   error.code = code;
   return error;
 }
+*/
+
 
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  //res.render('index', { title: 'Express' });
+
+
 });
 
 function pushMessages (key, field, event) {
@@ -66,7 +72,7 @@ function pushMessages (key, field, event) {
 
 }
 
-
+/*
 
 router.post('/bus/qa_management',
     function(req, res, next) {
@@ -95,54 +101,47 @@ router.post('/bus/qa_management',
             next(createError(error.code || 400, error.message));
             // RETRY REQUEST
         });
-        /*pool.hget(request_base_route, request_name, async (err, data) => {
-            let currentMessages = JSON.parse(data);
-            if (currentMessages === null || (request_method !== 'get' || request_name !== 'question')) {
 
-
-            }
-            else {
-                const result = currentMessages[currentMessages.length - 1].event
-                console.log(result)
-                res.json({
-                    result
-                })
-            }
-          })*/
 
 })
+*/
+
 router.post('/bus/loginRegister',
     function(req, res, next) {
         const request_event = req.body;
         const request_name = request_event.api_route;
         const request_base_route = request_event.base_route;
         const request_method = request_event.method;
+        const request_data  = JSON.parse(request_event.data);
         console.log(request_event.data)
-        const request_data = qs.stringify(JSON.parse(request_event.data));
         //pushMessages('requests', 'qa_management', request_event)
         console.log(request_data)
 
-        const config = {
+        var urlencoded = new URLSearchParams();
+        console.log(request_data.username)
+        urlencoded.append("username", request_data.username);
+        urlencoded.append("password", request_data.password);
+
+        var requestOptions = {
             method: request_method,
-            url: login_register_url +  "/" + request_name,
             headers: req.headers,
-            data : request_data
+            body: urlencoded,
+            redirect: 'follow'
         };
-        console.log(config.url)
-        axios(config)
-            .then(function (response) {
-                const result = response.data;
-                //console.log(json_response);
-                pushMessages(request_base_route, request_name, result);
-                res.json({
-                    result
-                })
-            })
-            .catch(function (error) {
+        console.log(login_register_url + "/"  + request_name)
+        fetch(login_register_url + "/" + request_name, requestOptions)
+            .then(response => response.text())
+            .then(result => res.json({
+                result
+            }))
+            .catch(error => {
                 next(createError(error.code || 400, error.message));
                 // RETRY REQUEST
             });
 })
+
+
+/*
 const request_list = ['questionsPerUser', 'questionsPerDay', 'answersPerUser', 'answersPerDay']
 router.post('/bus/analytics',
     function(req, res, next) {
@@ -173,36 +172,8 @@ router.post('/bus/analytics',
                 next(createError(error.code || 400, error.message));
                 // RETRY REQUEST
             });
-        /*pool.hget(request_base_route, request_name, async (err, data) => {
-            let currentMessages = JSON.parse(data);
-            if (currentMessages === null || (request_method !== 'get' || !request_list.includes(request_name))) {
-                console.log("helloooo")
-                axios(config)
-                    .then(function (response) {
-                        const result = response.data;
-                        //console.log(json_response);
-                        pushMessages(request_base_route, request_name, result);
-                        res.json({
-                            result
-                        })
-                    })
-                    .catch(function (error) {
-                        next(createError(error.code || 400, error.message));
-                        // RETRY REQUEST
-                    });
-
-            }
-            else {
-                console.log("hellloooo")
-                const result = currentMessages[currentMessages.length - 1].event
-                res.json({
-                   result
-                })
-            }
-        })
-        */
 
 
 })
-
+*/
 module.exports = router;

@@ -1,40 +1,31 @@
 const createError = require('http-errors');
+const fetch = require("node-fetch");
 
 const axios = require('axios');
 
 (async () => {
     try {
-        const val = {
-            userId : "60b21aefba2f98223c4021be"
-        }
-        // Publish a message
-        const message_doc = {
-            base_route: "analytics",
-            api_route: "questionsPerDay",
-            method: "get",
-            data: {}
-        }
-        const config = {
-            method: 'post',
-            url: 'https://soa-event-bus.herokuapp.com/bus/analytics',
-            headers: {
-                'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InBhbmF0aGEiLCJpYXQiOjE2MjQxMTc2MTUsImV4cCI6MTYyNDE1MzYxNX0.sjCKMRYqqBVP80qulD7fj1UO3QdG_-fvhaOEX6HtMpE',
-                'Content-Type': 'application/json'
-            },
-            data: message_doc
+        var myHeaders = new fetch.Headers();
+        myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+        let urlencoded = new URLSearchParams();
+        urlencoded.append("data", JSON.stringify({username: "pan", password: "1234"}))
+        urlencoded.append("base_route", "loginRegister")
+        urlencoded.append("method", "post");
+        urlencoded.append("api_route", "signin")
+        let requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: urlencoded,
+            redirect: 'follow'
         };
 
-        axios(config)
-            .then(function (response) {
-                const json_value = response.data.result;
-                //const questions = json_value.questions;
-                console.log(json_value)
 
-            })
-            .catch(function (error) {
-                console.log(error.response.status);
+        fetch("http://localhost:3005/bus/loginRegister", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log('error', error));
 
-            });
 
     } catch(err) {
         console.error(err);

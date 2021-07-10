@@ -7,18 +7,19 @@
   },
   "dependencies": {
     "amqplib": "^0.8.0",
+    "axios": "^0.21.1",
     "cookie-parser": "~1.4.4",
     "core-js": "^3.14.0",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "node-fetch": "^2.6.1",
     "passport": "^0.4.1",
     "pug": "2.0.0-beta11",
-    "rascal": "^13.0.3",
     "qs": "^6.7.0",
-    "axios": "^0.21.1",
-    "cors": "^2.8.5",
+    "rascal": "^13.0.3",
     "redis-connection-pool": "^1.7.4"
   }
 }
