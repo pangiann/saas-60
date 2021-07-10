@@ -108,6 +108,7 @@ router.post('/bus/qa_management',
     fetch(qa_management_url + "/" + request_name, requestOptions)
         .then(response => response.text())
         .then(result => {
+            result = JSON.parse(result)
             pushMessages(request_base_route, request_name, result);
             res.json({
                 result
@@ -149,6 +150,7 @@ router.post('/bus/loginRegister',
         fetch(login_register_url + "/" + request_name, requestOptions)
             .then(response => response.text())
             .then(result => {
+                result = JSON.parse(result)
                 pushMessages(request_base_route, request_name, result);
                 res.json({
                     result
@@ -198,6 +200,7 @@ router.post('/bus/analytics',
         fetch(analytics_url + "/" + request_name, requestOptions)
             .then(response => response.text())
             .then(result => {
+                result = JSON.parse(result)
                 pushMessages(request_base_route, request_name, result);
                 res.json({
                     result
