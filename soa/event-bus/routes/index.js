@@ -81,7 +81,7 @@ router.post('/bus/qa_management',
     const request_method = request_event.method;
     const request_data = request_event.data;
     //pushMessages('requests', 'qa_management', request_event)
-    var myHeaders = new Headers();
+    var myHeaders = new fetch.Headers();
     if (req.headers.authorization !== undefined) {
         myHeaders.append("Authorization", req.headers.authorization)
     }
@@ -159,7 +159,7 @@ router.post('/bus/analytics',
         const request_base_route = request_event.base_route;
         const request_method = request_event.method;
         const request_data = request_event.data;
-        var myHeaders = new Headers();
+        var myHeaders = new fetch.Headers();
         if (req.headers.authorization !== undefined) {
             myHeaders.append("Authorization", req.headers.authorization)
         }
