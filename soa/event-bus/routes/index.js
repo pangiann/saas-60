@@ -17,9 +17,9 @@ if (myArgs[0] === 'localhost') {
     redis_url = "amqp://localhost"
 }
 else {
-    qa_management_url = "https://soa-qa-management.herokuapp.com/"
-    login_register_url = "https://login-register-service.herokuapp.com/"
-    analytics_url = "https://soa-analytics.herokuapp.com/"
+    qa_management_url = "https://soa-qa-management.herokuapp.com/questionsAnswers"
+    login_register_url = "https://login-register-service.herokuapp.com/loginRegister"
+    analytics_url = "https://soa-analytics.herokuapp.com/analytics"
     redis_url = process.env.REDIS_URL
 }
 const TotalConnections = 20
