@@ -22,11 +22,9 @@ export class Register extends React.Component {
     handleUserInput = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+        this.setState({[name]: value});
 
     }
-
-
-
 
 
     handleRegister = (event) => {
