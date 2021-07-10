@@ -136,8 +136,9 @@ router.post('/bus/loginRegister',
 
         var urlencoded = new URLSearchParams();
         console.log(request_data.username)
-        urlencoded.append("username", request_data.username);
-        urlencoded.append("password", request_data.password);
+        for (let key in request_data) {
+            urlencoded.append(key, request_data[key])
+        }
         var myHeaders = new fetch.Headers();
         myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
         var requestOptions = {
