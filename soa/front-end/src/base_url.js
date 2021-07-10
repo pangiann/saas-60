@@ -1,4 +1,4 @@
-export let login_register_url = "https://login-register-service.herokuapp.com/loginRegister"
+export let login_register_url = "https://soa-login-register.herokuapp.com/loginRegister"
 export let qa_url = "https://soa-qa-management.herokuapp.com/questionsAnswers"
 export let analytics_url = "https://soa-analytics.herokuapp.com/analytics"
 
