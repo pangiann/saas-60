@@ -86,22 +86,34 @@ router.post('/bus/qa_management',
         myHeaders.append("Authorization", req.headers.authorization)
     }
     myHeaders.append("Content-Type", "application/json");
-    const config = {
-        method: request_method,
-        url: qa_management_url + "/" + request_name,
-        headers: myHeaders,
-        data : request_data
-    };
-    axios(config)
-        .then(function (response) {
-            const result = response.data;
-            //console.log(json_response);
+    let requestOptions;
+    if (request_method === "get" || request_method === "GET") {
+        requestOptions = {
+            method: request_method,
+            headers: myHeaders,
+            redirect: 'follow'
+        }
+    }
+    else {
+        requestOptions = {
+            method: request_method,
+            headers: myHeaders,
+            body: request_data,
+            redirect: 'follow'
+        };
+
+    }
+
+    console.log(login_register_url + "/"  + request_name)
+    fetch(qa_management_url + "/" + request_name, requestOptions)
+        .then(response => response.text())
+        .then(result => {
             pushMessages(request_base_route, request_name, result);
             res.json({
                 result
             })
         })
-        .catch(function (error) {
+        .catch(error => {
             next(createError(error.code || 400, error.message));
             // RETRY REQUEST
         });
@@ -164,24 +176,34 @@ router.post('/bus/analytics',
             myHeaders.append("Authorization", req.headers.authorization)
         }
         myHeaders.append("Content-Type", "application/json");
-        //pushMessages('requests', 'qa_management', request_event)
-        const config = {
-            method: request_method,
-            url: analytics_url + "/" + request_name,
-            headers: myHeaders,
-            data : request_data
-        };
-        console.log(config.url)
-        axios(config)
-            .then(function (response) {
-                const result = response.data;
-                //console.log(json_response);
+        let requestOptions;
+        if (request_method === "get" || request_method === "GET") {
+            requestOptions = {
+                method: request_method,
+                headers: myHeaders,
+                redirect: 'follow'
+            }
+        }
+        else {
+            requestOptions = {
+                method: request_method,
+                headers: myHeaders,
+                body: request_data,
+                redirect: 'follow'
+            };
+
+        }
+
+        console.log(analytics_url + "/"  + request_name)
+        fetch(analytics_url + "/" + request_name, requestOptions)
+            .then(response => response.text())
+            .then(result => {
                 pushMessages(request_base_route, request_name, result);
                 res.json({
                     result
                 })
             })
-            .catch(function (error) {
+            .catch(error => {
                 next(createError(error.code || 400, error.message));
                 // RETRY REQUEST
             });
