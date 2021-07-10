@@ -21,7 +21,7 @@ const axios = require('axios');
         };
 
 
-        fetch("http://localhost:3005/bus/loginRegister", requestOptions)
+        fetch("https://soa-event-bus.herokuapp.com/bus/loginRegister", requestOptions)
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));

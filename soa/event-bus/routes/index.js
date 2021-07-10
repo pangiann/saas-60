@@ -24,7 +24,7 @@ else {
     analytics_url = "https://soa-analytics.herokuapp.com/analytics"
     redis_url = process.env.REDIS_URL
 }
-/*
+
 const TotalConnections = 20
 const pool = require('redis-connection-pool')('myRedisPool', {
     url: redis_url,
@@ -39,7 +39,7 @@ function CustomException(message, code) {
   error.code = code;
   return error;
 }
-*/
+
 
 
 
@@ -72,7 +72,6 @@ function pushMessages (key, field, event) {
 
 }
 
-/*
 
 router.post('/bus/qa_management',
     function(req, res, next) {
@@ -82,10 +81,15 @@ router.post('/bus/qa_management',
     const request_method = request_event.method;
     const request_data = request_event.data;
     //pushMessages('requests', 'qa_management', request_event)
+    var myHeaders = new Headers();
+    if (req.headers.authorization !== undefined) {
+        myHeaders.append("Authorization", req.headers.authorization)
+    }
+    myHeaders.append("Content-Type", "application/json");
     const config = {
         method: request_method,
         url: qa_management_url + "/" + request_name,
-        headers: req.headers,
+        headers: myHeaders,
         data : request_data
     };
     axios(config)
@@ -104,7 +108,7 @@ router.post('/bus/qa_management',
 
 
 })
-*/
+
 
 router.post('/bus/loginRegister',
     function(req, res, next) {
@@ -132,9 +136,12 @@ router.post('/bus/loginRegister',
         console.log(login_register_url + "/"  + request_name)
         fetch(login_register_url + "/" + request_name, requestOptions)
             .then(response => response.text())
-            .then(result => res.json({
-                result
-            }))
+            .then(result => {
+                pushMessages(request_base_route, request_name, result);
+                res.json({
+                    result
+                })
+            })
             .catch(error => {
                 next(createError(error.code || 400, error.message));
                 // RETRY REQUEST
@@ -142,7 +149,7 @@ router.post('/bus/loginRegister',
 })
 
 
-/*
+
 const request_list = ['questionsPerUser', 'questionsPerDay', 'answersPerUser', 'answersPerDay']
 router.post('/bus/analytics',
     function(req, res, next) {
@@ -152,11 +159,16 @@ router.post('/bus/analytics',
         const request_base_route = request_event.base_route;
         const request_method = request_event.method;
         const request_data = request_event.data;
+        var myHeaders = new Headers();
+        if (req.headers.authorization !== undefined) {
+            myHeaders.append("Authorization", req.headers.authorization)
+        }
+        myHeaders.append("Content-Type", "application/json");
         //pushMessages('requests', 'qa_management', request_event)
         const config = {
             method: request_method,
             url: analytics_url + "/" + request_name,
-            headers: req.headers,
+            headers: myHeaders,
             data : request_data
         };
         console.log(config.url)
@@ -176,5 +188,5 @@ router.post('/bus/analytics',
 
 
 })
-*/
+
 module.exports = router;
