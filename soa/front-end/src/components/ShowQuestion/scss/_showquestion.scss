@@ -1,0 +1,228 @@
+.title_of_question{
+    color: #6a98ce;
+    font-size: 1.6rem;
+    padding: 0.4rem;
+    //border-bottom: 1px solid #ddd;
+    margin-right: 5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    margin-left: 5rem;
+    margin-top: 1rem;
+    @include breakpoint-down(medium) {
+        margin-left: 1rem;
+     //   margin-right: 1rem;
+    }
+
+}
+.title{
+    line-height: 1.2;
+    width: 13rem;
+    color: #6a98ce;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+.box_of_question{
+    @include breakpoint-down(medium) {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+    font-size: 14px;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    padding-bottom: 0.4rem;
+    border: 2px solid #eee;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+
+}
+.box_of_answer{
+    @include breakpoint-down(medium) {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+    font-size: 14px;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    padding-bottom: 0.4rem;
+    border: 2px solid #eee;
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    //margin-bottom: 2rem;
+
+}
+.answer_but {
+    color: white;
+    display: inline-block;
+    margin-left: 0.5rem;
+    margin-bottom: 0.4rem;
+    padding: 0.4rem;
+    margin-top: 0.5rem;
+    border-radius: 5px;
+    background-color: #6a98ce;
+
+}
+
+.answer_but:hover {
+    cursor: pointer;
+}
+.add_ans_but {
+    color: white;
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 12px;
+    background-color: #5cb85c;
+    margin-left: 0.8rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+
+
+
+}
+.add_ans_but:hover {
+    cursor: pointer;
+
+}
+.answers_title {
+    color: #6a98ce;
+    font-size: 1.6rem;
+    padding: 0.4rem;
+    //border-bottom: 1px solid #ddd;
+    margin-right: 5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    margin-left: 5rem;
+    margin-top: 1rem;
+    @include breakpoint-down(medium) {
+        margin-left: 1rem;
+     //   margin-right: 1rem;
+    }
+
+}
+.text_of_question{
+    font-size: 15px;
+    padding: 1%;
+    color: #333;
+}
+.author{
+    font-size: 15px;
+    margin-left: 0.8rem;
+    color: $darkBlue;
+    margin-top: 0.4rem;
+    display: flex;
+    @include breakpoint-down(small) {
+        font-size: 0.8rem;
+    }
+}
+
+.flex{
+    display: flex;
+    /*@include breakpoint-down(medium) {
+        display: block;
+    }*/
+   // align-items: flex-start;
+
+}
+.those {
+    display: inline-block;
+}
+.num_of_answers{
+    display: inline-block;
+    font-size: 1rem;
+    padding: 0.5rem;
+    color: #3c763d;
+    border: 1.5px solid #d6e9c6;
+    margin-top: 0.4rem;
+    margin-left: 0.4rem;
+    @include breakpoint-down(small) {
+       font-size: 0.6rem;
+    }
+}
+.upvotes_flex {
+    display: flex;
+}
+.plus_image {
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+
+
+}
+.plus_image:hover {
+    cursor: pointer;
+}
+.num_of_upvotes {
+    font-size: 1rem;
+    padding: 0.5rem;
+    color: #3c763d;
+    border: 1.5px solid #d6e9c6;
+    margin-top: 0.4rem;
+    margin-left: 0.4rem;
+    display: inline-block;
+    @include breakpoint-down(small) {
+        font-size: 0.6rem;
+    }
+}
+.answer_button2{
+    background-color: $limeBlue;
+    color: white;
+    font-size: 100%;
+    line-height: 1.2;
+    margin-left: calc(80% - 50px);
+    margin-bottom: 3rem !important;
+    border-radius: 0.8rem;
+    padding: 1%;
+    width: fit-content;
+}
+.keyword_display{
+    //flex: 1;
+    margin-top: 0.4rem;
+    justify-self: flex-start;
+    margin-left: 0.5rem;
+    background-color: white;
+    border: 1px solid #e2e2e2;
+    color: #6a98ce;
+    font-size: 1.1rem;
+    line-height: 1.2;
+    margin-right: 0.3rem;
+    padding: 0.4rem;
+    @include breakpoint-down(small) {
+        font-size: 0.7rem;
+    }
+    p {
+        margin: 0;
+    }
+  //  width: fit-content;
+}
+
+.my_answer{
+    border: 1px solid #e2e2e2;
+    p {
+        font-family: "Open Sans", sans-serif;
+        font-size: 22px;
+        margin-left: 0.8rem;
+    }
+    color: $darkBlue;
+    font-size: 1.3625rem;
+    line-height: 1.2;
+    margin-left: 5rem;
+    @include breakpoint-down(medium) {
+        margin-left: 1rem;
+        //   margin-right: 1rem;
+    }
+    margin-right: 5rem;
+    margin-top: 2rem;
+}
+
+.textbox{
+    font-family: 'Open Sans', sans-serif;
+    font-size: $font-med;
+    margin-left: 0.8rem;
+    height: 100%;
+    //padding-bottom: 5rem;
+    height: 250px;
+    margin-right: 5rem;
+    margin-top: 2%;
+    margin-bottom: 1%;
+}
+textarea {
+    height: 250px;
+}

@@ -63,7 +63,7 @@ module.exports = {
         try {
             return await questions_collection.aggregate([
                 {$unwind: "$keywords" }, {$group: {_id: "$keywords", keyword_sum: {$sum: 1}}},
-                {$project: {_id: 0, keywords: "$_id", keyword_sum: 1}},
+                {$project: {_id: 0, keyword: "$_id", keyword_sum: 1}},
                 {$sort: {keyword_sum: -1} }
             ]).toArray();
         }
@@ -71,6 +71,17 @@ module.exports = {
             throw error;
         }
 
+
+    },
+    showQuestionsOfUser: async function (username) {
+        const questions_collection = client.db('q&a').collection('Questions');
+        const query = {username: username}
+        try {
+            return await questions_collection.find(query).sort( { date: 1 } ).toArray()
+        }
+        catch (error) {
+            throw error;
+        }
 
     },
     questionsPerUser: async function () {

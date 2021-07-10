@@ -94,11 +94,22 @@ module.exports = {
         }
 
     },
+    showSpecificQuestion: async function (question_id) {
+        try {
+            const query = {_id: question_id};
+            const questions_collection = client.db('q&a').collection('Questions');
+            const result = await questions_collection.find(query).toArray();
+            return result;
+        }
+        catch (error) {
+            throw error;
+        }
+    },
     showQuestions: async function () {
         const query = {_id: { $ne: "questionsInfo"} };
         try {
             const questions_collection = client.db('q&a').collection('Questions');
-            return await questions_collection.find(query).toArray();
+            return await questions_collection.find(query).sort( { date: -1 } ).toArray();
         }
         catch (error) {
             throw error;
@@ -151,7 +162,7 @@ module.exports = {
         console.log(keyword_array);
         try {
             const questions_collection = client.db('q&a').collection('Questions');
-            const result = await questions_collection.find(query).toArray();
+            const result = await questions_collection.find(query).sort( { date: -1 } ).toArray();
             console.log(result);
             if (result.length === 0) {
                 throw new CustomException("No questions found with these keywords", 404);

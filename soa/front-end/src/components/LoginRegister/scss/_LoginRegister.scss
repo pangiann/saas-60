@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+
+.LoginRegister {
+  padding: 3rem 4rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Open Sans", sans-serif;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+//Login Main Container
+.login {
+  width: 27em;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+  position: relative;
+  z-index: 99;
+  .container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    box-shadow: 0px 0px 12px 2px rgba(15, 15, 15, 0.2);
+    border-radius: 1rem;
+    position: relative;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+
+    //transition: transform 200ms ease-in-out;
+  }
+
+}
+
+.image {
+  margin-bottom: 1rem;
+}
+//Button
+.btn_teo {
+  font-size: 21px;
+  margin: 1rem;
+  width: 200px;
+  height: 50px;
+  padding: 5px 20px;
+  background-color: #6a98ce;
+  color: #fff;
+  border: 0px;
+  border-radius: 10px;
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+  &:hover {
+    opacity:80%;
+    background-color: #6a98ce;
+  }
+  &:focus {
+    outline: none;
+  }
+}
+
+.form-group {
+
+  margin:auto;
+  //display: block;
+  width: 100%;
+  align-items: center;
+  @include breakpoint-up(medium){
+    justify-content: center;
+    align-items: center;
+  }
+
+
+}
+.input_field {
+  padding: 0 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+
+}
+
+input[type=text], input[type=password]{
+  display: inline-block;
+  width: 90%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  resize: vertical;
+  @include breakpoint-down(medium){
+    max-width: 90%;
+    font-size: 1.125rem;
+
+  }
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  border: 1px solid #6a98ce;
+  outline: none;
+}
+
+label {
+  margin-left: 1.2rem;
+  display: block;
+  text-align: left;
+  font-size: 0.8rem;
+  color: #62748e;
+  margin-bottom: 0rem;
+  padding-bottom: 0rem;
+  @include breakpoint-down(medium){
+    font-size: 0.8rem;
+  }
+
+}
+
+.logo-img {
+  width:80px;
+  margin-right:15px;
+}
+
+.btn_form {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 0rem;
+  padding-right: 0rem;
+}
+.panel {
+  color: #c20707;
+  border: 1px solid #de7575;
+  border-radius: 4px;
+  background-color: #fdf6f6;
+  width: 82%;
+  padding: 0.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.other_option {
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #6a98ce;
+  }
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+
+}
+
+

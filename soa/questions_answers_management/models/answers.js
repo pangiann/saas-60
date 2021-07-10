@@ -63,7 +63,7 @@ module.exports = {
         try {
             const query = {question_id: question_id};
             const answers_collection = client.db('q&a').collection('Answers');
-            const result = await answers_collection.find(query).toArray();
+            const result = await answers_collection.find(query).sort( { date: -1 } ).toArray();
             return result;
         }
         catch (error) {
@@ -74,7 +74,7 @@ module.exports = {
         try {
             const query = {user_id: user_id};
             const answers_collection = client.db('q&a').collection('Answers');
-            const result = await answers_collection.find(query).toArray();
+            const result = await answers_collection.find(query).sort( { date: -1 } ).toArray();
             return result;
         }
         catch (error) {

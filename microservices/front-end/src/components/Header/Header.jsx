@@ -46,8 +46,8 @@ class Header extends React.Component {
 
     closeMobileMenu = () => this.setState({ click: false });
     logout = () => {
-            document.cookie = Cookies.get("token_id") + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-            document.cookie = Cookies.get("user_id") + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.cookie = 'token_id =;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            document.cookie = 'user_id =;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
             this.setState({
                 logged: false
             })

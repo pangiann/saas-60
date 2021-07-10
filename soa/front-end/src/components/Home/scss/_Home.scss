@@ -1,0 +1,144 @@
+.profilestyle{
+    margin-left:5%;
+    margin-right:5%;
+    margin-top:50px;
+    margin-bottom: 70px;
+    background-color:#454d55;
+    padding: 40px;
+    padding-bottom:700px;
+    border-radius: 2rem;
+  }
+.profile-title-container{
+    color:white;
+    font-size: 2rem;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+.profileboxbox{
+    margin-top: 4%;
+    margin-bottom: 2%;
+}
+.profile-box{
+    background-color: #242424;
+    margin-left:10%;
+    margin-right:10%;
+    height:25.3rem;
+    border-radius: 2rem;
+    padding: 2%;
+    width: 30%;
+    float: left;
+}
+.profile-text{
+    color: white;
+    font-size: 20px;   
+    text-align: left;  
+}
+.cars-profile:after {
+    content: "";
+    display: table;
+    clear: both;
+    margin-left:5%;
+    margin-right:5%;
+}
+.cars-profile-box {
+    margin-top: 3%;
+    margin-left:10%;
+    margin-right:10%;
+    float: left;
+    width: 30%;
+    background-color: #242424;
+    border-radius: 2rem;
+    padding: 2%;
+}
+.formbox{
+    margin-top: 3%;
+    margin-left:20%;
+    margin-right:20%;
+    float: left;
+    width: 60%;
+    background-color: #242424;
+    border-radius: 2rem;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+
+.profilebtns {
+    
+    all: unset;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 10%;
+    padding-right: 10%;
+    font-size: 30px;
+    background: #64d7d6;
+    color: #242424;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display:block;
+    margin: 10px auto;
+    height:4rem;
+    border-radius: 2rem;
+  }
+
+  .profilebtns:hover {
+    transition: all 0.3s ease-out;
+    background: #353434;
+    color: #64d7d6;
+    transition: 250ms;
+    cursor: pointer;
+  }
+
+  .profilebtns2 {
+    all: unset;
+    text-decoration: none !important;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 3%;
+    padding-right: 3%;
+    font-size: 40px;
+    background: #64d7d6;
+    color: #242424;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    display:block;
+    margin: 10px auto;
+    height:8rem;
+    border-radius: 2rem;
+    width:26%;
+  }
+
+  .profilebtns2:hover {
+    transition: all 0.3s ease-out;
+    background: #353434;
+    color: #64d7d6;
+    transition: 250ms;
+    cursor: pointer;
+  }
+  .profilebtns2 a:hover, 
+  .profilebtns2 a:visited, 
+  .profilebtns2 a:link, 
+  .profilebtns2 a:active
+  {
+      text-decoration: none !important;
+  }
+
+  .selectprofiledrop{
+      padding:3%;
+      border-radius: 2rem;
+      font-size:30px;
+      width: 80%;
+      margin: 10px auto;
+  }
+  .selectprofileinput{
+    padding:3%;
+    border-radius: 2rem;
+    font-size:30px;
+    width: 80%;
+    margin: 10px auto;
+}

@@ -76,8 +76,7 @@ const expected_question = {
     "questionId" : ""
 }
 const mandatory_question = ["questionId"]
-router.get('/answers/question',
-    passport.authenticate('token', {session: false}),
+router.post('/answers/question',
     validator.payloadValidator(expected_question, mandatory_question, true),
     function(req, res, next) {
         if (!mongodb.ObjectId.isValid(req.body.questionId)) {
@@ -105,7 +104,7 @@ const expected_user = {
     "userId" : ""
 }
 const mandatory_user = ["userId"]
-router.get('/answers/user',
+router.post('/answers/user',
     passport.authenticate('token', {session: false}),
     validator.payloadValidator(expected_user, mandatory_user, true),
     function(req, res, next) {
@@ -130,7 +129,6 @@ router.get('/answers/user',
 
 // returns all answers
 router.get('/answer',
-    passport.authenticate('token', {session: false}),
     function(req, res, next) {
         answers.showAnswers()
             .then(result => {
@@ -259,7 +257,6 @@ router.put('/answer/upvote',
 // returns json with values: _id, user_id, title, question_no, question, date, keywords, num_of_answers
 
 router.get('/question',
-    passport.authenticate('token', {session: false}),
     function(req, res, next) {
         questions.showQuestions()
             .then(result => {
@@ -274,14 +271,36 @@ router.get('/question',
     }
 );
 
+
+router.post('/questions/question_id',
+    validator.payloadValidator(expected_question, mandatory_question, true),
+    function(req, res, next) {
+        if (!mongodb.ObjectId.isValid(req.body.questionId)) {
+            next(createError(404, "Not existing Question Id"));
+        }
+        else {
+            questions.showSpecificQuestion(ObjectID(req.body.questionId))
+                .then(result => {
+                    res.json({
+                        msg: "Specific Question",
+                        result
+                    });
+                })
+                .catch(err => {
+                    next(createError(err.code || 400, err.message));
+
+                })
+        }
+    }
+);
+
 // show all questions per specific keyword
 // returns questions that matches keywords given in an array
 const expected_questions_keyword = {
     "keywords" : []
 }
 const mandatory_questions_keyword = ["keywords"];
-router.get('/questions/questionsPerKeyword',
-    passport.authenticate('token', {session: false}),
+router.post('/questions/questionsPerKeyword',
     validator.payloadValidator(expected_questions_keyword, mandatory_questions_keyword, true),
     function(req, res, next) {
         questions.findQuestionByKeywords(req.body.keywords)
@@ -300,7 +319,7 @@ router.get('/questions/questionsPerKeyword',
 
 
 // returns all questions that a user has made
-router.get('/questions/user',
+router.post('/questions/user',
     passport.authenticate('token', {session: false}),
     validator.payloadValidator(expected_user, mandatory_user, true),
     function(req, res, next) {
