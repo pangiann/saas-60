@@ -33,13 +33,13 @@ class Footer extends React.Component {
                         </div>
 
                         <div className="footer__links col1">
-                            <a href="#">About Us</a>
+                            <a href="https://github.com/pangiann/saas-60">Github</a>
                             <a href="#">Contact</a>
                             <a href="#">Blog</a>
                         </div>
 
                         <div className="footer__links col2">
-                            <a href="#">Career</a>
+                            <a href="https://github.com/pangiann/saas-60/VPP">VPP file</a>
                             <a href="#">Support</a>
                             <a href="#">Privacy Policy</a>
                         </div>

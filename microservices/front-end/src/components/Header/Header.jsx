@@ -187,35 +187,23 @@ class Header extends React.Component {
                 </header>
                 <div className="header__menu has-fade hide-for-desktop">
                     <a href="/">Home</a>
-                    <a href="">
-                        <Link to='/myprofile' onClick={this.closeMobileMenu}>
-                            Profile
-                        </Link>
+                    <a href={'/myprofile'} onClick={this.closeMobileMenu}>
+                        Profile
                     </a>
-                    <a href="">
-                        <Link to='/askquestion' onClick={this.closeMobileMenu}>
-                            Ask question
-                        </Link>
+                    <a href={'/askquestion'} onClick={this.closeMobileMenu}>
+                        Ask question
                     </a>
-                    <a href="">
-                        <Link to='/answerquestion' onClick={this.closeMobileMenu}>
-                            Answer question
-                        </Link>
+                    <a href={'/answerquestion'} onClick={this.closeMobileMenu}>
+                        Answer question
                     </a>
-                    <a href="">
-                        <Link to='/keywords' onClick={this.closeMobileMenu}>
-                            Keyword Search
-                        </Link>
+                    <a href={'/keywords'} onClick={this.closeMobileMenu}>
+                        Keyword Search
                     </a>
-                    <a href="">
-                        <Link to='/timesearch' onClick={this.closeMobileMenu}>
-                            Time Search
-                        </Link>
+                    <a href={'/timesearch'} onClick={this.closeMobileMenu}>
+                        Time Search
                     </a>
-                    <a href="">
-                        <Link to='/loginregister' onClick={this.closeMobileMenu}>
-                            Log In - Register
-                        </Link>
+                    <a href={'/loginregister'} onClick={this.closeMobileMenu}>
+                        Log In - Register
                     </a>
                 </div>
             </div>

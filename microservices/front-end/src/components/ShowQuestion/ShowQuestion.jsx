@@ -183,6 +183,7 @@ class ShowQuestion extends React.Component {
                 <p>Your answer:</p>
                 <div className="textbox">
                     <textarea
+                        className={"answer_area"}
                         type="text"
                         value={this.state.description}
                         placeholder="Use up to 1.000 characters"
