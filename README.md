@@ -39,7 +39,7 @@ This project was curated by "saas-60" team comprising of (alphabetical order):
 You could explore our app using the below urls (two for the 2 different architectures)
 
  - [ask-me-anything-microservices](https://ask-me-anything-service.herokuapp.com)
- - [ask-me-anything-soa](https://soa-ask-me-antyhing.herokuapp.com)
+ - [ask-me-anything-soa](https://ask-me-anything-soa.herokuapp.com/)
 
 ## :hammer: Technologies Used
 
