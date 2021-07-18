@@ -31,7 +31,7 @@ architecture.
 ## :mens: Team
 
 This project was curated by "saas-60" team comprising of (alphabetical order):
-* [Theodoris Chronopoulos](https://github.com/theodore-chronopoulos) (AM: 03117069)
+* [Theodoris Chronopoulos](https://github.com/theodore-chronopoulos) (AM: 03117021)
 * [Panagiotis Giannoulis](https://github.com/pangiann) (AM: 03117812)
 
 
